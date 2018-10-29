@@ -14,7 +14,7 @@
         - http://www.aria-database.com/search.php?sid=f67bc4a8935043d74f698dec67bde46f&startResults=0&operaBrowse=Opera
 
     - Books: Gutenberg-Project
-    - News: Spiegel, NYT, Whashington Post
+    - News: Spiegel, NYT, Washington Post
     - Police Reports
     - VIP Tweets
     - Jokes
