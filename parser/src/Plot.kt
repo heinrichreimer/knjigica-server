@@ -1,15 +1,15 @@
 sealed class Plot {
-    class Type_section : Plot {
+    class Section : Plot {
         var section: String
         var level: String
     }
 
-    class Type_text : Plot {
+    class Text : Plot {
         var role: String
         var text: String
     }
 
-    class Type_instruction : Plot {
+    class Instruction : Plot {
         var instruction: String
     }
 }
