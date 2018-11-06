@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group 'de.unihalle.informatik.bigdata.libretto'
+version '0.1.0'
+
+apply plugin: 'kotlin'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testCompile 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/org.apache.nutch/nutch
+    compile 'org.apache.nutch:nutch:2.3.1'
+}
