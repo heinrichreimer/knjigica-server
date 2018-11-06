@@ -1,2 +1,2 @@
 rootProject.name = 'websearch'
-include 'crawler'
+include 'crawler', 'parser'
