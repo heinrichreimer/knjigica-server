@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Download Kareol corpus.
 ./download-kareol.sh

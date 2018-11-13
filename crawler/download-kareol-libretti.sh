@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-KAREOL_LIBRETTO_URLS_PATH="../corpus/kareol_libretto_urls.txt"
-KAREOL_LIBRETTO_CRAWL_PATH="../corpus/crawl/kareol_libretto"
+KAREOL_LIBRETTO_URLS_PATH="../corpus/web_crawl/kareol_libretto_urls.txt"
+KAREOL_LIBRETTO_CRAWL_PATH="../corpus/web_crawl/html/kareol_libretto"
 # Fetch a list of URLs to Kareol libretti.
 curl --location --silent "http://www.kareol.es/obra.htm" \
     | pup 'a[href*="obras"] attr{href}' \
@@ -12,4 +12,4 @@ curl --location --silent "http://www.kareol.es/obra.htm" \
 wget --input-file ${KAREOL_LIBRETTO_URLS_PATH} \
     --directory-prefix ${KAREOL_LIBRETTO_CRAWL_PATH} \
     --recursive --convert-links --relative --no-parent \
-    --wait 5 --random-wait
+    --wait 3 --random-wait # Fairness policy

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-KAREOL_SONG_URLS_PATH="../corpus/kareol_song_urls.txt"
-KAREOL_SONG_CRAWL_PATH="../corpus/crawl/kareol_song"
+KAREOL_SONG_URLS_PATH="../corpus/web_crawl/kareol_song_urls.txt"
+KAREOL_SONG_CRAWL_PATH="../corpus/web_crawl/html/kareol_song"
 # Fetch a list of URLs to Kareol songs.
 curl --location --silent "http://www.kareol.es/canciones.htm" \
     | pup 'a[href*="obras"] attr{href}' \
@@ -12,4 +12,4 @@ curl --location --silent "http://www.kareol.es/canciones.htm" \
 wget --input-file ${KAREOL_SONG_URLS_PATH} \
     --directory-prefix ${KAREOL_SONG_CRAWL_PATH} \
     --recursive --convert-links --relative --no-parent \
-    --wait 5 --random-wait
+    --wait 3 --random-wait # Fairness policy
