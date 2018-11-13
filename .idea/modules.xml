@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client-web/client-web.iml" filepath="$PROJECT_DIR$/client-web/client-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crawler/crawler.iml" filepath="$PROJECT_DIR$/crawler/crawler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/websearch.iml" filepath="$PROJECT_DIR$/websearch.iml" />
     </modules>
   </component>
 </project>
