@@ -1,4 +1,5 @@
-# **TODO** Add Title.
+# Knjigica - opera libretti search engine
+(Warum der Titel?)
 
 ## Abstract
 
@@ -16,13 +17,13 @@
 
 **TODO**
 
+### Corpus (Corpora)
+
+**TODO**
+
 ### Structure
 
-**TODO**
-
-### Additional data
-
-**TODO**
+**TODO**: Find citations about the structure of a libretto. Why did we choose our standard format?
 
 ## Technical implementation
 

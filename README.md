@@ -1,4 +1,4 @@
-# Web search project
+# Knjigica - opera libretti search engine
 
 ## Idea
 
