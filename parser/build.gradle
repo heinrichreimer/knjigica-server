@@ -11,6 +11,6 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile 'junit:junit:4.12'
 
-    // https://mvnrepository.com/artifact/org.apache.nutch/nutch
-    compile 'org.apache.nutch:nutch:2.3.1'
+    compile 'org.jsoup:jsoup:1.11.3'
+    compile 'com.squareup.moshi:moshi:1.7.0'
 }

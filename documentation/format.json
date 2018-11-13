@@ -2,8 +2,7 @@
 	"title": "Die Entführung aus dem Serail",
 	"subtitle": "Komisches Singspiel in drei Aufzügen KV 384",
 	"author": "Wolfgang Amadé Mozart",
-	"note": "Text nach Christoph Friedrich Bretzner
-	von Gottlieb Stephanie d. J.",
+	"note": "Text nach Christoph Friedrich Bretzner von Gottlieb Stephanie d. J.",
 	"premiere": {
 		"date": "16. Juli 1782",
 		"place": "Hoftheater, Wien",
@@ -30,12 +29,7 @@
 		{
 			"type": "text",
 			"role": "DON QUICHOTTE",
-			"text": "Già di sangue rubello
-			corre tumido il Reno, e già nell'onda
-			ebbe Arminio il sepolcro. Ora, o Segeste,
-			mercé la fé, ch'illesa
-			del gran Giove latin serbasti al trono,
-			e patria, e figlia, e libertà ti dono.",
+			"text": "Già di sangue rubello\ncorre tumido il Reno, e già nell'onda\nebbe Arminio il sepolcro. Ora, o Segeste,\nmercé la fé, ch'illesa\ndel gran Giove latin serbasti al trono,\ne patria, e figlia, e libertà ti dono.",
 		},
 		{
 			"type": "instruction",
