@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'de.unihalle.informatik.bigdata.knjigica'
+version '0.1.0'
+
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+
+    implementation 'org.elasticsearch.client:transport:6.4.3'
+}
