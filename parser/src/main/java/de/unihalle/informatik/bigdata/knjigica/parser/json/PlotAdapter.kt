@@ -1,6 +1,8 @@
 package de.unihalle.informatik.bigdata.knjigica.parser.json
 
-import com.squareup.moshi.*
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.ToJson
 import de.unihalle.informatik.bigdata.knjigica.data.Plot
 
 
@@ -15,7 +17,6 @@ object PlotAdapter {
 
     @FromJson
     fun fromJson(map: Map<String, Any>): Plot {
-        val moshi = Moshi.Builder().build()
         val data = map[FIELD_DATA] ?: throw JsonDataException("Missing plot.")
         return when (map[FIELD_TYPE]) {
             TYPE_SECTION -> data as Plot.Section
@@ -27,7 +28,6 @@ object PlotAdapter {
 
     @ToJson
     fun toJson(plot: Plot): Map<String, Any> {
-        val moshi = Moshi.Builder().build()
         val type = when (plot) {
             is Plot.Section -> TYPE_SECTION
             is Plot.Text -> TYPE_TEXT
