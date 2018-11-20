@@ -4,7 +4,8 @@ import de.unihalle.informatik.bigdata.knjigica.data.Libretto
 import de.unihalle.informatik.bigdata.knjigica.util.languageRange
 import org.jsoup.Jsoup
 import java.io.File
-import java.util.*
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 object OperaLibLibrettoParser : Parser<File, Libretto> {
@@ -23,20 +24,20 @@ object OperaLibLibrettoParser : Parser<File, Libretto> {
                     result.groups[1]?.value ?: ""
                 }
                 ?.takeIf(String::isNotBlank)
-        val language = when (languageString) {
-            "fra" -> Locale.FRENCH.languageRange
-            "deu" -> Locale.GERMAN.languageRange
-            "eng" -> Locale.ENGLISH.languageRange
-            "rus" -> Locale.LanguageRange("ru")
-            else -> Locale.ITALIAN.languageRange
+        val locale = when (languageString) {
+            "fra" -> Locale.FRENCH
+            "deu" -> Locale.GERMAN
+            "eng" -> Locale.ENGLISH
+            "rus" -> Locale.Builder().setLanguage("ru").setScript("Cyrl").build();
+            else -> Locale.ITALIAN
         }
-        println("language: ${language.range}")
+        println("language: ${locale.languageRange.range}")
 
         val title = document.select("h2")[0].text()
         println("title: $title")
 
         val ridInfos = document.select("p[class=\"rid_info\"]")
-        val subtitle = ridInfos[0].text().lineSequence().firstOrNull()
+        val subtitle = ridInfos[0].wholeText().lineSequence().firstOrNull()
         println("subtitle: $subtitle")
 
         val ridInfoBolds = ridInfos[1].select(" > b")
@@ -44,6 +45,16 @@ object OperaLibLibrettoParser : Parser<File, Libretto> {
         println("textAuthor: $textAuthor")
         val musicAuthor = ridInfoBolds[1].text()
         println("musicAuthor: $musicAuthor")
+
+        // TODO "Das Rheingold" from Wagner has both music and text author combined.
+        val (premiereDateString, premiereLocation) = ridInfoBolds[2].text()
+                .split(',')
+                .map(String::trim)
+        println("premiereDateString: $premiereDateString")
+        println("premiereLocation: $premiereLocation")
+        val format: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM uuuu", locale)
+        val premiereDate = format.parse(premiereDateString)
+        println("premiereDate: ${DateTimeFormatter.ISO_DATE.format(premiereDate)}")
 
         TODO()
     }
