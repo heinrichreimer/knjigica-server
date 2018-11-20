@@ -5,11 +5,22 @@ import org.jsoup.Jsoup
 import java.io.File
 
 
-class OperaLibLibrettoParser : Parser<File, Libretto> {
+object OperaLibLibrettoParser : Parser<File, Libretto> {
     override suspend fun parse(source: File): Libretto {
         val document = Jsoup.parse(source, Charsets.UTF_8.name())
-        val title = document.select("h2").first().text()
-        val subtitle = document.select
+
+        val languageScript = document.select("head > script[type=\"text/javascript\"]").last().text()
+        val language
+
+        val title = document.select("h2")[0].text()
+
+        val ridInfos = document.select("p[class=\"rid_info\"]")
+        val subtitle = ridInfos[0].text()
+
+        val ridInfoBolds = ridInfos[1].select(" > b")
+        val textAuthor = ridInfoBolds[0].text()
+        val musicAuthor = ridInfoBolds[1].text()
+
         val author = document.select("p[class=\"rid_info\"] > b")
         val note = document.select
         val premiere.date = document.select
