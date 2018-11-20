@@ -1,30 +1,26 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
-import de.unihalle.informatik.bigdata.knjigica.model.Libretto
-import okio.Source
-import java.io.File
-import jdk.nashorn.tools.ShellFunctions.input
+import de.unihalle.informatik.bigdata.knjigica.data.Libretto
 import org.jsoup.Jsoup
+import java.io.File
 
 
-
-class OperaLibLibrettoParser : LibrettoParser {
-    override suspend fun parse(source: Source): Libretto
-        val input = File("/corpus/input.html")
-        var doc = Jsoup.parse(input, "UTF-8", "http://example.com/")
-        title = doc.select("h2")
-        subtitle = doc.select
-        author = doc.select("<p[class="rid_info] > b")
-        note = doc.select
-        premiere.date = doc.select
-        premiere.place = doc.select
-        roles.name = doc.select
-        roles.description = doc.select
-        roles.voice = doc.select
-        plot.Section.section = doc.select
-        plot.Section.level = doc.select
-        plot.Text.role = doc.select
-        plot.Text.text = doc.select
-        plot.Instruction.instruction = doc.select
-}
+class OperaLibLibrettoParser : Parser<File, Libretto> {
+    override suspend fun parse(source: File): Libretto {
+        val document = Jsoup.parse(source, Charsets.UTF_8.name())
+        val title = document.select("h2").first().text()
+        val subtitle = document.select
+        val author = document.select("p[class=\"rid_info\"] > b")
+        val note = document.select
+        val premiere.date = document.select
+        val premiere.place = document.select
+        val roles.name = document.select
+        val roles.description = document.select
+        val roles.voice = document.select
+        val plot.Section.section = document.select
+        val plot.Section.level = document.select
+        val plot.Text.role = document.select
+        val plot.Text.text = document.select
+        val plot.Instruction.instruction = document.select
+    }
 }
