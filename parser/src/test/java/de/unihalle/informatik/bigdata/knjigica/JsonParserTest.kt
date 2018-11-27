@@ -13,9 +13,11 @@ class JsonParserTest {
     @Test
     fun testJsonParser() {
         runBlocking {
-            val jsonBuffer = Buffer().also {
-                parser.format(libretto).copyTo(it)
-            }
+            // Create a buffer storing the JSON.
+            val jsonBuffer = Buffer()
+
+            // Format the libretto and pipe its JSON to the empty buffer.
+            parser.format(jsonBuffer, libretto)
 
             val newLibretto = parser.parse(jsonBuffer)
 

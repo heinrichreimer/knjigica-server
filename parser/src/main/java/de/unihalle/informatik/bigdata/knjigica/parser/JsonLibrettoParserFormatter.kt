@@ -19,9 +19,9 @@ object JsonLibrettoParserFormatter : ParserFormatter<BufferedSource, Libretto, B
             .add(KotlinJsonAdapterFactory())
             .build()
 
-    private val adapter = moshi.adapter(Libretto::class.java).nonNull().indent("  ")
+    private val adapter = moshi.adapter(Libretto::class.java).nonNull().indent("  ") // TODO Remove indent in production code.
 
     override suspend fun parse(source: BufferedSource) = adapter.fromJson(source)!!
 
-    override suspend fun format(data: Libretto) = Buffer().also { adapter.toJson(it, data) }
+    override suspend fun format(sink: BufferedSink, data: Libretto) = adapter.toJson(sink, data)
 }

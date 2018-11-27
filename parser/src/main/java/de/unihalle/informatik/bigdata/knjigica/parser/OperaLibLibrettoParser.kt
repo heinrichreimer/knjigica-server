@@ -4,19 +4,21 @@ import de.unihalle.informatik.bigdata.knjigica.data.Libretto
 import de.unihalle.informatik.bigdata.knjigica.data.Plot
 import de.unihalle.informatik.bigdata.knjigica.data.Role
 import de.unihalle.informatik.bigdata.knjigica.util.languageRange
+import okio.BufferedSource
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
-import java.io.File
 import java.text.Normalizer
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
 
 
-object OperaLibLibrettoParser : Parser<File, Libretto> {
-    override suspend fun parse(source: File): Libretto {
-        val document = Jsoup.parse(source, Charsets.UTF_8.name())
+class OperaLibLibrettoParser(
+        private val baseUri: String = ""
+) : Parser<BufferedSource, Libretto> {
+    override suspend fun parse(source: BufferedSource): Libretto {
+        val document = Jsoup.parse(source.inputStream(), Charsets.UTF_8.name(), baseUri)
 
         val languageScript = document.head()
                 .select("script[type=\"text/javascript\"]")

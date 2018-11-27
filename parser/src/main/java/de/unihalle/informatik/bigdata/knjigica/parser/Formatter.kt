@@ -1,5 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
-interface Formatter<DataType, SinkType> {
-    suspend fun format(data: DataType): SinkType
+import okio.Sink
+
+interface Formatter<DataType, SinkType : Sink> {
+    suspend fun format(sink: SinkType, data: DataType)
 }

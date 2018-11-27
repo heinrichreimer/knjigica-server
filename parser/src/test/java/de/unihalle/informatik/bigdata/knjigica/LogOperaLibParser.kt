@@ -2,23 +2,26 @@ package de.unihalle.informatik.bigdata.knjigica
 
 import de.unihalle.informatik.bigdata.knjigica.parser.OperaLibLibrettoParser
 import kotlinx.coroutines.runBlocking
+import okio.JvmStatic
+import okio.buffer
+import okio.source
 import java.io.File
 import kotlin.random.Random
 
+
 object LogOperaLibParser {
-    private val parser = OperaLibLibrettoParser
     private const val path = "corpus/crawl/html/opera_lib_libretto/rid.html"
-    private val random = Random.Default
+    private val parser = OperaLibLibrettoParser(path)
 
     @JvmStatic
     fun main(vararg args: String) {
         runBlocking {
-            val index = random.nextInt(0, 433)
-            val indexedPath = path + if (index > 0) ".$index" else ""
-            val file = File(indexedPath)
-            println(file.absolutePath)
+            val index = Random.nextInt(0, 433) // Choose a random libretto.
+            val source = File(path + if (index > 0) ".$index" else "")
+                    .source()
+                    .buffer()
 
-            parser.parse(file)
+            parser.parse(source)
         }
     }
 }

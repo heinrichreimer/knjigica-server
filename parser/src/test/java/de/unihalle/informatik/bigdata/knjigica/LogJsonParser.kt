@@ -2,7 +2,8 @@ package de.unihalle.informatik.bigdata.knjigica
 
 import de.unihalle.informatik.bigdata.knjigica.parser.JsonLibrettoParserFormatter
 import kotlinx.coroutines.runBlocking
-import okio.Buffer
+import okio.buffer
+import okio.sink
 
 object LogJsonParser {
     private val parser = JsonLibrettoParserFormatter
@@ -12,15 +13,16 @@ object LogJsonParser {
     fun main(vararg args: String) {
         runBlocking {
             println(libretto)
+            println()
 
-            val jsonBuffer = Buffer().also {
-                parser.format(libretto).copyTo(it)
-            }
-            val json = jsonBuffer.clone().readString(Charsets.UTF_8)
-            println(json)
-
-            val newLibretto = parser.parse(jsonBuffer)
-            println(newLibretto)
+            // Redirect JSON directly to the system output.
+            val outputSink = System.out
+                    .sink()
+                    .buffer()
+            // Format JSON.
+            parser.format(outputSink, libretto)
+            // Flush the buffer to the system output.
+            outputSink.flush()
         }
     }
 }
