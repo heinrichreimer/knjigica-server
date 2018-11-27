@@ -6,7 +6,7 @@ import okio.Buffer
 import org.junit.Assert
 import org.junit.Test
 
-class TestJsonParser {
+class JsonParserTest {
     private val parser = JsonLibrettoParserFormatter
     private val libretto = Libretti.ENTFUEHRUNG_AUS_DEM_SERAIL
 
