@@ -67,6 +67,24 @@ Elements of a Libretto:
 
 **TODO**: Java, Elastic Search, ...
 
+### Crawler
+- basiert auf Bash Skripten
+- Verwendung der Startseite (Seite, die auf Liberetto verweist) und Erfassung der dort hinterlegten Inhalte
+- Normalisierung der erfassten Inhalte
+- Erfassung aller Links (`href`) und Erweiterung durch Kürzel `http`
+- über `wget` werden zusammengefasste Links heruntergeladen
+
+### Parser
+- gecrawlte Seiten müssen in Java Objekt geschrieben werden
+- Entwurf mehrerer Klassen, die Informationen der Liberetto auf Kerninformationen eingrenzen
+1. Parser, der HTML Dokumente in das Objekt schreibt
+    - Verwendung Jsoup
+2. Formatter, der das Objekt in übersichtliches JSON Dokument umwandelt, welches von Suchmaschine als Referenz verwendet wird
+
+### Indexer
+- Verwendung von Elasticsearch
+- Anpassung der Umgebung und erste Versuche erstellte Dokumente zu durchsuchen
+
 ### Indexing
 
 **TODO**
