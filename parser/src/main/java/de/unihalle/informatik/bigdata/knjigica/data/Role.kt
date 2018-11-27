@@ -10,6 +10,7 @@ data class Role(
         SOPRANO,
         MEZZO_SOPRANO,
         ALTO,
+        CONTRALTO,
         TENOR,
         BARITONE,
         BASS
