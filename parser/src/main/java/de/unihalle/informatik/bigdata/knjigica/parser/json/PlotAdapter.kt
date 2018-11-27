@@ -1,41 +1,64 @@
 package de.unihalle.informatik.bigdata.knjigica.parser.json
 
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.JsonDataException
-import com.squareup.moshi.ToJson
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.unihalle.informatik.bigdata.knjigica.data.Plot
 
+object PlotAdapter : JsonAdapter<Plot>() {
 
-object PlotAdapter {
+    private val moshi: Moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
-    private const val FIELD_TYPE = "type"
-    private const val FIELD_DATA = "data"
+    private const val FIELD_NAME_TYPE = "type"
+    private const val FIELD_NAME_DATA = "data"
 
-    private const val TYPE_SECTION = "section"
-    private const val TYPE_TEXT = "text"
-    private const val TYPE_INSTRUCTION = "instruction"
+    enum class PlotType {
+        SECTION, TEXT, INSTRUCTION
+    }
 
-    @FromJson
-    fun fromJson(map: Map<String, Any>): Plot {
-        val data = map[FIELD_DATA] ?: throw JsonDataException("Missing plot.")
-        return when (map[FIELD_TYPE]) {
-            TYPE_SECTION -> data as Plot.Section
-            TYPE_TEXT -> data as Plot.Text
-            TYPE_INSTRUCTION -> data as Plot.Instruction
-            else -> throw JsonDataException("Plot has unknown type.")
+    override fun fromJson(reader: JsonReader): Plot? {
+        if (reader.peek() == JsonReader.Token.NULL) {
+            return reader.nextNull()
+        }
+        return reader.nextObject {
+            reader.expectName(FIELD_NAME_TYPE)
+            val type = PlotType.valueOf(reader.nextString())
+
+            reader.expectName(FIELD_NAME_DATA)
+            when (type) {
+                PlotType.SECTION -> moshi.adapter<Plot.Section>()
+                PlotType.TEXT -> moshi.adapter<Plot.Text>()
+                PlotType.INSTRUCTION -> moshi.adapter<Plot.Instruction>()
+            }.fromJson(reader)
         }
     }
 
-    @ToJson
-    fun toJson(plot: Plot): Map<String, Any> {
-        val type = when (plot) {
-            is Plot.Section -> TYPE_SECTION
-            is Plot.Text -> TYPE_TEXT
-            is Plot.Instruction -> TYPE_INSTRUCTION
+    override fun toJson(writer: JsonWriter, plot: Plot?) {
+        if (plot == null) {
+            writer.nullValue()
+            return
         }
-        return mapOf(
-                FIELD_TYPE to type,
-                FIELD_DATA to plot
-        )
+
+        writer.objectValue {
+            writer.name(FIELD_NAME_TYPE)
+            writer.value(
+                    when (plot) {
+                        is Plot.Section -> PlotType.SECTION
+                        is Plot.Text -> PlotType.TEXT
+                        is Plot.Instruction -> PlotType.INSTRUCTION
+                    }.name
+            )
+
+            writer.name(FIELD_NAME_DATA)
+            when (plot) {
+                is Plot.Section -> moshi.adapter<Plot.Section>().toJson(writer, plot)
+                is Plot.Text -> moshi.adapter<Plot.Text>().toJson(writer, plot)
+                is Plot.Instruction -> moshi.adapter<Plot.Instruction>().toJson(writer, plot)
+            }
+        }
     }
 }

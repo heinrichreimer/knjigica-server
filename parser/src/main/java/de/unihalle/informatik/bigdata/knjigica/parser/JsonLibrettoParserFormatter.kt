@@ -3,11 +3,10 @@ package de.unihalle.informatik.bigdata.knjigica.parser
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.unihalle.informatik.bigdata.knjigica.data.Libretto
-import de.unihalle.informatik.bigdata.knjigica.parser.json.LanguageRangeAdapter
-import de.unihalle.informatik.bigdata.knjigica.parser.json.LocalDateAdapter
-import de.unihalle.informatik.bigdata.knjigica.parser.json.LocalDateRangeAdapter
-import de.unihalle.informatik.bigdata.knjigica.parser.json.PlotAdapter
-import okio.*
+import de.unihalle.informatik.bigdata.knjigica.data.Plot
+import de.unihalle.informatik.bigdata.knjigica.parser.json.*
+import okio.BufferedSink
+import okio.BufferedSource
 
 object JsonLibrettoParserFormatter : ParserFormatter<BufferedSource, Libretto, BufferedSink> {
 
@@ -15,7 +14,7 @@ object JsonLibrettoParserFormatter : ParserFormatter<BufferedSource, Libretto, B
             .add(LocalDateAdapter)
             .add(LocalDateRangeAdapter)
             .add(LanguageRangeAdapter)
-            .add(PlotAdapter)
+            .add<Plot>(PlotAdapter)
             .add(KotlinJsonAdapterFactory())
             .build()
 
