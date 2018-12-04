@@ -169,16 +169,28 @@ class OperaLibLibrettoParser(
 
         println(allPlotDivs)
 
+        val numberRegex = Regex("\\[(.*)]")
         plotDivs
-                .mapNotNull {
+                .mapNotNull { plotDiv ->
                     when {
-                        it.hasClass("rid_a") -> Plot.Section(it.text(), Plot.Section.Level.ACT)
-                        it.hasClass("rid_s") -> Plot.Section(it.text(), Plot.Section.Level.SCENE)
-                        it.hasClass("rid_p_num") -> Plot.Section(it.text(), Plot.Section.Level.NUMBER)
-                        it.hasClass("rid_voce") -> null
-                        it.hasClass("rid_indt") -> null
-                        it.hasClass("rid_p_ind") -> null
-                        it.hasClass("rid_p_scn") -> null
+                        plotDiv.hasClass("rid_a") -> {
+                            plotDiv.text()
+                                    .let { Plot.Section(it, Plot.Section.Level.ACT) }
+                        }
+                        plotDiv.hasClass("rid_s") -> {
+                            plotDiv.text()
+                                    .let { Plot.Section(it, Plot.Section.Level.SCENE) }
+                        }
+                        plotDiv.hasClass("rid_p_num") -> {
+                            plotDiv.text()
+                                    .replace(numberRegex) { it.groups[1]?.value ?: "" }
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
+                        }
+                        plotDiv.hasClass("rid_voce") -> null
+                        plotDiv.hasClass("rid_indt") -> null
+                        plotDiv.hasClass("rid_p_ind") -> null
+                        plotDiv.hasClass("rid_p_scn") -> null
                         else -> null
                     }
                 }
@@ -187,8 +199,6 @@ class OperaLibLibrettoParser(
                 }
 
 
-        // = Aufzug
-        //"rid_s" = Szenen
         //"rid_voce" = Rollenname
         //"rid_indt" = Instruktion
         //"rid_p_ind" = Aktion Schauspieler -> Klasse plot
