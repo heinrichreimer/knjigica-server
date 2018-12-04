@@ -6,7 +6,7 @@ sealed class Plot {
 
     data class Section(
             val section: String,
-            val level: Level
+            val level: Level // TODO can we omit this?
     ) : Plot() {
         enum class Level {
             ACT, NUMBER, SCENE

@@ -13,6 +13,7 @@ data class Role(
         CONTRALTO,
         TENOR,
         BARITONE,
-        BASS
+        BASS,
+        CHOIR
     }
 }
