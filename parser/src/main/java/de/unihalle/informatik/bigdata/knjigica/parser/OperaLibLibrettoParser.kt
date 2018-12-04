@@ -170,7 +170,7 @@ class OperaLibLibrettoParser(
         println(allPlotDivs)
 
         val numberRegex = Regex("\\[(.*)]")
-        var plotTextName: String? = null
+        var roleName: String? = null
 
         plotDivs
                 .mapNotNull { plotDiv ->
@@ -189,11 +189,19 @@ class OperaLibLibrettoParser(
                                     .takeIf(String::isNotBlank)
                                     ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
                         }
-                        plotDiv.hasClass("rid_voce") -> plotTextName = plotDiv.text()
+                        plotDiv.hasClass("rid_voce") -> roleName = plotDiv.text()
                         plotDiv.hasClass("rid_testo") -> {
-                            val textName: String = plotTextName ?: throw IllegalStateException("no values rid_voce")
-                            val plotText = plotDiv.select("> p:not(.rid_indt)").eachText().joinToString(separator = "\n")
-                            val plotTextInstruct = plotDiv.select("> p.rid_indt").eachText().joinToString(separator = "\n")
+                            val textName: String = roleName
+                                    ?: throw IllegalStateException("no values rid_voce")
+                            val plotText = plotDiv
+                                    .select("> p:not(.rid_indt)")
+                                    .eachText()
+                                    .joinToString("\n")
+                            val plotTextInstruct = plotDiv
+                                    .select("> p.rid_indt")
+                                    .eachText()
+                                    .joinToString("\n")
+
                             Plot.Text(
                                     roleName = textName,
                                     text = plotText,
@@ -201,16 +209,14 @@ class OperaLibLibrettoParser(
                             )
                         }
                         plotDiv.hasClass("rid_p_ind") -> {
-                            val plotInstruct = plotDiv.text()
-                            Plot.Instruction(
-                                    instruction = plotInstruct
-                            )
+                            plotDiv.text()
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Instruction(it) }
                         }
                         plotDiv.hasClass("rid_p_scn") -> {
-                            val plotInstruct = plotDiv.text()
-                            Plot.Instruction(
-                                    instruction = plotInstruct
-                            )
+                            plotDiv.text()
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Instruction(it) }
                         }
                         else -> null
                     }
