@@ -113,6 +113,7 @@ class OperaLibLibrettoParser(
                     val roleVoiceStringNormalized = roleVoiceString
                             .let { Normalizer.normalize(it, Normalizer.Form.NFD) }
                     val roleVoice = when (roleVoiceStringNormalized) {
+                        "sconosciuto", "unknown" -> null // unknown
                         "soprano", "sopran" -> Role.Voice.SOPRANO
                         "mezzosoprano", "mezzosopran" -> Role.Voice.MEZZO_SOPRANO
                         "alto", "alt", "altro" -> Role.Voice.ALTO
@@ -128,14 +129,15 @@ class OperaLibLibrettoParser(
                             "тенор" -> Role.Voice.TENOR
                             "баритон" -> Role.Voice.BARITONE
                             "бас" -> Role.Voice.BASS
-                            else -> null
+                            else -> {
+                                if (roleVoiceString.isNotBlank()) {
+                                    System.err.println("Could not resolve voice type '$roleVoiceString'.")
+                                }
+                                null
+                            }
                         }
                     }
                     val role = Role(roleName, roleDescription, roleVoice)
-
-                    if (roleVoice == null && roleVoiceString.isNotBlank()) {
-                        System.err.println("Could not resolve voice type '$roleVoiceString'.")
-                    }
                     println("role: $role")
 
                     role
