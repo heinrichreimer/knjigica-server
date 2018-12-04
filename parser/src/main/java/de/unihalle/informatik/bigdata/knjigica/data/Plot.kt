@@ -5,8 +5,8 @@ import com.squareup.moshi.Json
 sealed class Plot {
 
     data class Section(
-            var section: String,
-            var level: Level
+            var section: String,    //name
+            var level: Level        //Abwägung, ob Unterteilung notwendig
     ) : Plot() {
         enum class Level {
             ACT, NUMBER, SCENE
@@ -16,7 +16,7 @@ sealed class Plot {
     data class Text(
             @Json(name = "role_name") var roleName: String,
             var text: String,
-            var instruction: String? = null
+            var instruction: String
     ) : Plot()
 
     data class Instruction(

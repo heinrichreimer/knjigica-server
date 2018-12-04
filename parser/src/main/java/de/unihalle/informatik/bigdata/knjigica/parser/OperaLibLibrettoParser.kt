@@ -170,6 +170,8 @@ class OperaLibLibrettoParser(
         println(allPlotDivs)
 
         val numberRegex = Regex("\\[(.*)]")
+        var plotTextName: String? = null
+
         plotDivs
                 .mapNotNull { plotDiv ->
                     when {
@@ -187,21 +189,35 @@ class OperaLibLibrettoParser(
                                     .takeIf(String::isNotBlank)
                                     ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
                         }
-                        plotDiv.hasClass("rid_voce") -> null
-                        plotDiv.hasClass("rid_indt") -> null
-                        plotDiv.hasClass("rid_p_ind") -> null
-                        plotDiv.hasClass("rid_p_scn") -> null
+                        plotDiv.hasClass("rid_voce") -> plotTextName = plotDiv.text()
+                        plotDiv.hasClass("rid_testo") -> {
+                            val textName: String = plotTextName ?: throw IllegalStateException("no values rid_voce")
+                            val plotText = plotDiv.select("> p:not(.rid_indt)").eachText().joinToString(separator = "\n")
+                            val plotTextInstruct = plotDiv.select("> p.rid_indt").eachText().joinToString(separator = "\n")
+                            Plot.Text(
+                                    roleName = textName,
+                                    text = plotText,
+                                    instruction = plotTextInstruct
+                            )
+                        }
+                        plotDiv.hasClass("rid_p_ind") -> {
+                            val plotInstruct = plotDiv.text()
+                            Plot.Instruction(
+                                    instruction = plotInstruct
+                            )
+                        }
+                        plotDiv.hasClass("rid_p_scn") -> {
+                            val plotInstruct = plotDiv.text()
+                            Plot.Instruction(
+                                    instruction = plotInstruct
+                            )
+                        }
                         else -> null
                     }
                 }
                 .forEach {
                     println(it)
                 }
-
-
-        //"rid_voce" = Rollenname
-        //"rid_indt" = Instruktion
-        //"rid_p_ind" = Aktion Schauspieler -> Klasse plot
         //"rid_p_scn" = Erzähler?
 
 

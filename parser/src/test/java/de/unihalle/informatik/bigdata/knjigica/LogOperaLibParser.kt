@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 
 object LogOperaLibParser {
-    private const val path = "corpus/crawl/html/opera_lib_libretto/rid.html"
+    private const val path = "corpus/crawl/operalib_libretto/rid.html"
     private val parser = OperaLibLibrettoParser(path)
 
     @JvmStatic
