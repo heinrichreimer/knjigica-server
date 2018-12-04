@@ -1,10 +1,10 @@
 package de.unihalle.informatik.bigdata.knjigica.data
 
 data class Role(
-        var name: String,
-        var description: String? = null,
-        var voice: Voice? = null,
-        var note: String? = null
+        val name: String,
+        val description: String? = null,
+        val voice: Voice? = null,
+        val note: String? = null
 ) {
     enum class Voice {
         SOPRANO,
