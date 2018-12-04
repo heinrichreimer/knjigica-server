@@ -195,7 +195,7 @@ class OperaLibLibrettoParser(
                     }
                 }
                 .forEach {
-                    println(it)
+                    println("plot: $it")
                 }
 
 
