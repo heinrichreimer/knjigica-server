@@ -106,7 +106,7 @@ class OperaLibLibrettoParser(
                         "alto", "alt", "altro" -> Role.Voice.ALTO
                         "contralto", "contraalto" -> Role.Voice.CONTRALTO
                         "tenor", "tenore" -> Role.Voice.TENOR
-                        "baritone", "bariton" -> Role.Voice.BARITONE
+                        "baritone", "bariton", "baritono" -> Role.Voice.BARITONE
                         "bass", "basso" -> Role.Voice.BASS
                         else -> when (roleVoiceString) {
                             "сопрано" -> Role.Voice.SOPRANO
