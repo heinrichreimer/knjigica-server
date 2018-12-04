@@ -249,7 +249,7 @@ class OperaLibLibrettoParser(
                 authors,
                 emptyList(),
                 premiere,
-                roles,
+                roles + sideRoles,
                 plot
         )
         println(libretto)
