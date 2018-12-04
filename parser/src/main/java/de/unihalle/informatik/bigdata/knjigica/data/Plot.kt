@@ -14,11 +14,18 @@ sealed class Plot {
     }
 
     data class Text(
-            @Json(name = "role_name")
-            val roleName: String,
+            @Json(name = "role_names")
+            val roleName: Set<String>,
             val text: String,
             val instruction: String? = null
-    ) : Plot()
+    ) : Plot() {
+
+        constructor(
+                roleName: String,
+                text: String,
+                instruction: String? = null
+        ) : this(setOf(roleName), text, instruction)
+    }
 
     data class Instruction(
             val instruction: String

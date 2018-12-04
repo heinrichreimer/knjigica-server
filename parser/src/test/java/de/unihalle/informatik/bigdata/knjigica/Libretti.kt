@@ -11,7 +11,7 @@ object Libretti {
             title = "Die Entführung aus dem Serail",
             subtitle = "Deutsche Singspiel.",
             language = Locale.GERMAN.languageRange,
-            authors = listOf(
+            authors = setOf(
                     Author(
                             name = "Wolfgang Amadeus Mozart",
                             fullName = "Joannes Chrysostomus Wolfgangus Theophilus Mozart",

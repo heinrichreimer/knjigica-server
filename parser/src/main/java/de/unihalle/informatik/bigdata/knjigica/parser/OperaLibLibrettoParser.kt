@@ -1,14 +1,13 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
-import de.unihalle.informatik.bigdata.knjigica.data.Libretto
-import de.unihalle.informatik.bigdata.knjigica.data.Plot
-import de.unihalle.informatik.bigdata.knjigica.data.Role
+import de.unihalle.informatik.bigdata.knjigica.data.*
 import de.unihalle.informatik.bigdata.knjigica.util.languageRange
 import okio.BufferedSource
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import java.text.Normalizer
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -54,12 +53,17 @@ class OperaLibLibrettoParser(
         println("subtitle: $subtitle")
 
         val ridInfoBolds = ridInfos[1].select(" > b")
+
+        // TODO "Das Rheingold" from "Richard Wagner" / "Mefistofele" from "Arrigo Boito" has both music and text author combined.
         val textAuthor = ridInfoBolds[0].text()
         println("textAuthor: $textAuthor")
         val musicAuthor = ridInfoBolds[1].text()
         println("musicAuthor: $musicAuthor")
+        val authors = setOf(
+                Author(textAuthor, scope = Author.Scope.TEXT),
+                Author(musicAuthor, scope = Author.Scope.MUSIC)
+        )
 
-        // TODO "Das Rheingold" from "Richard Wagner" / "Mefistofele" from "Arrigo Boito" has both music and text author combined.
         val (premiereDateString, premiereLocation) = ridInfoBolds[2].text()
                 .split(',')
                 .map(String::trim)
@@ -68,20 +72,27 @@ class OperaLibLibrettoParser(
         val format: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM uuuu", locale)
         val premiereDate = try {
             format.parse(premiereDateString)
+                    .let { LocalDate.from(it) }
         } catch (e: DateTimeParseException) {
             null
         }
+        val premiere = if (premiereDate != null) {
+            Premiere(
+                    premiereDate,
+                    premiereLocation
+            )
+        } else null
         println("premiereDate: ${premiereDate?.let(DateTimeFormatter.ISO_DATE::format)}")
 
         val rolesTable = meta
                 .select("table")
                 .first()
-        val roles = rolesTable
+        val roles: Set<Role> = rolesTable
                 .select("tr")
                 .filter { row ->
                     row.select("td.vtit").isEmpty()
                 }
-                .map { row ->
+                .mapTo(mutableSetOf()) { row ->
                     val descriptionColumn = row
                             .select("td.vdes > p")
                             .first()
@@ -173,34 +184,32 @@ class OperaLibLibrettoParser(
         println(allPlotDivs)
 
         val bracesRegex = Regex("[\\[(](.*)[])]")
-        val andRegex = Regex("\\W*(and|e|et|und)\\W*", RegexOption.IGNORE_CASE)
+        val andRegex = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
         var roleName: Set<String> = emptySet()
 
-        plotDivs
-                .flatMap { plotDiv ->
+        val plot = plotDivs
+                .mapNotNull { plotDiv ->
                     when {
                         plotDiv.hasClass("rid_a") -> {
-                            setOf(plotDiv.text().let { Plot.Section(it, Plot.Section.Level.ACT) })
+                            plotDiv.text().let { Plot.Section(it, Plot.Section.Level.ACT) }
                         }
                         plotDiv.hasClass("rid_s") -> {
-                            setOf(plotDiv.text().let { Plot.Section(it, Plot.Section.Level.SCENE) })
+                            plotDiv.text().let { Plot.Section(it, Plot.Section.Level.SCENE) }
                         }
                         plotDiv.hasClass("rid_p_num") -> {
-                            setOf(
-                                    plotDiv.text()
-                                            .replace(bracesRegex) { it.groups[1]?.value ?: "" }
-                                            .takeIf(String::isNotBlank)
-                                            ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
-                            )
+                            plotDiv.text()
+                                    .replace(bracesRegex) { it.groups[1]?.value ?: "" }
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
                         }
                         plotDiv.hasClass("rid_voce") -> {
                             roleName = plotDiv.text().split(andRegex).toSet()
-                            emptySet()
+                            null
                         }
                         plotDiv.classNames().any { it.startsWith("rid_testo") } -> {
                             val names = roleName
                                     .takeIf { it.isNotEmpty() }
-                                    ?: throw IllegalStateException("no values rid_voce")
+                                    ?: throw IllegalStateException("No role name specified.")
                             val text = plotDiv
                                     .select("> p:not(.rid_indt)")
                                     .eachText()
@@ -213,29 +222,35 @@ class OperaLibLibrettoParser(
                                     .takeIf { it.isNotEmpty() }
                                     ?.joinToString("\n")
 
-                            names.map { name -> Plot.Text(name, text, instruction) }
+                            Plot.Text(names, text, instruction)
                         }
                         plotDiv.hasClass("rid_p_ind") -> {
-                            setOf(
-                                    plotDiv.text()
-                                            .takeIf(String::isNotBlank)
-                                            ?.let { Plot.Instruction(it) }
-                            )
+                            plotDiv.text()
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Instruction(it) }
                         }
                         plotDiv.hasClass("rid_p_scn") -> {
-                            setOf(
-                                    plotDiv.text()
-                                            .takeIf(String::isNotBlank)
-                                            ?.let { Plot.Instruction(it) }
-                            )
+                            plotDiv.text()
+                                    .takeIf(String::isNotBlank)
+                                    ?.let { Plot.Instruction(it) }
                         }
-                        else -> emptySet()
+                        else -> null
                     }
                 }
-                .forEach {
-                    println("plot: $it")
-                }
 
-        TODO("Parse plot.")
+        plot.forEach { println("plot: $it") }
+
+        val libretto = Libretto(
+                title,
+                subtitle,
+                locale.languageRange,
+                authors,
+                emptyList(),
+                premiere,
+                roles,
+                plot
+        )
+        println(libretto)
+        return libretto
     }
 }
