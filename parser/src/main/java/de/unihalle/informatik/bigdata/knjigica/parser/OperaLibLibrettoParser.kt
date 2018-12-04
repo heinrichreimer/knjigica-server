@@ -17,6 +17,7 @@ import java.util.*
 class OperaLibLibrettoParser(
         private val baseUri: String = ""
 ) : Parser<BufferedSource, Libretto> {
+
     override suspend fun parse(source: BufferedSource): Libretto {
         val document = Jsoup.parse(source.inputStream(), Charsets.UTF_8.name(), baseUri)
 
@@ -121,7 +122,9 @@ class OperaLibLibrettoParser(
                     }
                     val role = Role(roleName, roleDescription, roleVoice)
 
-                    if (roleVoice == null) println("!!!!!!!!!!!! ($roleVoiceString)") // TODO remove log.
+                    if (roleVoice == null && roleVoiceString.isNotBlank()) {
+                        System.err.println("Could not resolve voice type '$roleVoiceString'.")
+                    }
                     println("role: $role")
 
                     role
@@ -169,63 +172,69 @@ class OperaLibLibrettoParser(
 
         println(allPlotDivs)
 
-        val numberRegex = Regex("\\[(.*)]")
-        var roleName: String? = null
+        val bracesRegex = Regex("[\\[(](.*)[])]")
+        val andRegex = Regex("\\W*(and|e|et|und)\\W*", RegexOption.IGNORE_CASE)
+        var roleName: Set<String> = emptySet()
 
         plotDivs
-                .mapNotNull { plotDiv ->
+                .flatMap { plotDiv ->
                     when {
                         plotDiv.hasClass("rid_a") -> {
-                            plotDiv.text()
-                                    .let { Plot.Section(it, Plot.Section.Level.ACT) }
+                            setOf(plotDiv.text().let { Plot.Section(it, Plot.Section.Level.ACT) })
                         }
                         plotDiv.hasClass("rid_s") -> {
-                            plotDiv.text()
-                                    .let { Plot.Section(it, Plot.Section.Level.SCENE) }
+                            setOf(plotDiv.text().let { Plot.Section(it, Plot.Section.Level.SCENE) })
                         }
                         plotDiv.hasClass("rid_p_num") -> {
-                            plotDiv.text()
-                                    .replace(numberRegex) { it.groups[1]?.value ?: "" }
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
+                            setOf(
+                                    plotDiv.text()
+                                            .replace(bracesRegex) { it.groups[1]?.value ?: "" }
+                                            .takeIf(String::isNotBlank)
+                                            ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
+                            )
                         }
-                        plotDiv.hasClass("rid_voce") -> roleName = plotDiv.text()
-                        plotDiv.hasClass("rid_testo") -> {
-                            val textName: String = roleName
+                        plotDiv.hasClass("rid_voce") -> {
+                            roleName = plotDiv.text().split(andRegex).toSet()
+                            emptySet()
+                        }
+                        plotDiv.classNames().any { it.startsWith("rid_testo") } -> {
+                            val names = roleName
+                                    .takeIf { it.isNotEmpty() }
                                     ?: throw IllegalStateException("no values rid_voce")
-                            val plotText = plotDiv
+                            val text = plotDiv
                                     .select("> p:not(.rid_indt)")
                                     .eachText()
                                     .joinToString("\n")
-                            val plotTextInstruct = plotDiv
+                            val instruction = plotDiv
                                     .select("> p.rid_indt")
                                     .eachText()
-                                    .joinToString("\n")
+                                    .map { it.replace(bracesRegex) { it.groups[1]?.value ?: "" } }
+                                    .filter(String::isNotBlank)
+                                    .takeIf { it.isNotEmpty() }
+                                    ?.joinToString("\n")
 
-                            Plot.Text(
-                                    roleName = textName,
-                                    text = plotText,
-                                    instruction = plotTextInstruct
-                            )
+                            names.map { name -> Plot.Text(name, text, instruction) }
                         }
                         plotDiv.hasClass("rid_p_ind") -> {
-                            plotDiv.text()
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Instruction(it) }
+                            setOf(
+                                    plotDiv.text()
+                                            .takeIf(String::isNotBlank)
+                                            ?.let { Plot.Instruction(it) }
+                            )
                         }
                         plotDiv.hasClass("rid_p_scn") -> {
-                            plotDiv.text()
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Instruction(it) }
+                            setOf(
+                                    plotDiv.text()
+                                            .takeIf(String::isNotBlank)
+                                            ?.let { Plot.Instruction(it) }
+                            )
                         }
-                        else -> null
+                        else -> emptySet()
                     }
                 }
                 .forEach {
                     println("plot: $it")
                 }
-        //"rid_p_scn" = Erzähler?
-
 
         TODO("Parse plot.")
     }

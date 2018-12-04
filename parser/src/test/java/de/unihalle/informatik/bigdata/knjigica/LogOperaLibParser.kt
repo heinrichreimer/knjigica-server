@@ -20,6 +20,7 @@ object LogOperaLibParser {
             val source = File(path + if (index > 0) ".$index" else "")
                     .source()
                     .buffer()
+            println("Parsing OperaLib libretto #$index.")
 
             parser.parse(source)
         }
