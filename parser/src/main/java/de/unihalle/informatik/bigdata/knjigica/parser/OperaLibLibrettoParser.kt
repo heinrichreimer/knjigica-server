@@ -1,6 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
 import de.unihalle.informatik.bigdata.knjigica.data.*
+import de.unihalle.informatik.bigdata.knjigica.data.Annotation
 import de.unihalle.informatik.bigdata.knjigica.util.languageRange
 import okio.BufferedSource
 import org.jsoup.Jsoup
@@ -26,10 +27,11 @@ class OperaLibLibrettoParser(
         val TEXT_AUTHOR_REGEX = Regex("\\b(libretto|text|текст|livret)\\b", RegexOption.IGNORE_CASE)
         val MUSIC_AUTHOR_REGEX = Regex("\\b(musica|musik|music|musique|музыка)\\b", RegexOption.IGNORE_CASE)
 
-        val UNKNOWN_VOICE_REGEX = Regex("sconosciuto|unknown|other|неизвестный|другой", RegexOption.IGNORE_CASE)
+        val UNKNOWN_VOICE_REGEX = Regex("unknown|inconnu|unbekannt|неизвестныи|sconosciuto", RegexOption.IGNORE_CASE)
+        val OTHER_VOICE_REGEX = Regex("other|autre|andere|другои|altro", RegexOption.IGNORE_CASE)
         val SOPRANO_VOICE_REGEX = Regex("soprano?|сопрано", RegexOption.IGNORE_CASE)
         val MEZZO_SOPRANO_VOICE_REGEX = Regex("mezzosoprano?|меццосопрано", RegexOption.IGNORE_CASE)
-        val ALTO_VOICE_REGEX = Regex("alt(r?o)?|альт", RegexOption.IGNORE_CASE)
+        val ALTO_VOICE_REGEX = Regex("alto?|альт", RegexOption.IGNORE_CASE)
         val CONTRALTO_VOICE_REGEX = Regex("contra?alt(r?o)?|контральто", RegexOption.IGNORE_CASE)
         val TENOR_VOICE_REGEX = Regex("tenore?|тенор", RegexOption.IGNORE_CASE)
         val BARITONE_VOICE_REGEX = Regex("bar[iy]ton[eo]?|баритон", RegexOption.IGNORE_CASE)
@@ -53,61 +55,74 @@ class OperaLibLibrettoParser(
         val authors = parseAuthors(document)
         val premiere = parsePremiere(document)
         val roles = parseRoles(document) + parseSideRoles(document)
-        val setting = parseSetting(document)
-                ?.let { Plot.Instruction(it) }
-                ?.let(::listOf)
-                .orEmpty()
-
-
-        var allTitle: String? = null
-        val allPlotDivs = document
-                .select("div#ps-tabella > div")
-                .dropWhile { !it.hasClass("rid_p_frg") }
-                .mapNotNull { element ->
-                    when {
-                        element.hasClass("rid_alltit") -> {
-                            allTitle = element.text()
-                            null
-                        }
-                        element.hasClass("rid_alltxt") -> allTitle to element.text()
-                        else -> null
-                    }
-                }
-                .groupBy { it.first }
-
-        println(allPlotDivs)
-
-        val plot =
-                parsePlot(document)
+        val annotations = parseAnnotations(document)
+        val plot = parsePlot(document)
         return Libretto(
                 title = title,
                 subtitle = subtitle,
                 language = locale.languageRange,
                 authors = authors,
-                annotations = emptySet(),
+                annotations = annotations,
                 premiere = premiere,
                 roles = roles,
-                plot = setting + plot
+                plot = plot
         )
     }
 
-    private fun parseSetting(document: Document): String? {
+    private fun parseAnnotations(document: Document): Set<Annotation> {
+        var annotationTitle: String? = null
+        return document
+                .select("div#ps-tabella > div")
+                .dropWhile { !it.hasClass("rid_p_frg") }
+                .mapNotNull { element ->
+                    when {
+                        element.hasClass("rid_alltit") -> {
+                            annotationTitle = element.text()
+                            null
+                        }
+                        element.hasClass("rid_alltxt") -> {
+                            val title = annotationTitle ?: ""
+                            if (title.isBlank()) {
+                                System.err.println("No annotation title specified.")
+                            }
+                            val text: String? = element
+                                    .text()
+                                    .takeIf(String::isNotBlank)
+                            if (text != null) {
+                                Annotation(title, text)
+                            } else null
+                        }
+                        else -> null
+                    }
+                }
+                .groupBy(Annotation::title)
+                .mapTo(mutableSetOf()) { group ->
+                    Annotation(
+                            title = group.key,
+                            text = group.value
+                                    .joinToString(
+                                            separator = "\n",
+                                            transform = Annotation::text
+                                    )
+                    )
+                }
+    }
+
+    private fun parseSetting(document: Document): Plot.Instruction? {
         return document
                 .select("p[class=\"rid_info\"]")[2]
                 .select("i")
                 .text()
                 .trim()
                 .takeIf(String::isNotBlank)
-                ?.also { println("setting: $it") }
+                ?.let { Plot.Instruction(it) }
     }
 
     private fun parsePremiere(document: Document): Premiere? {
         val premiereIndex = 1 + if (hasCombinedAuthor(document)) 0 else 1
         val (premiereDateString, premiereLocation) = document
-                .select("p[class=\"rid_info\"]")
-                .get(1)
-                .select(" > b")
-                .get(premiereIndex)
+                .select("p[class=\"rid_info\"]")[1]
+                .select(" > b")[premiereIndex]
                 .text()
                 .split(',')
                 .map(String::trim)
@@ -115,17 +130,10 @@ class OperaLibLibrettoParser(
             PREMIERE_DATE_FORMATTER.withLocale(parseLocale(document))
                     .parse(premiereDateString)
                     .let { LocalDate.from(it) }
-        } catch (e: DateTimeParseException) {
+        } catch (_: DateTimeParseException) {
             null
         }
-        val premiere = if (premiereDate != null) {
-            Premiere(
-                    premiereDate,
-                    premiereLocation
-            )
-        } else null
-        println("premiereDate: ${premiereDate?.let(DateTimeFormatter.ISO_DATE::format)}")
-        return premiere
+        return premiereDate?.let { Premiere(it, premiereLocation) }
     }
 
     private fun hasCombinedAuthor(document: Document): Boolean {
@@ -193,7 +201,8 @@ class OperaLibLibrettoParser(
                 .replace(COMBINING_DIACRITICAL_MARKS_REGEX, "")
                 .replace(ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX, "")
         val voice = when {
-            voiceString matches UNKNOWN_VOICE_REGEX -> null // unknown or other
+            voiceString matches OTHER_VOICE_REGEX -> null // Other voice
+            voiceString matches UNKNOWN_VOICE_REGEX -> null // Unknown voice
             voiceString matches SOPRANO_VOICE_REGEX -> Role.Voice.SOPRANO
             voiceString matches MEZZO_SOPRANO_VOICE_REGEX -> Role.Voice.MEZZO_SOPRANO
             voiceString matches ALTO_VOICE_REGEX -> Role.Voice.ALTO
@@ -268,6 +277,10 @@ class OperaLibLibrettoParser(
                         else -> null
                     }
                 }
+                .let { list ->
+                    val setting = parseSetting(document)
+                    listOfNotNull(setting) + list
+                }
     }
 
     private fun parsePlotAct(element: Element) =
@@ -338,9 +351,7 @@ class OperaLibLibrettoParser(
         }
     }
 
-    private fun Element.hasClassPrefix(prefix: String): Boolean {
-        return classNames().any { it.startsWith(prefix) }
-    }
+    private fun Element.hasClassPrefix(prefix: String) = classNames().any { it.startsWith(prefix) }
 
     private fun String.firstLineOrNull() = lineSequence().firstOrNull()
 
