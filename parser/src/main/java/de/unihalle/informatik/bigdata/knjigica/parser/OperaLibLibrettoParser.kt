@@ -23,6 +23,8 @@ class OperaLibLibrettoParser(
         val ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX = Regex("[-,. ]")
         val SURROUNDING_BRACES_REGEX = Regex("[\\[(](.*)[])]")
         val CONJUNCTION_REGEX = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
+        val TEXT_AUTHOR_REGEX = Regex("\\b(libretto|text|текст|livret)\\b", RegexOption.IGNORE_CASE)
+        val MUSIC_AUTHOR_REGEX = Regex("\\b(musica|musik|music|musique|музыка)\\b", RegexOption.IGNORE_CASE)
     }
 
     override suspend fun parse(source: BufferedSource): Libretto {
@@ -50,28 +52,42 @@ class OperaLibLibrettoParser(
                 .firstOrNull()
                 .also { println("subtitle: $it") }
 
-        val ridInfoBolds = ridInfos[1]
-                .select(" > b")
-
-
         val hasCombinedAuthor = ridInfos[1]
                 .wholeText()
                 .lineSequence()
                 .firstOrNull()
                 .also { println("authorLine: $it") }
+                ?.let {
+                    MUSIC_AUTHOR_REGEX.containsMatchIn(it) && TEXT_AUTHOR_REGEX.containsMatchIn(it)
+                }
+                ?: false
+        println("hasCombinedAuthor: $hasCombinedAuthor")
+
+        val ridInfoBolds = ridInfos[1]
+                .select(" > b")
+
         // TODO "Das Rheingold" from "Richard Wagner" / "Mefistofele" from "Arrigo Boito" has both music and text author combined.
-        val textAuthor = ridInfoBolds[0]
+        val textAuthor = ridInfoBolds
+                .get(0)
                 .text()
         println("textAuthor: $textAuthor")
-        val musicAuthor = ridInfoBolds[1]
-                .text()
+        val musicAuthor =
+                if (hasCombinedAuthor) textAuthor
+                else {
+                    ridInfoBolds
+                            .get(1)
+                            .text()
+                }
         println("musicAuthor: $musicAuthor")
         val authors = setOf(
                 Author(textAuthor, scope = Author.Scope.TEXT),
                 Author(musicAuthor, scope = Author.Scope.MUSIC)
         )
 
-        val (premiereDateString, premiereLocation) = ridInfoBolds[2].text()
+        val premiereIndex = 1 + if (hasCombinedAuthor) 0 else 1
+        val (premiereDateString, premiereLocation) = ridInfoBolds
+                .get(premiereIndex)
+                .text()
                 .split(',')
                 .map(String::trim)
         println("premiereDateString: $premiereDateString")
@@ -120,7 +136,7 @@ class OperaLibLibrettoParser(
                             .trim()
                             .replace(ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX, "")
                     val roleVoice = when (roleVoiceString) {
-                        "sconosciuto", "unknown" -> null // unknown
+                        "sconosciuto", "unknown", "неизвестный", "другой" -> null // unknown or other
                         "soprano", "sopran", "сопрано" -> Role.Voice.SOPRANO
                         "mezzosoprano", "mezzosopran", "меццосопрано" -> Role.Voice.MEZZO_SOPRANO
                         "alto", "alt", "altro", "альт" -> Role.Voice.ALTO
