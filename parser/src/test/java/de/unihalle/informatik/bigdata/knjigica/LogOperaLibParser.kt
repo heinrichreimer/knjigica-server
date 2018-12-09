@@ -22,7 +22,8 @@ object LogOperaLibParser {
                     .buffer()
             println("Parsing OperaLib libretto #$index.")
 
-            parser.parse(source)
+            val libretto = parser.parse(source)
+            println(libretto)
         }
     }
 }
