@@ -5,7 +5,7 @@ import de.unihalle.informatik.bigdata.knjigica.util.languageRange
 import okio.BufferedSource
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.TextNode
+import org.jsoup.nodes.Element
 import java.text.Normalizer
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -25,176 +25,44 @@ class OperaLibLibrettoParser(
         val CONJUNCTION_REGEX = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
         val TEXT_AUTHOR_REGEX = Regex("\\b(libretto|text|текст|livret)\\b", RegexOption.IGNORE_CASE)
         val MUSIC_AUTHOR_REGEX = Regex("\\b(musica|musik|music|musique|музыка)\\b", RegexOption.IGNORE_CASE)
+
+        val UNKNOWN_VOICE_REGEX = Regex("sconosciuto|unknown|other|неизвестный|другой", RegexOption.IGNORE_CASE)
+        val SOPRANO_VOICE_REGEX = Regex("soprano?|сопрано", RegexOption.IGNORE_CASE)
+        val MEZZO_SOPRANO_VOICE_REGEX = Regex("mezzosoprano?|меццосопрано", RegexOption.IGNORE_CASE)
+        val ALTO_VOICE_REGEX = Regex("alt(r?o)?|альт", RegexOption.IGNORE_CASE)
+        val CONTRALTO_VOICE_REGEX = Regex("contra?alt(r?o)?|контральто", RegexOption.IGNORE_CASE)
+        val TENOR_VOICE_REGEX = Regex("tenore?|тенор", RegexOption.IGNORE_CASE)
+        val BARITONE_VOICE_REGEX = Regex("bar[iy]ton[eo]?|баритон", RegexOption.IGNORE_CASE)
+        val BASSO_VOICE_REGEX = Regex("bass[eo]?|бас", RegexOption.IGNORE_CASE)
+
+        val UNWRAP_FIRST_GROUP_TRANSFORMATION: (MatchResult) -> String = { it.groups[1]?.value ?: "" }
+        val COMBINING_DIACRITICAL_MARKS_REGEX = Regex("[̀-ͯ]")
+        val SIDE_ROLE_DELIMITER_REGEX = Regex("[.;]")
+        val SIDE_ROLE_DELIMITER_FALLBACK_REGEX = Regex("[,]")
     }
 
     override suspend fun parse(source: BufferedSource): Libretto {
-        val document = Jsoup.parse(source.inputStream(), Charsets.UTF_8.name(), baseUri)
-        val locale = parseLocale(document)
-
-        val title = document
-                .select("h2")
-                .first()
-                .text()
-                .also { println("title: $it") }
-
-        val opera = document
-                .select("div#ps-tabella")
-
-        val meta = opera
-                .select("div.rid_opera")
-
-        val ridInfos = document
-                .select("p[class=\"rid_info\"]")
-
-        val subtitle = ridInfos[0]
-                .wholeText()
-                .lineSequence()
-                .firstOrNull()
-                .also { println("subtitle: $it") }
-
-        val hasCombinedAuthor = ridInfos[1]
-                .wholeText()
-                .lineSequence()
-                .firstOrNull()
-                .also { println("authorLine: $it") }
-                ?.let {
-                    MUSIC_AUTHOR_REGEX.containsMatchIn(it) && TEXT_AUTHOR_REGEX.containsMatchIn(it)
-                }
-                ?: false
-        println("hasCombinedAuthor: $hasCombinedAuthor")
-
-        val ridInfoBolds = ridInfos[1]
-                .select(" > b")
-
-        // TODO "Das Rheingold" from "Richard Wagner" / "Mefistofele" from "Arrigo Boito" has both music and text author combined.
-        val textAuthor = ridInfoBolds
-                .get(0)
-                .text()
-        println("textAuthor: $textAuthor")
-        val musicAuthor =
-                if (hasCombinedAuthor) textAuthor
-                else {
-                    ridInfoBolds
-                            .get(1)
-                            .text()
-                }
-        println("musicAuthor: $musicAuthor")
-        val authors = setOf(
-                Author(textAuthor, scope = Author.Scope.TEXT),
-                Author(musicAuthor, scope = Author.Scope.MUSIC)
+        val document = Jsoup.parse(
+                source.inputStream(),
+                Charsets.UTF_8.name(),
+                baseUri
         )
+        val locale = parseLocale(document)
+        val title = parseTitle(document)
+        val subtitle = parseSubtitle(document)
+        val authors = parseAuthors(document)
+        val premiere = parsePremiere(document)
+        val roles = parseRoles(document) + parseSideRoles(document)
+        val setting = parseSetting(document)
+                ?.let { Plot.Instruction(it) }
+                ?.let(::listOf)
+                .orEmpty()
 
-        val premiereIndex = 1 + if (hasCombinedAuthor) 0 else 1
-        val (premiereDateString, premiereLocation) = ridInfoBolds
-                .get(premiereIndex)
-                .text()
-                .split(',')
-                .map(String::trim)
-        println("premiereDateString: $premiereDateString")
-        println("premiereLocation: $premiereLocation")
-        val premiereDate = try {
-            PREMIERE_DATE_FORMATTER.withLocale(locale)
-                    .parse(premiereDateString)
-                    .let { LocalDate.from(it) }
-        } catch (e: DateTimeParseException) {
-            null
-        }
-        val premiere = if (premiereDate != null) {
-            Premiere(
-                    premiereDate,
-                    premiereLocation
-            )
-        } else null
-        println("premiereDate: ${premiereDate?.let(DateTimeFormatter.ISO_DATE::format)}")
-
-        val rolesTable = meta
-                .select("table")
-                .first()
-        val roles: Set<Role> = rolesTable
-                .select("tr")
-                .filter { row ->
-                    row.select("td.vtit").isEmpty()
-                }
-                .mapTo(mutableSetOf()) { row ->
-                    val descriptionColumn = row
-                            .select("td.vdes > p")
-                            .first()
-                    val roleName = descriptionColumn
-                            .select("b")
-                            .first()
-                            .text()
-                    val roleDescription = descriptionColumn
-                            .text()
-                            .takeUnless { it == roleName }
-
-                    val roleVoiceString = row
-                            .select("td.vreg > p > i")
-                            .first()
-                            .text()
-                            .let { Normalizer.normalize(it, Normalizer.Form.NFD) }
-                            .toLowerCase()
-                            .trim()
-                            .replace(ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX, "")
-                    val roleVoice = when (roleVoiceString) {
-                        "sconosciuto", "unknown", "неизвестный", "другой" -> null // unknown or other
-                        "soprano", "sopran", "сопрано" -> Role.Voice.SOPRANO
-                        "mezzosoprano", "mezzosopran", "меццосопрано" -> Role.Voice.MEZZO_SOPRANO
-                        "alto", "alt", "altro", "альт" -> Role.Voice.ALTO
-                        "contralto", "contraalto", "контральто" -> Role.Voice.CONTRALTO
-                        "tenor", "tenore", "тенор" -> Role.Voice.TENOR
-                        "baritone", "bariton", "baritono", "баритон" -> Role.Voice.BARITONE
-                        "bass", "basso", "basse", "бас" -> Role.Voice.BASS
-                        else -> {
-                            if (roleVoiceString.isNotBlank()) {
-                                System.err.println("Could not resolve voice type '$roleVoiceString'.")
-                            }
-                            null
-                        }
-                    }
-                    val role = Role(roleName, roleDescription, roleVoice)
-                    println("role: $role")
-
-                    role
-                }
-
-        val sideRoles = ridInfos[2]
-                .textNodes()
-                .joinToString(transform = TextNode::text)
-                .split("\n\n")
-                .first()
-                .let {
-                    // Drop heading (separated with `:`).
-                    val colonIndex = it.indexOf(':')
-                    it.drop(colonIndex + 1)
-                }
-                .split(';')
-                .let {
-                    // If side characters are not separated by semicolons or dots,
-                    // try splitting by colons.
-                    if (it.size == 1) it.first().split(',')
-                    else it
-                }
-                .map { it.removeSuffix(".") }
-                .map(String::trim)
-                .filter(String::isNotBlank)
-                .map {
-                    val role = Role(it)
-                    println("sideRole: $role")
-                    role
-                }
-
-        val setting = ridInfos[2]
-                .select("i")
-                .text()
-                .trim()
-                .takeIf(String::isNotBlank)
-        println("setting: $setting")
-
-        val plotDivs = opera.select("> div")
-                .dropWhile { !it.hasClass("rid_p_frg") }
 
         var allTitle: String? = null
-        val allPlotDivs = plotDivs
+        val allPlotDivs = document
+                .select("div#ps-tabella > div")
+                .dropWhile { !it.hasClass("rid_p_frg") }
                 .mapNotNull { element ->
                     when {
                         element.hasClass("rid_alltit") -> {
@@ -209,75 +77,241 @@ class OperaLibLibrettoParser(
 
         println(allPlotDivs)
 
+        val plot =
+                parsePlot(document)
+        return Libretto(
+                title = title,
+                subtitle = subtitle,
+                language = locale.languageRange,
+                authors = authors,
+                notes = emptyList(),
+                premiere = premiere,
+                roles = roles,
+                plot = setting + plot
+        )
+    }
+
+    private fun parseSetting(document: Document): String? {
+        return document
+                .select("p[class=\"rid_info\"]")[2]
+                .select("i")
+                .text()
+                .trim()
+                .takeIf(String::isNotBlank)
+                ?.also { println("setting: $it") }
+    }
+
+    private fun parsePremiere(document: Document): Premiere? {
+        val premiereIndex = 1 + if (hasCombinedAuthor(document)) 0 else 1
+        val (premiereDateString, premiereLocation) = document
+                .select("p[class=\"rid_info\"]")
+                .get(1)
+                .select(" > b")
+                .get(premiereIndex)
+                .text()
+                .split(',')
+                .map(String::trim)
+        val premiereDate = try {
+            PREMIERE_DATE_FORMATTER.withLocale(parseLocale(document))
+                    .parse(premiereDateString)
+                    .let { LocalDate.from(it) }
+        } catch (e: DateTimeParseException) {
+            null
+        }
+        val premiere = if (premiereDate != null) {
+            Premiere(
+                    premiereDate,
+                    premiereLocation
+            )
+        } else null
+        println("premiereDate: ${premiereDate?.let(DateTimeFormatter.ISO_DATE::format)}")
+        return premiere
+    }
+
+    private fun hasCombinedAuthor(document: Document): Boolean {
+        return document
+                .select("p[class=\"rid_info\"]")
+                .get(1)
+                .wholeText()
+                .lineSequence()
+                .firstOrNull()
+                ?.let {
+                    MUSIC_AUTHOR_REGEX.containsMatchIn(it) && TEXT_AUTHOR_REGEX.containsMatchIn(it)
+                }
+                ?: false
+    }
+
+    private fun parseAuthors(document: Document): Set<Author> {
+        val potentialAuthorElements = document
+                .select("p[class=\"rid_info\"]")
+                .get(1)
+                .select(" > b")
+
+        val authorName = potentialAuthorElements[0].text()
+
+        return if (hasCombinedAuthor(document)) {
+            setOf(
+                    Author(
+                            name = authorName,
+                            scopes = setOf(Author.Scope.TEXT, Author.Scope.MUSIC)
+                    )
+            )
+        } else {
+            val musicAuthorName = potentialAuthorElements[1].text()
+            setOf(
+                    Author(authorName, scope = Author.Scope.TEXT),
+                    Author(musicAuthorName, scope = Author.Scope.MUSIC)
+            )
+        }
+    }
+
+    private fun parseRoles(document: Document): Set<Role> {
+        return document
+                .selectFirst("div#ps-tabella > div.rid_opera > table")
+                .select("tr")
+                .filter { row ->
+                    row.selectFirst("td.vtit") == null
+                }
+                .mapTo(mutableSetOf(), ::parseRole)
+    }
+
+    private fun parseRole(row: Element): Role {
+        val name = row
+                .selectFirst("td.vdes > p > b")
+                .text()
+        val description = row
+                .selectFirst("td.vdes > p")
+                .text()
+                .takeUnless { it == name }
+
+        val voiceString = row
+                .selectFirst("td.vreg > p > i")
+                .text()
+                .trim()
+                .toLowerCase()
+                .let { Normalizer.normalize(it, Normalizer.Form.NFD) }
+                .replace(COMBINING_DIACRITICAL_MARKS_REGEX, "")
+                .replace(ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX, "")
+        val voice = when {
+            voiceString matches UNKNOWN_VOICE_REGEX -> null // unknown or other
+            voiceString matches SOPRANO_VOICE_REGEX -> Role.Voice.SOPRANO
+            voiceString matches MEZZO_SOPRANO_VOICE_REGEX -> Role.Voice.MEZZO_SOPRANO
+            voiceString matches ALTO_VOICE_REGEX -> Role.Voice.ALTO
+            voiceString matches CONTRALTO_VOICE_REGEX -> Role.Voice.CONTRALTO
+            voiceString matches TENOR_VOICE_REGEX -> Role.Voice.TENOR
+            voiceString matches BARITONE_VOICE_REGEX -> Role.Voice.BARITONE
+            voiceString matches BASSO_VOICE_REGEX -> Role.Voice.BASS
+            else -> {
+                if (voiceString.isNotBlank()) {
+                    System.err.println("Could not resolve voice type '$voiceString'.")
+                }
+                null
+            }
+        }
+        return Role(name, description, voice)
+    }
+
+    private fun parseSideRoles(document: Document): Set<Role> {
+        return document
+                .select("p[class=\"rid_info\"]")
+                .get(2)
+                .wholeText()
+                .split("\n\n")
+                .map {
+                    // Drop heading (separated with `:`).
+                    val colonIndex = it.indexOf(':')
+                    it.drop(colonIndex + 1)
+                }
+                .flatMapTo(mutableSetOf()) { line ->
+                    line
+                            .split(SIDE_ROLE_DELIMITER_REGEX)
+                            .let { list ->
+                                // If side characters are not separated by semicolons or dots,
+                                // try splitting by colons.
+                                if (list.size == 1) {
+                                    list
+                                            .first()
+                                            .split(SIDE_ROLE_DELIMITER_FALLBACK_REGEX)
+                                } else list
+                            }
+                            .asSequence()
+                            .map { it.removeSuffix(".") }
+                            .map(String::trim)
+                            .filter(String::isNotBlank)
+                            .map { Role(it) }
+                            .toSet()
+                }
+    }
+
+    private fun parseTitle(document: Document): String = document.selectFirst("h2").text()
+
+    private fun parseSubtitle(document: Document) =
+            document.selectFirst("p[class=\"rid_info\"]").wholeText().firstLineOrNull()
+
+    private fun parsePlot(document: Document): List<Plot> {
         var roleName: Set<String> = emptySet()
-        val plot = plotDivs
+        return document
+                .select("div#ps-tabella > div")
+                .dropWhile { !it.hasClass("rid_p_frg") }
                 .mapNotNull { plotDiv ->
                     when {
-                        plotDiv.hasClass("rid_a") -> {
-                            plotDiv.text().let { Plot.Section(it, Plot.Section.Level.ACT) }
-                        }
-                        plotDiv.hasClass("rid_s") -> {
-                            plotDiv.text().let { Plot.Section(it, Plot.Section.Level.SCENE) }
-                        }
-                        plotDiv.hasClass("rid_p_num") -> {
-                            plotDiv.text()
-                                    .replace(SURROUNDING_BRACES_REGEX) { it.groups[1]?.value ?: "" }
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
-                        }
+                        plotDiv.hasClass("rid_a") -> parsePlotAct(plotDiv)
+                        plotDiv.hasClass("rid_s") -> parsePlotScene(plotDiv)
+                        plotDiv.hasClass("rid_p_num") -> parsePlotNumber(plotDiv)
                         plotDiv.hasClass("rid_voce") -> {
-                            roleName = plotDiv.text().split(CONJUNCTION_REGEX).toSet()
+                            roleName = parsePlotRoleNames(plotDiv)
                             null
                         }
-                        plotDiv.classNames().any { it.startsWith("rid_testo") } -> {
-                            val names = roleName
-                                    .also {
-                                        if (it.isEmpty()) {
-                                            System.err.println("No role name specified.")
-                                        }
-                                    }
-                            val text = plotDiv
-                                    .select("> p:not(.rid_indt)")
-                                    .eachText()
-                                    .joinToString("\n")
-                            val instruction = plotDiv
-                                    .select("> p.rid_indt")
-                                    .eachText()
-                                    .map { it.replace(SURROUNDING_BRACES_REGEX) { it.groups[1]?.value ?: "" } }
-                                    .filter(String::isNotBlank)
-                                    .takeIf { it.isNotEmpty() }
-                                    ?.joinToString("\n")
-
-                            Plot.Text(names, text, instruction)
-                        }
-                        plotDiv.hasClass("rid_p_ind") -> {
-                            plotDiv.text()
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Instruction(it) }
-                        }
-                        plotDiv.hasClass("rid_p_scn") -> {
-                            plotDiv.text()
-                                    .takeIf(String::isNotBlank)
-                                    ?.let { Plot.Instruction(it) }
-                        }
+                        plotDiv.hasClassPrefix("rid_testo") -> parsePlotText(plotDiv, roleName)
+                        plotDiv.hasClass("rid_p_ind") -> parsePlotInstruction(plotDiv)
+                        plotDiv.hasClass("rid_p_scn") -> parsePlotInstruction(plotDiv)
                         else -> null
                     }
                 }
+    }
 
-        plot.forEach { println("plot: $it") }
+    private fun parsePlotAct(element: Element) =
+            element.text().let { Plot.Section(it, Plot.Section.Level.ACT) }
 
-        val libretto = Libretto(
-                title,
-                subtitle,
-                locale.languageRange,
-                authors,
-                emptyList(),
-                premiere,
-                roles + sideRoles,
-                plot
-        )
-        println(libretto)
-        return libretto
+    private fun parsePlotScene(element: Element) =
+            element.text().let { Plot.Section(it, Plot.Section.Level.SCENE) }
+
+    private fun parsePlotNumber(element: Element): Plot.Section? {
+        return element.text()
+                .unwrapBraces()
+                .takeIf(String::isNotBlank)
+                ?.let { Plot.Section(it, Plot.Section.Level.NUMBER) }
+    }
+
+    private fun parsePlotRoleNames(element: Element) = element.text().split(CONJUNCTION_REGEX).toSet()
+
+    private fun parsePlotText(element: Element, roleNames: Set<String>): Plot.Text {
+        val names = roleNames
+                .also {
+                    if (it.isEmpty()) {
+                        System.err.println("No role name specified.")
+                    }
+                }
+        val text = element
+                .select("> p:not(.rid_indt)")
+                .eachText()
+                .joinToString("\n")
+        val instruction = element
+                .select("> p.rid_indt")
+                .eachText()
+                .map { it.unwrapBraces() }
+                .filter(String::isNotBlank)
+                .takeIf { it.isNotEmpty() }
+                ?.joinToString("\n")
+
+        return Plot.Text(names, text, instruction)
+    }
+
+    private fun parsePlotInstruction(element: Element): Plot.Instruction? {
+        return element.text()
+                .takeIf(String::isNotBlank)
+                ?.unwrapBraces()
+                ?.let { Plot.Instruction(it) }
     }
 
     private fun parseLocale(document: Document): Locale {
@@ -289,19 +323,28 @@ class OperaLibLibrettoParser(
                 .lineSequence()
                 .map(String::trim)
                 .firstOrNull { it matches LANGUAGE_SCRIPT_REGEX }
-                ?.replace(LANGUAGE_SCRIPT_REGEX) { result ->
-                    result.groups[1]?.value ?: ""
-                }
+                ?.replace(LANGUAGE_SCRIPT_REGEX, UNWRAP_FIRST_GROUP_TRANSFORMATION)
                 ?.takeIf(String::isNotBlank)
-                .let { languageString ->
-                    when (languageString) {
-                        "fra" -> Locale.FRENCH
-                        "deu" -> Locale.GERMAN
-                        "eng" -> Locale.ENGLISH
-                        "rus" -> Locale.Builder().setLanguage("ru").setScript("Cyrl").build();
-                        else -> Locale.ITALIAN
-                    }
-                }
-                .also { println("language: ${it.languageRange.range}") }
+                .let(::parseLocale)
     }
+
+    private fun parseLocale(languageCode: String?): Locale {
+        return when (languageCode) {
+            "fra" -> Locale.FRENCH
+            "deu" -> Locale.GERMAN
+            "eng" -> Locale.ENGLISH
+            "rus" -> Locale.Builder().setLanguage("ru").setScript("Cyrl").build();
+            else -> Locale.ITALIAN
+        }
+    }
+
+    private fun Element.hasClassPrefix(prefix: String): Boolean {
+        return classNames().any { it.startsWith(prefix) }
+    }
+
+    private fun String.firstLineOrNull() = lineSequence().firstOrNull()
+
+    private fun String.unwrapFirstGroup(regex: Regex) = replace(regex, UNWRAP_FIRST_GROUP_TRANSFORMATION)
+
+    private fun String.unwrapBraces() = unwrapFirstGroup(SURROUNDING_BRACES_REGEX)
 }
