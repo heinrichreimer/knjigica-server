@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
 
-
+// TODO Remove debug logging after testing.
 class OperaLibLibrettoParser(
         private val baseUri: String = ""
 ) : Parser<BufferedSource, Libretto> {
@@ -20,7 +20,7 @@ class OperaLibLibrettoParser(
     companion object {
         val LANGUAGE_SCRIPT_REGEX = Regex("menuEUrid\\(\\W*?'([a-z]{3})'\\W*?\\)\\W*?;")
         val PREMIERE_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMMM uuuu")!!
-        val ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX = Regex("[^a-z]+", RegexOption.IGNORE_CASE)
+        val ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX = Regex("[-,. ]")
         val SURROUNDING_BRACES_REGEX = Regex("[\\[(](.*)[])]")
         val CONJUNCTION_REGEX = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
     }
@@ -29,26 +29,42 @@ class OperaLibLibrettoParser(
         val document = Jsoup.parse(source.inputStream(), Charsets.UTF_8.name(), baseUri)
         val locale = parseLocale(document)
 
-        val title = document.select("h2")[0].text()
-        println("title: $title")
+        val title = document
+                .select("h2")
+                .first()
+                .text()
+                .also { println("title: $it") }
 
-        val opera = document.select("div#ps-tabella")
+        val opera = document
+                .select("div#ps-tabella")
 
-        val meta = opera.select("div.rid_opera")
+        val meta = opera
+                .select("div.rid_opera")
 
-        val ridInfos = document.select("p[class=\"rid_info\"]")
+        val ridInfos = document
+                .select("p[class=\"rid_info\"]")
+
         val subtitle = ridInfos[0]
                 .wholeText()
                 .lineSequence()
                 .firstOrNull()
-        println("subtitle: $subtitle")
+                .also { println("subtitle: $it") }
 
-        val ridInfoBolds = ridInfos[1].select(" > b")
+        val ridInfoBolds = ridInfos[1]
+                .select(" > b")
 
+
+        val hasCombinedAuthor = ridInfos[1]
+                .wholeText()
+                .lineSequence()
+                .firstOrNull()
+                .also { println("authorLine: $it") }
         // TODO "Das Rheingold" from "Richard Wagner" / "Mefistofele" from "Arrigo Boito" has both music and text author combined.
-        val textAuthor = ridInfoBolds[0].text()
+        val textAuthor = ridInfoBolds[0]
+                .text()
         println("textAuthor: $textAuthor")
-        val musicAuthor = ridInfoBolds[1].text()
+        val musicAuthor = ridInfoBolds[1]
+                .text()
         println("musicAuthor: $musicAuthor")
         val authors = setOf(
                 Author(textAuthor, scope = Author.Scope.TEXT),
@@ -99,33 +115,24 @@ class OperaLibLibrettoParser(
                             .select("td.vreg > p > i")
                             .first()
                             .text()
-                            .toLowerCase()
-                    val roleVoiceStringNormalized = roleVoiceString
                             .let { Normalizer.normalize(it, Normalizer.Form.NFD) }
+                            .toLowerCase()
+                            .trim()
                             .replace(ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX, "")
-                    val roleVoice = when (roleVoiceStringNormalized) {
+                    val roleVoice = when (roleVoiceString) {
                         "sconosciuto", "unknown" -> null // unknown
-                        "soprano", "sopran" -> Role.Voice.SOPRANO
-                        "mezzosoprano", "mezzosopran" -> Role.Voice.MEZZO_SOPRANO
-                        "alto", "alt", "altro" -> Role.Voice.ALTO
-                        "contralto", "contraalto" -> Role.Voice.CONTRALTO
-                        "tenor", "tenore" -> Role.Voice.TENOR
-                        "baritone", "bariton", "baritono" -> Role.Voice.BARITONE
-                        "bass", "basso" -> Role.Voice.BASS
-                        else -> when (roleVoiceString) {
-                            "сопрано" -> Role.Voice.SOPRANO
-                            "меццосопрано" -> Role.Voice.MEZZO_SOPRANO
-                            "альт" -> Role.Voice.ALTO
-                            "контральто" -> Role.Voice.CONTRALTO
-                            "тенор" -> Role.Voice.TENOR
-                            "баритон" -> Role.Voice.BARITONE
-                            "бас" -> Role.Voice.BASS
-                            else -> {
-                                if (roleVoiceString.isNotBlank()) {
-                                    System.err.println("Could not resolve voice type '$roleVoiceString'.")
-                                }
-                                null
+                        "soprano", "sopran", "сопрано" -> Role.Voice.SOPRANO
+                        "mezzosoprano", "mezzosopran", "меццосопрано" -> Role.Voice.MEZZO_SOPRANO
+                        "alto", "alt", "altro", "альт" -> Role.Voice.ALTO
+                        "contralto", "contraalto", "контральто" -> Role.Voice.CONTRALTO
+                        "tenor", "tenore", "тенор" -> Role.Voice.TENOR
+                        "baritone", "bariton", "baritono", "баритон" -> Role.Voice.BARITONE
+                        "bass", "basso", "basse", "бас" -> Role.Voice.BASS
+                        else -> {
+                            if (roleVoiceString.isNotBlank()) {
+                                System.err.println("Could not resolve voice type '$roleVoiceString'.")
                             }
+                            null
                         }
                     }
                     val role = Role(roleName, roleDescription, roleVoice)
@@ -208,8 +215,11 @@ class OperaLibLibrettoParser(
                         }
                         plotDiv.classNames().any { it.startsWith("rid_testo") } -> {
                             val names = roleName
-                                    .takeIf { it.isNotEmpty() }
-                                    ?: throw IllegalStateException("No role name specified.")
+                                    .also {
+                                        if (it.isEmpty()) {
+                                            System.err.println("No role name specified.")
+                                        }
+                                    }
                             val text = plotDiv
                                     .select("> p:not(.rid_indt)")
                                     .eachText()
@@ -255,7 +265,7 @@ class OperaLibLibrettoParser(
     }
 
     private fun parseLocale(document: Document): Locale {
-        val locale = document
+        return document
                 .head()
                 .select("script[type=\"text/javascript\"]")
                 .last()
@@ -276,8 +286,6 @@ class OperaLibLibrettoParser(
                         else -> Locale.ITALIAN
                     }
                 }
-
-        println("language: ${locale.languageRange.range}")
-        return locale
+                .also { println("language: ${it.languageRange.range}") }
     }
 }
