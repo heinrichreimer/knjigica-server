@@ -7,7 +7,7 @@ data class Libretto(
         val subtitle: String? = null,
         val language: Locale.LanguageRange,
         val authors: Set<Author>,
-        val notes: List<String>,
+        val annotations: Set<Annotation>,
         val premiere: Premiere? = null,
         val roles: Set<Role>,
         val plot: List<Plot>

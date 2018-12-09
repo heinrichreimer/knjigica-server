@@ -84,7 +84,7 @@ class OperaLibLibrettoParser(
                 subtitle = subtitle,
                 language = locale.languageRange,
                 authors = authors,
-                notes = emptyList(),
+                annotations = emptySet(),
                 premiere = premiere,
                 roles = roles,
                 plot = setting + plot

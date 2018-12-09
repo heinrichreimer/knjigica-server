@@ -1,6 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica
 
 import de.unihalle.informatik.bigdata.knjigica.data.*
+import de.unihalle.informatik.bigdata.knjigica.data.Annotation
 import de.unihalle.informatik.bigdata.knjigica.util.languageRange
 import java.time.LocalDate
 import java.time.Month
@@ -33,8 +34,11 @@ object Libretti {
                             scope = Author.Scope.TEXT
                     )
             ),
-            notes = listOf(
-                    "Syntetische Fassung herausgegeben von www.operalib.eu."
+            annotations = setOf(
+                    Annotation(
+                            "Quelle",
+                            "Syntetische Fassung herausgegeben von www.operalib.eu."
+                    )
             ),
             premiere = Premiere(
                     date = LocalDate.of(1782, Month.JULY, 16),
