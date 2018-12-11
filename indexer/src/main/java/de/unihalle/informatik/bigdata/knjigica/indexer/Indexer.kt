@@ -1,37 +1,46 @@
+
 package de.unihalle.informatik.bigdata.knjigica.indexer
 
-import de.unihalle.informatik.bigdata.knjigica.indexer.util.index
-import de.unihalle.informatik.bigdata.knjigica.indexer.util.rest.bulk
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.index
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.rest.bulk
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.toBytesReference
 import de.unihalle.informatik.bigdata.knjigica.model.Libretto
 import de.unihalle.informatik.bigdata.knjigica.parser.JsonLibrettoParserFormatter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import okio.Buffer
+import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.common.xcontent.XContentType
 
 object Indexer {
-    fun index(client: RestHighLevelClient, libretti: Sequence<Libretto>) {
-        client.bulk {
-            libretti.forEach {
-                val buffer = Buffer()
-                runBlocking(Dispatchers.IO) {
-                    JsonLibrettoParserFormatter.format(buffer, it)
-                }
-                index(Configuration.LIBRETTO_INDEX, Configuration.LIBRETTO_TYPE) {
-                    source(buffer.readByteArray(), XContentType.JSON)
-                }
-            }
-        }.run {
-            if (hasFailures()) {
-                System.err.println("Bulk index response contains failures:")
-                items.filter { it.isFailed }
-                        .forEach {
-                            System.err.println("${it.id}: ${it.failureMessage}")
+    private const val CHUNK_SIZE = 70
+
+    suspend fun index(client: RestHighLevelClient, libretti: Iterable<Libretto>) {
+        libretti.chunked(CHUNK_SIZE)
+                .forEach { chunk ->
+                    client.bulk {
+                        chunk.forEach { libretto ->
+                            index(libretto)
                         }
-            }
-            println("items count: ${items.size}")
-            println("items: ${items}")
-        }
+                    }.let { response ->
+                        if (response.hasFailures()) {
+                            System.err.println("Bulk index response contains failures:")
+                            response.items.filter { it.isFailed }
+                                    .forEach {
+                                        System.err.println("${it.id}: ${it.failureMessage}")
+                                    }
+                        }
+                        println("Indexed ${response.items.size} items.")
+                    }
+                }
     }
+
+    private suspend fun BulkRequest.index(libretto: Libretto) =
+            index {
+                index(Configuration.LIBRETTO_INDEX)
+                type(Configuration.LIBRETTO_TYPE)
+                source(libretto.toJsonBytes(), XContentType.JSON)
+            }
+
+    private suspend fun Libretto.toJsonBytes() =
+            Buffer().also { JsonLibrettoParserFormatter.format(it, this) }.readByteArray().toBytesReference()
 }

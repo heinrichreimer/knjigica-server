@@ -1,6 +1,6 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer
 
-import de.unihalle.informatik.bigdata.knjigica.indexer.util.rest.restHighLevelClientOf
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.rest.restHighLevelClientOf
 import org.apache.http.HttpHost
 
 object Configuration {

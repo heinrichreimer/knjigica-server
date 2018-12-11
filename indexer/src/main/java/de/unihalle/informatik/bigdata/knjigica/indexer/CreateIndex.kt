@@ -1,8 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer
 
-import de.unihalle.informatik.bigdata.knjigica.indexer.util.rest.indices
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest
-import org.elasticsearch.client.RequestOptions
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.rest.create
+import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.rest.indices
 
 object CreateIndex {
 
@@ -11,7 +10,9 @@ object CreateIndex {
         Configuration.CLIENT.use {
             with(it) {
                 indices {
-                    create(CreateIndexRequest(Configuration.LIBRETTO_INDEX), RequestOptions.DEFAULT)
+                    create {
+                        index(Configuration.LIBRETTO_INDEX)
+                    }
                 }
             }
         }

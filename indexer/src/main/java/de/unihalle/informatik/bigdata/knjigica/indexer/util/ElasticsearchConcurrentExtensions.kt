@@ -1,33 +1,43 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer.util
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.elasticsearch.action.ActionFuture
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
+import org.elasticsearch.action.ActionListener
+import org.elasticsearch.client.Response
+import org.elasticsearch.client.ResponseListener
+import java.util.concurrent.ExecutionException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
-fun CoroutineScope.launch(
-        context: CoroutineContext = EmptyCoroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
-        future: ActionFuture<*>
-) = launch(context, start) { future.actionGet() }
+suspend fun <T> ActionFuture<T>.await(): T = suspendCoroutine { continuation ->
+    try {
+        continuation.resume(get())
+    } catch (cause: ExecutionException) {
+        continuation.resumeWithException(cause)
+    } catch (cause: InterruptedException) {
+        continuation.resumeWithException(cause)
+    }
+}
 
-fun ActionFuture<*>.launch(
-        coroutineScope: CoroutineScope,
-        context: CoroutineContext = EmptyCoroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT
-) = coroutineScope.launch(context, start) { actionGet() }
+@JvmName("awaitResponse")
+suspend fun ((ResponseListener) -> Unit).await(): Response = suspendCancellableCoroutine { continuation ->
+    this(object : ResponseListener {
+        override fun onSuccess(response: Response) = continuation.resume(response)
+        override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
+    })
+}
 
-fun <T> CoroutineScope.async(
-        context: CoroutineContext = EmptyCoroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
-        future: ActionFuture<T>
-) = async(context, start) { future.actionGet() }
+@JvmName("\$awaitResponse")
+suspend fun awaitResponse(block: (ResponseListener) -> Unit): Response = block.await()
 
-fun <T> ActionFuture<T>.async(
-        coroutineScope: CoroutineScope,
-        context: CoroutineContext = EmptyCoroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT
-) = coroutineScope.async(context, start) { actionGet() }
+@JvmName("awaitAction")
+suspend fun <T> ((ActionListener<T>) -> Unit).await(): T = suspendCancellableCoroutine { continuation ->
+    this(object : ActionListener<T> {
+        override fun onResponse(response: T) = continuation.resume(response)
+        override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
+    })
+}
+
+@JvmName("\$awaitAction")
+suspend fun <T> awaitAction(block: (ActionListener<T>) -> Unit): T = block.await()
