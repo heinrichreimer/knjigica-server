@@ -22,7 +22,7 @@ suspend fun <T> ActionFuture<T>.await(): T = suspendCoroutine { continuation ->
 
 @JvmName("awaitResponseReceiver")
 suspend inline fun ((ResponseListener) -> Unit).await(): Response = suspendCancellableCoroutine { continuation ->
-    this(object : ResponseListener {
+    invoke(object : ResponseListener {
         override fun onSuccess(response: Response) = continuation.resume(response)
         override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
     })
@@ -32,7 +32,7 @@ suspend inline fun awaitResponse(block: (ResponseListener) -> Unit): Response = 
 
 @JvmName("awaitActionReceiver")
 suspend inline fun <T> ((ActionListener<T>) -> Unit).await(): T = suspendCancellableCoroutine { continuation ->
-    this(object : ActionListener<T> {
+    invoke(object : ActionListener<T> {
         override fun onResponse(response: T) = continuation.resume(response)
         override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
     })
