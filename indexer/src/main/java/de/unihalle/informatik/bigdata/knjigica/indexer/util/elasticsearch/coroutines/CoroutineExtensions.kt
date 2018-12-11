@@ -1,4 +1,4 @@
-package de.unihalle.informatik.bigdata.knjigica.indexer.util
+package de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.coroutines
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.elasticsearch.action.ActionFuture
@@ -20,24 +20,22 @@ suspend fun <T> ActionFuture<T>.await(): T = suspendCoroutine { continuation ->
     }
 }
 
-@JvmName("awaitResponse")
-suspend fun ((ResponseListener) -> Unit).await(): Response = suspendCancellableCoroutine { continuation ->
+@JvmName("awaitResponseReceiver")
+suspend inline fun ((ResponseListener) -> Unit).await(): Response = suspendCancellableCoroutine { continuation ->
     this(object : ResponseListener {
         override fun onSuccess(response: Response) = continuation.resume(response)
         override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
     })
 }
 
-@JvmName("\$awaitResponse")
-suspend fun awaitResponse(block: (ResponseListener) -> Unit): Response = block.await()
+suspend inline fun awaitResponse(block: (ResponseListener) -> Unit): Response = block.await()
 
-@JvmName("awaitAction")
-suspend fun <T> ((ActionListener<T>) -> Unit).await(): T = suspendCancellableCoroutine { continuation ->
+@JvmName("awaitActionReceiver")
+suspend inline fun <T> ((ActionListener<T>) -> Unit).await(): T = suspendCancellableCoroutine { continuation ->
     this(object : ActionListener<T> {
         override fun onResponse(response: T) = continuation.resume(response)
         override fun onFailure(exception: Exception) = continuation.resumeWithException(exception)
     })
 }
 
-@JvmName("\$awaitAction")
-suspend fun <T> awaitAction(block: (ActionListener<T>) -> Unit): T = block.await()
+suspend inline fun <T> awaitAction(block: (ActionListener<T>) -> Unit): T = block.await()
