@@ -1,2 +1,4 @@
 rootProject.name = 'websearch'
 include 'parser', 'indexer'
+include 'model'
+

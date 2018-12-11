@@ -1,0 +1,1 @@
+docker run -p 9200:9200 -e "discovery.type=single-node" -e http.port=9200 -e http.cors.allow-origin="http://localhost:1358" -e http.cors.enabled=true -e http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization -e http.cors.allow-credentials=true docker.elastic.co/elasticsearch/elasticsearch:6.5.2

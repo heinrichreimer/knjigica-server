@@ -1,8 +1,8 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
-import de.unihalle.informatik.bigdata.knjigica.data.*
-import de.unihalle.informatik.bigdata.knjigica.data.Annotation
-import de.unihalle.informatik.bigdata.knjigica.util.languageRange
+import de.unihalle.informatik.bigdata.knjigica.model.*
+import de.unihalle.informatik.bigdata.knjigica.model.Annotation
+import de.unihalle.informatik.bigdata.knjigica.parser.util.languageRange
 import okio.BufferedSource
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

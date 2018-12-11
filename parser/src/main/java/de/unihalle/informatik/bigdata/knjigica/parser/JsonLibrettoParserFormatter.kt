@@ -2,8 +2,8 @@ package de.unihalle.informatik.bigdata.knjigica.parser
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import de.unihalle.informatik.bigdata.knjigica.data.Libretto
-import de.unihalle.informatik.bigdata.knjigica.data.Plot
+import de.unihalle.informatik.bigdata.knjigica.model.Libretto
+import de.unihalle.informatik.bigdata.knjigica.model.Plot
 import de.unihalle.informatik.bigdata.knjigica.parser.json.*
 import okio.BufferedSink
 import okio.BufferedSource

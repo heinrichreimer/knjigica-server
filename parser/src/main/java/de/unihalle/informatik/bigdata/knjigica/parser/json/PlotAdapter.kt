@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import de.unihalle.informatik.bigdata.knjigica.data.Plot
+import de.unihalle.informatik.bigdata.knjigica.model.Plot
 
 object PlotAdapter : JsonAdapter<Plot>() {
 

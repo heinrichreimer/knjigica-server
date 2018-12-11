@@ -1,0 +1,61 @@
+version: '3'
+services:
+  # Elasticsearch engine (node #1, the main node)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.2
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - http.port=9200
+      - http.cors.allow-origin="http://localhost:1358"
+      - http.cors.enabled=true
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+
+  # Elasticsearch engine (node #2, which communicates with #1)
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.2
+    container_name: elasticsearch2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.zen.ping.unicast.hosts=elasticsearch
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+
+  # Search browser
+  dejavu:
+    image: appbaseio/dejavu:2.0.5
+    container_name: dejavu
+    ports:
+      - "1358:1358"
+    links:
+      - elasticsearch
+
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
+
+networks:
+  esnet:

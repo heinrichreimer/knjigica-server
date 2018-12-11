@@ -1,6 +1,6 @@
 package de.unihalle.informatik.bigdata.knjigica.parser
 
-import de.unihalle.informatik.bigdata.knjigica.data.Libretto
+import de.unihalle.informatik.bigdata.knjigica.model.Libretto
 import okio.BufferedSource
 import org.jsoup.Jsoup
 
