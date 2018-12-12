@@ -59,95 +59,95 @@ import org.elasticsearch.client.ClusterAdminClient
 import org.elasticsearch.common.bytes.BytesReference
 import org.elasticsearch.common.xcontent.XContentType
 
-suspend inline fun ClusterAdminClient.healthAsync(block: ClusterHealthRequest.() -> Unit): ClusterHealthResponse =
+suspend inline fun ClusterAdminClient.healthAsync(block: ClusterHealthRequest.() -> Unit = {}): ClusterHealthResponse =
         awaitAction { healthAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.stateAsync(block: ClusterStateRequest.() -> Unit): ClusterStateResponse =
+suspend inline fun ClusterAdminClient.stateAsync(block: ClusterStateRequest.() -> Unit = {}): ClusterStateResponse =
         awaitAction { stateAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.updateSettingsAsync(block: ClusterUpdateSettingsRequest.() -> Unit): ClusterUpdateSettingsResponse =
+suspend inline fun ClusterAdminClient.updateSettingsAsync(block: ClusterUpdateSettingsRequest.() -> Unit = {}): ClusterUpdateSettingsResponse =
         awaitAction { updateSettingsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.rerouteAsync(block: ClusterRerouteRequest.() -> Unit): ClusterRerouteResponse =
+suspend inline fun ClusterAdminClient.rerouteAsync(block: ClusterRerouteRequest.() -> Unit = {}): ClusterRerouteResponse =
         awaitAction { rerouteAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.nodesInfoAsync(block: NodesInfoRequest.() -> Unit): NodesInfoResponse =
+suspend inline fun ClusterAdminClient.nodesInfoAsync(block: NodesInfoRequest.() -> Unit = {}): NodesInfoResponse =
         awaitAction { nodesInfoAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.clusterStatsAsync(block: ClusterStatsRequest.() -> Unit): ClusterStatsResponse =
+suspend inline fun ClusterAdminClient.clusterStatsAsync(block: ClusterStatsRequest.() -> Unit = {}): ClusterStatsResponse =
         awaitAction { clusterStatsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.nodesStatsAsync(block: NodesStatsRequest.() -> Unit): NodesStatsResponse =
+suspend inline fun ClusterAdminClient.nodesStatsAsync(block: NodesStatsRequest.() -> Unit = {}): NodesStatsResponse =
         awaitAction { nodesStatsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.nodesUsageAsync(block: NodesUsageRequest.() -> Unit): NodesUsageResponse =
+suspend inline fun ClusterAdminClient.nodesUsageAsync(block: NodesUsageRequest.() -> Unit = {}): NodesUsageResponse =
         awaitAction { nodesUsageAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.nodesHotThreadsAsync(block: NodesHotThreadsRequest.() -> Unit): NodesHotThreadsResponse =
+suspend inline fun ClusterAdminClient.nodesHotThreadsAsync(block: NodesHotThreadsRequest.() -> Unit = {}): NodesHotThreadsResponse =
         awaitAction { nodesHotThreadsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.listTasksAsync(block: ListTasksRequest.() -> Unit): ListTasksResponse =
+suspend inline fun ClusterAdminClient.listTasksAsync(block: ListTasksRequest.() -> Unit = {}): ListTasksResponse =
         awaitAction { listTasksAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.getTaskAsync(block: GetTaskRequest.() -> Unit): GetTaskResponse =
+suspend inline fun ClusterAdminClient.getTaskAsync(block: GetTaskRequest.() -> Unit = {}): GetTaskResponse =
         awaitAction { getTaskAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.cancelTasksAsync(block: CancelTasksRequest.() -> Unit): CancelTasksResponse =
+suspend inline fun ClusterAdminClient.cancelTasksAsync(block: CancelTasksRequest.() -> Unit = {}): CancelTasksResponse =
         awaitAction { cancelTasksAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.searchShardsAsync(block: ClusterSearchShardsRequest.() -> Unit): ClusterSearchShardsResponse =
+suspend inline fun ClusterAdminClient.searchShardsAsync(block: ClusterSearchShardsRequest.() -> Unit = {}): ClusterSearchShardsResponse =
         awaitAction { searchShardsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.putRepositoryAsync(block: PutRepositoryRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.putRepositoryAsync(block: PutRepositoryRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { putRepositoryAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.deleteRepositoryAsync(block: DeleteRepositoryRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.deleteRepositoryAsync(block: DeleteRepositoryRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { deleteRepositoryAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.getRepositoriesAsync(block: GetRepositoriesRequest.() -> Unit): GetRepositoriesResponse =
+suspend inline fun ClusterAdminClient.getRepositoriesAsync(block: GetRepositoriesRequest.() -> Unit = {}): GetRepositoriesResponse =
         awaitAction { getRepositoriesAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.verifyRepositoryAsync(block: VerifyRepositoryRequest.() -> Unit): VerifyRepositoryResponse =
+suspend inline fun ClusterAdminClient.verifyRepositoryAsync(block: VerifyRepositoryRequest.() -> Unit = {}): VerifyRepositoryResponse =
         awaitAction { verifyRepositoryAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.createSnapshotAsync(block: CreateSnapshotRequest.() -> Unit): CreateSnapshotResponse =
+suspend inline fun ClusterAdminClient.createSnapshotAsync(block: CreateSnapshotRequest.() -> Unit = {}): CreateSnapshotResponse =
         awaitAction { createSnapshotAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.getSnapshotsAsync(block: GetSnapshotsRequest.() -> Unit): GetSnapshotsResponse =
+suspend inline fun ClusterAdminClient.getSnapshotsAsync(block: GetSnapshotsRequest.() -> Unit = {}): GetSnapshotsResponse =
         awaitAction { getSnapshotsAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.deleteSnapshotAsync(block: DeleteSnapshotRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.deleteSnapshotAsync(block: DeleteSnapshotRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { deleteSnapshotAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.restoreSnapshotAsync(block: RestoreSnapshotRequest.() -> Unit): RestoreSnapshotResponse =
+suspend inline fun ClusterAdminClient.restoreSnapshotAsync(block: RestoreSnapshotRequest.() -> Unit = {}): RestoreSnapshotResponse =
         awaitAction { restoreSnapshotAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.pendingClusterTasksAsync(block: PendingClusterTasksRequest.() -> Unit): PendingClusterTasksResponse =
+suspend inline fun ClusterAdminClient.pendingClusterTasksAsync(block: PendingClusterTasksRequest.() -> Unit = {}): PendingClusterTasksResponse =
         awaitAction { pendingClusterTasksAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.snapshotsStatusAsync(block: SnapshotsStatusRequest.() -> Unit): SnapshotsStatusResponse =
+suspend inline fun ClusterAdminClient.snapshotsStatusAsync(block: SnapshotsStatusRequest.() -> Unit = {}): SnapshotsStatusResponse =
         awaitAction { snapshotsStatusAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.putPipelineAsync(id: String, source: BytesReference, xContentType: XContentType, block: PutPipelineRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.putPipelineAsync(id: String, source: BytesReference, xContentType: XContentType, block: PutPipelineRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { putPipelineAsync(id, source, xContentType, it, block) }
 
-suspend inline fun ClusterAdminClient.deletePipelineAsync(id: String, block: DeletePipelineRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.deletePipelineAsync(id: String, block: DeletePipelineRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { deletePipelineAsync(id, it, block) }
 
-suspend inline fun ClusterAdminClient.getPipelineAsync(block: GetPipelineRequest.() -> Unit): GetPipelineResponse =
+suspend inline fun ClusterAdminClient.getPipelineAsync(block: GetPipelineRequest.() -> Unit = {}): GetPipelineResponse =
         awaitAction { getPipelineAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.simulatePipelineAsync(source: BytesReference, xContentType: XContentType, block: SimulatePipelineRequest.() -> Unit): SimulatePipelineResponse =
+suspend inline fun ClusterAdminClient.simulatePipelineAsync(source: BytesReference, xContentType: XContentType, block: SimulatePipelineRequest.() -> Unit = {}): SimulatePipelineResponse =
         awaitAction { simulatePipelineAsync(source, xContentType, it, block) }
 
-suspend inline fun ClusterAdminClient.allocationExplainAsync(block: ClusterAllocationExplainRequest.() -> Unit): ClusterAllocationExplainResponse =
+suspend inline fun ClusterAdminClient.allocationExplainAsync(block: ClusterAllocationExplainRequest.() -> Unit = {}): ClusterAllocationExplainResponse =
         awaitAction { allocationExplainAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.deleteStoredScriptAsync(id: String, block: DeleteStoredScriptRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.deleteStoredScriptAsync(id: String, block: DeleteStoredScriptRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { deleteStoredScriptAsync(id, it, block) }
 
-suspend inline fun ClusterAdminClient.putStoredScriptAsync(block: PutStoredScriptRequest.() -> Unit): AcknowledgedResponse =
+suspend inline fun ClusterAdminClient.putStoredScriptAsync(block: PutStoredScriptRequest.() -> Unit = {}): AcknowledgedResponse =
         awaitAction { putStoredScriptAsync(it, block) }
 
-suspend inline fun ClusterAdminClient.getStoredScriptAsync(id: String, block: GetStoredScriptRequest.() -> Unit): GetStoredScriptResponse =
+suspend inline fun ClusterAdminClient.getStoredScriptAsync(id: String, block: GetStoredScriptRequest.() -> Unit = {}): GetStoredScriptResponse =
         awaitAction { getStoredScriptAsync(id, it, block) }

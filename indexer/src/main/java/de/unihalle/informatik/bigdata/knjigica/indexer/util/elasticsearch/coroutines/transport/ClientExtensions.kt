@@ -27,44 +27,44 @@ import org.elasticsearch.action.update.UpdateRequest
 import org.elasticsearch.action.update.UpdateResponse
 import org.elasticsearch.client.Client
 
-suspend inline fun Client.indexAsync(block: IndexRequest.() -> Unit): IndexResponse =
+suspend inline fun Client.indexAsync(block: IndexRequest.() -> Unit = {}): IndexResponse =
         awaitAction { indexAsync(it, block) }
 
-suspend inline fun Client.updateAsync(block: UpdateRequest.() -> Unit): UpdateResponse =
+suspend inline fun Client.updateAsync(block: UpdateRequest.() -> Unit = {}): UpdateResponse =
         awaitAction { updateAsync(it, block) }
 
-suspend inline fun Client.deleteAsync(block: DeleteRequest.() -> Unit): DeleteResponse =
+suspend inline fun Client.deleteAsync(block: DeleteRequest.() -> Unit = {}): DeleteResponse =
         awaitAction { deleteAsync(it, block) }
 
-suspend inline fun Client.bulkAsync(block: BulkRequest.() -> Unit): BulkResponse =
+suspend inline fun Client.bulkAsync(block: BulkRequest.() -> Unit = {}): BulkResponse =
         awaitAction { bulkAsync(it, block) }
 
-suspend inline fun Client.getAsync(block: GetRequest.() -> Unit): GetResponse =
+suspend inline fun Client.getAsync(block: GetRequest.() -> Unit = {}): GetResponse =
         awaitAction { getAsync(it, block) }
 
-suspend inline fun Client.multiGetAsync(block: MultiGetRequest.() -> Unit): MultiGetResponse =
+suspend inline fun Client.multiGetAsync(block: MultiGetRequest.() -> Unit = {}): MultiGetResponse =
         awaitAction { multiGetAsync(it, block) }
 
-suspend inline fun Client.searchAsync(block: SearchRequest.() -> Unit): SearchResponse =
+suspend inline fun Client.searchAsync(block: SearchRequest.() -> Unit = {}): SearchResponse =
         awaitAction { searchAsync(it, block) }
 
-suspend inline fun Client.searchScrollAsync(block: SearchScrollRequest.() -> Unit): SearchResponse =
+suspend inline fun Client.searchScrollAsync(block: SearchScrollRequest.() -> Unit = {}): SearchResponse =
         awaitAction { searchScrollAsync(it, block) }
 
-suspend inline fun Client.multiSearchAsync(block: MultiSearchRequest.() -> Unit): MultiSearchResponse =
+suspend inline fun Client.multiSearchAsync(block: MultiSearchRequest.() -> Unit = {}): MultiSearchResponse =
         awaitAction { multiSearchAsync(it, block) }
 
-suspend inline fun Client.termVectorsAsync(block: TermVectorsRequest.() -> Unit): TermVectorsResponse =
+suspend inline fun Client.termVectorsAsync(block: TermVectorsRequest.() -> Unit = {}): TermVectorsResponse =
         awaitAction { termVectorsAsync(it, block) }
 
-suspend inline fun Client.multiTermVectorsAsync(block: MultiTermVectorsRequest.() -> Unit): MultiTermVectorsResponse =
+suspend inline fun Client.multiTermVectorsAsync(block: MultiTermVectorsRequest.() -> Unit = {}): MultiTermVectorsResponse =
         awaitAction { multiTermVectorsAsync(it, block) }
 
-suspend inline fun Client.explainAsync(block: ExplainRequest.() -> Unit): ExplainResponse =
+suspend inline fun Client.explainAsync(block: ExplainRequest.() -> Unit = {}): ExplainResponse =
         awaitAction { explainAsync(it, block) }
 
-suspend inline fun Client.clearScrollAsync(block: ClearScrollRequest.() -> Unit): ClearScrollResponse =
+suspend inline fun Client.clearScrollAsync(block: ClearScrollRequest.() -> Unit = {}): ClearScrollResponse =
         awaitAction { clearScrollAsync(it, block) }
 
-suspend inline fun Client.fieldCapsAsync(block: FieldCapabilitiesRequest.() -> Unit): FieldCapabilitiesResponse =
+suspend inline fun Client.fieldCapsAsync(block: FieldCapabilitiesRequest.() -> Unit = {}): FieldCapabilitiesResponse =
         awaitAction { fieldCapsAsync(it, block) }
