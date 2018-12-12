@@ -9,5 +9,5 @@ import org.elasticsearch.protocol.xpack.migration.IndexUpgradeInfoResponse
 import java.io.IOException
 
 @Throws(IOException::class)
-inline fun MigrationClient.getAssistance(options: RequestOptions = RequestOptions.DEFAULT, block: IndexUpgradeInfoRequest.() -> Unit): IndexUpgradeInfoResponse =
+inline fun MigrationClient.getAssistance(options: RequestOptions = RequestOptions.DEFAULT, block: IndexUpgradeInfoRequest.() -> Unit = {}): IndexUpgradeInfoResponse =
         getAssistance(IndexUpgradeInfoRequest().apply(block), options)

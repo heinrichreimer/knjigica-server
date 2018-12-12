@@ -65,202 +65,203 @@ import org.elasticsearch.action.admin.indices.validate.query.ValidateQueryRespon
 import org.elasticsearch.action.support.master.AcknowledgedResponse
 import org.elasticsearch.client.IndicesAdminClient
 
-inline fun IndicesAdminClient.exists(block: IndicesExistsRequest.() -> Unit): ActionFuture<IndicesExistsResponse> =
+inline fun IndicesAdminClient.exists(block: IndicesExistsRequest.() -> Unit = {}): ActionFuture<IndicesExistsResponse> =
         exists(IndicesExistsRequest().apply(block))
 
-inline fun IndicesAdminClient.existsAsync(listener: ActionListener<IndicesExistsResponse>, block: IndicesExistsRequest.() -> Unit) =
+inline fun IndicesAdminClient.existsAsync(listener: ActionListener<IndicesExistsResponse>, block: IndicesExistsRequest.() -> Unit = {}) =
         exists(IndicesExistsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.typesExists(block: TypesExistsRequest.() -> Unit): ActionFuture<TypesExistsResponse> =
+inline fun IndicesAdminClient.typesExists(block: TypesExistsRequest.() -> Unit = {}): ActionFuture<TypesExistsResponse> =
         typesExists(TypesExistsRequest().apply(block))
 
-inline fun IndicesAdminClient.typesExistsAsync(listener: ActionListener<TypesExistsResponse>, block: TypesExistsRequest.() -> Unit) =
+inline fun IndicesAdminClient.typesExistsAsync(listener: ActionListener<TypesExistsResponse>, block: TypesExistsRequest.() -> Unit = {}) =
         typesExists(TypesExistsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.stats(block: IndicesStatsRequest.() -> Unit): ActionFuture<IndicesStatsResponse> =
+inline fun IndicesAdminClient.stats(block: IndicesStatsRequest.() -> Unit = {}): ActionFuture<IndicesStatsResponse> =
         stats(IndicesStatsRequest().apply(block))
 
-inline fun IndicesAdminClient.statsAsync(listener: ActionListener<IndicesStatsResponse>, block: IndicesStatsRequest.() -> Unit) =
+inline fun IndicesAdminClient.statsAsync(listener: ActionListener<IndicesStatsResponse>, block: IndicesStatsRequest.() -> Unit = {}) =
         stats(IndicesStatsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.recoveries(block: RecoveryRequest.() -> Unit): ActionFuture<RecoveryResponse> =
+inline fun IndicesAdminClient.recoveries(block: RecoveryRequest.() -> Unit = {}): ActionFuture<RecoveryResponse> =
         recoveries(RecoveryRequest().apply(block))
 
-inline fun IndicesAdminClient.recoveriesAsync(listener: ActionListener<RecoveryResponse>, block: RecoveryRequest.() -> Unit) =
+inline fun IndicesAdminClient.recoveriesAsync(listener: ActionListener<RecoveryResponse>, block: RecoveryRequest.() -> Unit = {}) =
         recoveries(RecoveryRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.segments(block: IndicesSegmentsRequest.() -> Unit): ActionFuture<IndicesSegmentResponse> =
+inline fun IndicesAdminClient.segments(block: IndicesSegmentsRequest.() -> Unit = {}): ActionFuture<IndicesSegmentResponse> =
         segments(IndicesSegmentsRequest().apply(block))
 
-inline fun IndicesAdminClient.segmentsAsync(listener: ActionListener<IndicesSegmentResponse>, block: IndicesSegmentsRequest.() -> Unit) =
+inline fun IndicesAdminClient.segmentsAsync(listener: ActionListener<IndicesSegmentResponse>, block: IndicesSegmentsRequest.() -> Unit = {}) =
         segments(IndicesSegmentsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.shardStores(block: IndicesShardStoresRequest.() -> Unit): ActionFuture<IndicesShardStoresResponse> =
+inline fun IndicesAdminClient.shardStores(block: IndicesShardStoresRequest.() -> Unit = {}): ActionFuture<IndicesShardStoresResponse> =
         shardStores(IndicesShardStoresRequest().apply(block))
 
-inline fun IndicesAdminClient.shardStoresAsync(listener: ActionListener<IndicesShardStoresResponse>, block: IndicesShardStoresRequest.() -> Unit) =
+inline fun IndicesAdminClient.shardStoresAsync(listener: ActionListener<IndicesShardStoresResponse>, block: IndicesShardStoresRequest.() -> Unit = {}) =
         shardStores(IndicesShardStoresRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.create(block: CreateIndexRequest.() -> Unit): ActionFuture<CreateIndexResponse> =
+inline fun IndicesAdminClient.create(block: CreateIndexRequest.() -> Unit = {}): ActionFuture<CreateIndexResponse> =
         create(CreateIndexRequest().apply(block))
 
-inline fun IndicesAdminClient.createAsync(listener: ActionListener<CreateIndexResponse>, block: CreateIndexRequest.() -> Unit) =
+inline fun IndicesAdminClient.createAsync(listener: ActionListener<CreateIndexResponse>, block: CreateIndexRequest.() -> Unit = {}) =
         create(CreateIndexRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.delete(block: DeleteIndexRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.delete(block: DeleteIndexRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         delete(DeleteIndexRequest().apply(block))
 
-inline fun IndicesAdminClient.deleteAsync(listener: ActionListener<AcknowledgedResponse>, block: DeleteIndexRequest.() -> Unit) =
+inline fun IndicesAdminClient.deleteAsync(listener: ActionListener<AcknowledgedResponse>, block: DeleteIndexRequest.() -> Unit = {}) =
         delete(DeleteIndexRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.close(block: CloseIndexRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.close(block: CloseIndexRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         close(CloseIndexRequest().apply(block))
 
-inline fun IndicesAdminClient.closeAsync(listener: ActionListener<AcknowledgedResponse>, block: CloseIndexRequest.() -> Unit) =
+inline fun IndicesAdminClient.closeAsync(listener: ActionListener<AcknowledgedResponse>, block: CloseIndexRequest.() -> Unit = {}) =
         close(CloseIndexRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.open(block: OpenIndexRequest.() -> Unit): ActionFuture<OpenIndexResponse> =
+inline fun IndicesAdminClient.open(block: OpenIndexRequest.() -> Unit = {}): ActionFuture<OpenIndexResponse> =
         open(OpenIndexRequest().apply(block))
 
-inline fun IndicesAdminClient.openAsync(listener: ActionListener<OpenIndexResponse>, block: OpenIndexRequest.() -> Unit) =
+inline fun IndicesAdminClient.openAsync(listener: ActionListener<OpenIndexResponse>, block: OpenIndexRequest.() -> Unit = {}) =
         open(OpenIndexRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.refresh(block: RefreshRequest.() -> Unit): ActionFuture<RefreshResponse> =
+inline fun IndicesAdminClient.refresh(block: RefreshRequest.() -> Unit = {}): ActionFuture<RefreshResponse> =
         refresh(RefreshRequest().apply(block))
 
-inline fun IndicesAdminClient.refreshAsync(listener: ActionListener<RefreshResponse>, block: RefreshRequest.() -> Unit) =
+inline fun IndicesAdminClient.refreshAsync(listener: ActionListener<RefreshResponse>, block: RefreshRequest.() -> Unit = {}) =
         refresh(RefreshRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.flush(block: FlushRequest.() -> Unit): ActionFuture<FlushResponse> =
+inline fun IndicesAdminClient.flush(block: FlushRequest.() -> Unit = {}): ActionFuture<FlushResponse> =
         flush(FlushRequest().apply(block))
 
-inline fun IndicesAdminClient.flushAsync(listener: ActionListener<FlushResponse>, block: FlushRequest.() -> Unit) =
+inline fun IndicesAdminClient.flushAsync(listener: ActionListener<FlushResponse>, block: FlushRequest.() -> Unit = {}) =
         flush(FlushRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.syncedFlush(block: SyncedFlushRequest.() -> Unit): ActionFuture<SyncedFlushResponse> =
+inline fun IndicesAdminClient.syncedFlush(block: SyncedFlushRequest.() -> Unit = {}): ActionFuture<SyncedFlushResponse> =
         syncedFlush(SyncedFlushRequest().apply(block))
 
-inline fun IndicesAdminClient.syncedFlushAsync(listener: ActionListener<SyncedFlushResponse>, block: SyncedFlushRequest.() -> Unit) =
+inline fun IndicesAdminClient.syncedFlushAsync(listener: ActionListener<SyncedFlushResponse>, block: SyncedFlushRequest.() -> Unit = {}) =
         syncedFlush(SyncedFlushRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.forceMerge(block: ForceMergeRequest.() -> Unit): ActionFuture<ForceMergeResponse> =
+inline fun IndicesAdminClient.forceMerge(block: ForceMergeRequest.() -> Unit = {}): ActionFuture<ForceMergeResponse> =
         forceMerge(ForceMergeRequest().apply(block))
 
-inline fun IndicesAdminClient.forceMergeAsync(listener: ActionListener<ForceMergeResponse>, block: ForceMergeRequest.() -> Unit) =
+inline fun IndicesAdminClient.forceMergeAsync(listener: ActionListener<ForceMergeResponse>, block: ForceMergeRequest.() -> Unit = {}) =
         forceMerge(ForceMergeRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.upgrade(block: UpgradeRequest.() -> Unit): ActionFuture<UpgradeResponse> =
+inline fun IndicesAdminClient.upgrade(block: UpgradeRequest.() -> Unit = {}): ActionFuture<UpgradeResponse> =
         upgrade(UpgradeRequest().apply(block))
 
-inline fun IndicesAdminClient.upgradeAsync(listener: ActionListener<UpgradeResponse>, block: UpgradeRequest.() -> Unit) =
+inline fun IndicesAdminClient.upgradeAsync(listener: ActionListener<UpgradeResponse>, block: UpgradeRequest.() -> Unit = {}) =
         upgrade(UpgradeRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.upgradeStatus(block: UpgradeStatusRequest.() -> Unit): ActionFuture<UpgradeStatusResponse> =
+inline fun IndicesAdminClient.upgradeStatus(block: UpgradeStatusRequest.() -> Unit = {}): ActionFuture<UpgradeStatusResponse> =
         upgradeStatus(UpgradeStatusRequest().apply(block))
 
-inline fun IndicesAdminClient.upgradeStatusAsync(listener: ActionListener<UpgradeStatusResponse>, block: UpgradeStatusRequest.() -> Unit) =
+inline fun IndicesAdminClient.upgradeStatusAsync(listener: ActionListener<UpgradeStatusResponse>, block: UpgradeStatusRequest.() -> Unit = {}) =
         upgradeStatus(UpgradeStatusRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getMappings(block: GetMappingsRequest.() -> Unit): ActionFuture<GetMappingsResponse> =
+inline fun IndicesAdminClient.getMappings(block: GetMappingsRequest.() -> Unit = {}): ActionFuture<GetMappingsResponse> =
         getMappings(GetMappingsRequest().apply(block))
 
-inline fun IndicesAdminClient.getMappingsAsync(listener: ActionListener<GetMappingsResponse>, block: GetMappingsRequest.() -> Unit) =
+inline fun IndicesAdminClient.getMappingsAsync(listener: ActionListener<GetMappingsResponse>, block: GetMappingsRequest.() -> Unit = {}) =
         getMappings(GetMappingsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getFieldMappings(block: GetFieldMappingsRequest.() -> Unit): ActionFuture<GetFieldMappingsResponse> =
+inline fun IndicesAdminClient.getFieldMappings(block: GetFieldMappingsRequest.() -> Unit = {}): ActionFuture<GetFieldMappingsResponse> =
         getFieldMappings(GetFieldMappingsRequest().apply(block))
 
-inline fun IndicesAdminClient.getFieldMappingsAsync(listener: ActionListener<GetFieldMappingsResponse>, block: GetFieldMappingsRequest.() -> Unit) =
+inline fun IndicesAdminClient.getFieldMappingsAsync(listener: ActionListener<GetFieldMappingsResponse>, block: GetFieldMappingsRequest.() -> Unit = {}) =
         getFieldMappings(GetFieldMappingsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.putMapping(block: PutMappingRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.putMapping(block: PutMappingRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         putMapping(PutMappingRequest().apply(block))
 
-inline fun IndicesAdminClient.putMappingAsync(listener: ActionListener<AcknowledgedResponse>, block: PutMappingRequest.() -> Unit) =
+inline fun IndicesAdminClient.putMappingAsync(listener: ActionListener<AcknowledgedResponse>, block: PutMappingRequest.() -> Unit = {}) =
         putMapping(PutMappingRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.aliases(block: IndicesAliasesRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.aliases(block: IndicesAliasesRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         aliases(IndicesAliasesRequest().apply(block))
 
-inline fun IndicesAdminClient.aliasesAsync(listener: ActionListener<AcknowledgedResponse>, block: IndicesAliasesRequest.() -> Unit) =
+inline fun IndicesAdminClient.aliasesAsync(listener: ActionListener<AcknowledgedResponse>, block: IndicesAliasesRequest.() -> Unit = {}) =
         aliases(IndicesAliasesRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getAliases(block: GetAliasesRequest.() -> Unit): ActionFuture<GetAliasesResponse> =
+inline fun IndicesAdminClient.getAliases(block: GetAliasesRequest.() -> Unit = {}): ActionFuture<GetAliasesResponse> =
         getAliases(GetAliasesRequest().apply(block))
 
-inline fun IndicesAdminClient.getAliasesAsync(listener: ActionListener<GetAliasesResponse>, block: GetAliasesRequest.() -> Unit) =
+inline fun IndicesAdminClient.getAliasesAsync(listener: ActionListener<GetAliasesResponse>, block: GetAliasesRequest.() -> Unit = {}) =
         getAliases(GetAliasesRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.aliasesExist(block: GetAliasesRequest.() -> Unit): ActionFuture<AliasesExistResponse> =
+inline fun IndicesAdminClient.aliasesExist(block: GetAliasesRequest.() -> Unit = {}): ActionFuture<AliasesExistResponse> =
         aliasesExist(GetAliasesRequest().apply(block))
 
-inline fun IndicesAdminClient.aliasesExistAsync(listener: ActionListener<AliasesExistResponse>, block: GetAliasesRequest.() -> Unit) =
+inline fun IndicesAdminClient.aliasesExistAsync(listener: ActionListener<AliasesExistResponse>, block: GetAliasesRequest.() -> Unit = {}) =
         aliasesExist(GetAliasesRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getIndex(block: GetIndexRequest.() -> Unit): ActionFuture<GetIndexResponse> =
+inline fun IndicesAdminClient.getIndex(block: GetIndexRequest.() -> Unit = {}): ActionFuture<GetIndexResponse> =
         getIndex(GetIndexRequest().apply(block))
 
-inline fun IndicesAdminClient.getIndexAsync(listener: ActionListener<GetIndexResponse>, block: GetIndexRequest.() -> Unit) =
+inline fun IndicesAdminClient.getIndexAsync(listener: ActionListener<GetIndexResponse>, block: GetIndexRequest.() -> Unit = {}) =
         getIndex(GetIndexRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.clearCache(block: ClearIndicesCacheRequest.() -> Unit): ActionFuture<ClearIndicesCacheResponse> =
+inline fun IndicesAdminClient.clearCache(block: ClearIndicesCacheRequest.() -> Unit = {}): ActionFuture<ClearIndicesCacheResponse> =
         clearCache(ClearIndicesCacheRequest().apply(block))
 
-inline fun IndicesAdminClient.clearCacheAsync(listener: ActionListener<ClearIndicesCacheResponse>, block: ClearIndicesCacheRequest.() -> Unit) =
+inline fun IndicesAdminClient.clearCacheAsync(listener: ActionListener<ClearIndicesCacheResponse>, block: ClearIndicesCacheRequest.() -> Unit = {}) =
         clearCache(ClearIndicesCacheRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.updateSettings(block: UpdateSettingsRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.updateSettings(block: UpdateSettingsRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         updateSettings(UpdateSettingsRequest().apply(block))
 
-inline fun IndicesAdminClient.updateSettingsAsync(listener: ActionListener<AcknowledgedResponse>, block: UpdateSettingsRequest.() -> Unit) =
+inline fun IndicesAdminClient.updateSettingsAsync(listener: ActionListener<AcknowledgedResponse>, block: UpdateSettingsRequest.() -> Unit = {}) =
         updateSettings(UpdateSettingsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.analyze(block: AnalyzeRequest.() -> Unit): ActionFuture<AnalyzeResponse> =
+inline fun IndicesAdminClient.analyze(block: AnalyzeRequest.() -> Unit = {}): ActionFuture<AnalyzeResponse> =
         analyze(AnalyzeRequest().apply(block))
 
-inline fun IndicesAdminClient.analyzeAsync(listener: ActionListener<AnalyzeResponse>, block: AnalyzeRequest.() -> Unit) =
+inline fun IndicesAdminClient.analyzeAsync(listener: ActionListener<AnalyzeResponse>, block: AnalyzeRequest.() -> Unit = {}) =
         analyze(AnalyzeRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.putTemplate(block: PutIndexTemplateRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.putTemplate(block: PutIndexTemplateRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         putTemplate(PutIndexTemplateRequest().apply(block))
 
-inline fun IndicesAdminClient.putTemplateAsync(listener: ActionListener<AcknowledgedResponse>, block: PutIndexTemplateRequest.() -> Unit) =
+inline fun IndicesAdminClient.putTemplateAsync(listener: ActionListener<AcknowledgedResponse>, block: PutIndexTemplateRequest.() -> Unit = {}) =
         putTemplate(PutIndexTemplateRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.deleteTemplate(block: DeleteIndexTemplateRequest.() -> Unit): ActionFuture<AcknowledgedResponse> =
+inline fun IndicesAdminClient.deleteTemplate(block: DeleteIndexTemplateRequest.() -> Unit = {}): ActionFuture<AcknowledgedResponse> =
         deleteTemplate(DeleteIndexTemplateRequest().apply(block))
 
-inline fun IndicesAdminClient.deleteTemplateAsync(listener: ActionListener<AcknowledgedResponse>, block: DeleteIndexTemplateRequest.() -> Unit) =
+inline fun IndicesAdminClient.deleteTemplateAsync(listener: ActionListener<AcknowledgedResponse>, block: DeleteIndexTemplateRequest.() -> Unit = {}) =
         deleteTemplate(DeleteIndexTemplateRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getTemplates(block: GetIndexTemplatesRequest.() -> Unit): ActionFuture<GetIndexTemplatesResponse> =
+inline fun IndicesAdminClient.getTemplates(block: GetIndexTemplatesRequest.() -> Unit = {}): ActionFuture<GetIndexTemplatesResponse> =
         getTemplates(GetIndexTemplatesRequest().apply(block))
 
-inline fun IndicesAdminClient.getTemplatesAsync(listener: ActionListener<GetIndexTemplatesResponse>, block: GetIndexTemplatesRequest.() -> Unit) =
+inline fun IndicesAdminClient.getTemplatesAsync(listener: ActionListener<GetIndexTemplatesResponse>, block: GetIndexTemplatesRequest.() -> Unit = {}) =
         getTemplates(GetIndexTemplatesRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.validateQuery(block: ValidateQueryRequest.() -> Unit): ActionFuture<ValidateQueryResponse> =
+inline fun IndicesAdminClient.validateQuery(block: ValidateQueryRequest.() -> Unit = {}): ActionFuture<ValidateQueryResponse> =
         validateQuery(ValidateQueryRequest().apply(block))
 
-inline fun IndicesAdminClient.validateQueryAsync(listener: ActionListener<ValidateQueryResponse>, block: ValidateQueryRequest.() -> Unit) =
+inline fun IndicesAdminClient.validateQueryAsync(listener: ActionListener<ValidateQueryResponse>, block: ValidateQueryRequest.() -> Unit = {}) =
         validateQuery(ValidateQueryRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.getSettings(block: GetSettingsRequest.() -> Unit): ActionFuture<GetSettingsResponse> =
+inline fun IndicesAdminClient.getSettings(block: GetSettingsRequest.() -> Unit = {}): ActionFuture<GetSettingsResponse> =
         getSettings(GetSettingsRequest().apply(block))
 
-inline fun IndicesAdminClient.getSettingsAsync(listener: ActionListener<GetSettingsResponse>, block: GetSettingsRequest.() -> Unit) =
+inline fun IndicesAdminClient.getSettingsAsync(listener: ActionListener<GetSettingsResponse>, block: GetSettingsRequest.() -> Unit = {}) =
         getSettings(GetSettingsRequest().apply(block), listener)
 
-inline fun IndicesAdminClient.resizeIndex(targetIndex: String, sourceIndex: String, block: ResizeRequest.() -> Unit): ActionFuture<ResizeResponse> =
+inline fun IndicesAdminClient.resizeIndex(targetIndex: String, sourceIndex: String, block: ResizeRequest.() -> Unit = {}): ActionFuture<ResizeResponse> =
         resizeIndex(ResizeRequest(targetIndex, sourceIndex).apply(block))
 
-inline fun IndicesAdminClient.resizeIndexAsync(targetIndex: String, sourceIndex: String, listener: ActionListener<ResizeResponse>, block: ResizeRequest.() -> Unit) =
+inline fun IndicesAdminClient.resizeIndexAsync(targetIndex: String, sourceIndex: String, listener: ActionListener<ResizeResponse>, block: ResizeRequest.() -> Unit = {}) =
         resizeIndex(ResizeRequest(targetIndex, sourceIndex).apply(block), listener)
 
 fun IndicesAdminClient.rolloverIndex(request: RolloverRequest): ActionFuture<RolloverResponse> = 
         rolloversIndex(request) // Fixing typo in IndicesAdminClient.
-inline fun IndicesAdminClient.rolloverIndex(alias: String, newIndexName: String, block: RolloverRequest.() -> Unit): ActionFuture<RolloverResponse> =
+
+inline fun IndicesAdminClient.rolloverIndex(alias: String, newIndexName: String, block: RolloverRequest.() -> Unit = {}): ActionFuture<RolloverResponse> =
         rolloverIndex(RolloverRequest(alias, newIndexName).apply(block))
 
-inline fun IndicesAdminClient.rolloverIndexAsync(alias: String, newIndexName: String, listener: ActionListener<RolloverResponse>, block: RolloverRequest.() -> Unit) =
+inline fun IndicesAdminClient.rolloverIndexAsync(alias: String, newIndexName: String, listener: ActionListener<RolloverResponse>, block: RolloverRequest.() -> Unit = {}) =
         rolloverIndex(RolloverRequest(alias, newIndexName).apply(block), listener)
