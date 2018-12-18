@@ -17,11 +17,11 @@ object OperaLibIndexer {
         CORPUS.listFiles()
                 .asIterable()
                 .parallelMap(::toLibretto)
-                .let { Indexer.index(client, it) }
+                .let { LibrettoIndexer.chunked(70).index(client, it) }
     }
 
     private suspend fun toLibretto(file: File): Libretto {
-        println("Parsing OperaLib libretto at '$file.absolutePath'.")
+        println("Parsing OperaLib libretto at '${file.absolutePath}'.")
         return PARSER.parse(file.source().buffer())
     }
 }

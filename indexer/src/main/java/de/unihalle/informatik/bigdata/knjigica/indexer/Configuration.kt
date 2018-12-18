@@ -9,6 +9,6 @@ object Configuration {
     val CLIENT = restHighLevelClientOf(HOST)
 
 
-    const val LIBRETTO_INDEX = "libretti"
+    const val INDEX = "libretti"
     const val LIBRETTO_TYPE = "libretto"
 }
