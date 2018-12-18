@@ -2,6 +2,7 @@ package de.unihalle.informatik.bigdata.knjigica.parser
 
 import de.unihalle.informatik.bigdata.knjigica.model.*
 import de.unihalle.informatik.bigdata.knjigica.model.Annotation
+import de.unihalle.informatik.bigdata.knjigica.parser.architecture.Parser
 import de.unihalle.informatik.bigdata.knjigica.parser.util.languageRange
 import okio.BufferedSource
 import org.jsoup.Jsoup
@@ -13,34 +14,34 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
 
-// TODO Remove debug logging after testing.
 class OperaLibLibrettoParser(
         private val baseUri: String = ""
 ) : Parser<BufferedSource, Libretto> {
 
     companion object {
-        val LANGUAGE_SCRIPT_REGEX = Regex("menuEUrid\\(\\W*?'([a-z]{3})'\\W*?\\)\\W*?;")
-        val PREMIERE_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMMM uuuu")!!
-        val ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX = Regex("[-,. ]")
-        val SURROUNDING_BRACES_REGEX = Regex("[\\[(](.*)[])]")
-        val CONJUNCTION_REGEX = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
-        val TEXT_AUTHOR_REGEX = Regex("\\b(libretto|text|текст|livret)\\b", RegexOption.IGNORE_CASE)
-        val MUSIC_AUTHOR_REGEX = Regex("\\b(musica|musik|music|musique|музыка)\\b", RegexOption.IGNORE_CASE)
+        private val LANGUAGE_SCRIPT_REGEX = Regex("menuEUrid\\(\\W*?'([a-z]{3})'\\W*?\\)\\W*?;")
+        private val PREMIERE_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMMM uuuu")!!
+        private val ILLEGAL_ROLE_VOICE_CHARACTERS_REGEX = Regex("[-,. ]")
+        private val SURROUNDING_BRACES_REGEX = Regex("[\\[(](.*)[])]")
+        private val CONJUNCTION_REGEX = Regex("\\W*\\b(and|e|et|und)\\b\\W*", RegexOption.IGNORE_CASE)
+        private val TEXT_AUTHOR_REGEX = Regex("\\b(libretto|text|текст|livret)\\b", RegexOption.IGNORE_CASE)
+        private val MUSIC_AUTHOR_REGEX = Regex("\\b(musica|musik|music|musique|музыка)\\b", RegexOption.IGNORE_CASE)
 
-        val UNKNOWN_VOICE_REGEX = Regex("unknown|inconnu|unbekannt|неизвестныи|sconosciuto", RegexOption.IGNORE_CASE)
-        val OTHER_VOICE_REGEX = Regex("other|autre|andere|другои|altro", RegexOption.IGNORE_CASE)
-        val SOPRANO_VOICE_REGEX = Regex("soprano?|сопрано", RegexOption.IGNORE_CASE)
-        val MEZZO_SOPRANO_VOICE_REGEX = Regex("mezzosoprano?|меццосопрано", RegexOption.IGNORE_CASE)
-        val ALTO_VOICE_REGEX = Regex("alto?|альт", RegexOption.IGNORE_CASE)
-        val CONTRALTO_VOICE_REGEX = Regex("contra?alt(r?o)?|контральто", RegexOption.IGNORE_CASE)
-        val TENOR_VOICE_REGEX = Regex("tenore?|тенор", RegexOption.IGNORE_CASE)
-        val BARITONE_VOICE_REGEX = Regex("bar[iy]ton[eo]?|баритон", RegexOption.IGNORE_CASE)
-        val BASSO_VOICE_REGEX = Regex("bass[eo]?|бас", RegexOption.IGNORE_CASE)
+        private val UNKNOWN_VOICE_REGEX = Regex("unknown|inconnu|unbekannt|неизвестныи|sconosciuto", RegexOption.IGNORE_CASE)
+        private val OTHER_VOICE_REGEX = Regex("other|autre|andere|другои|altro", RegexOption.IGNORE_CASE)
+        private val SOPRANO_VOICE_REGEX = Regex("soprano?|сопрано", RegexOption.IGNORE_CASE)
+        private val MEZZO_SOPRANO_VOICE_REGEX = Regex("mezzosoprano?|меццосопрано", RegexOption.IGNORE_CASE)
+        private val ALTO_VOICE_REGEX = Regex("alto?|альт", RegexOption.IGNORE_CASE)
+        private val CONTRALTO_VOICE_REGEX = Regex("contra?alt(r?o)?|контральто", RegexOption.IGNORE_CASE)
+        private val TENOR_VOICE_REGEX = Regex("tenore?|тенор", RegexOption.IGNORE_CASE)
+        private val BARITONE_VOICE_REGEX = Regex("bar[iy]ton[eo]?|баритон", RegexOption.IGNORE_CASE)
+        private val BASSO_VOICE_REGEX = Regex("bass[eo]?|бас", RegexOption.IGNORE_CASE)
 
-        val UNWRAP_FIRST_GROUP_TRANSFORMATION: (MatchResult) -> String = { it.groups[1]?.value ?: "" }
-        val COMBINING_DIACRITICAL_MARKS_REGEX = Regex("[̀-ͯ]")
-        val SIDE_ROLE_DELIMITER_REGEX = Regex("[.;]")
-        val SIDE_ROLE_DELIMITER_FALLBACK_REGEX = Regex("[,]")
+        private val UNWRAP_FIRST_GROUP_TRANSFORMATION: (MatchResult) -> String = { it.groups[1]?.value ?: "" }
+        private val COMBINING_DIACRITICAL_MARKS_REGEX = Regex("\\p{InCombiningDiacriticalMarks}")
+        private val SIDE_ROLE_DELIMITER_REGEX = Regex("[.;]")
+        private val SIDE_ROLE_DELIMITER_FALLBACK_REGEX = Regex("[,]")
+        private val AUTHOR_DELIMITER_REGEX = Regex("[,]")
     }
 
     override suspend fun parse(source: BufferedSource): Libretto {
@@ -138,8 +139,7 @@ class OperaLibLibrettoParser(
 
     private fun hasCombinedAuthor(document: Document): Boolean {
         return document
-                .select("p[class=\"rid_info\"]")
-                .get(1)
+                .select("p[class=\"rid_info\"]")[1]
                 .wholeText()
                 .lineSequence()
                 .firstOrNull()
@@ -150,27 +150,52 @@ class OperaLibLibrettoParser(
     }
 
     private fun parseAuthors(document: Document): Set<Author> {
+
+        fun String.getCoreAuthorName(): String {
+            return splitToSequence(' ')
+                    .filter { word -> word.none(Char::isLowerCase) }
+                    .joinToString(separator = " ")
+                    .takeIf(String::isNotBlank)
+                    ?: this
+        }
+
         val potentialAuthorElements = document
-                .select("p[class=\"rid_info\"]")
-                .get(1)
+                .select("p[class=\"rid_info\"]")[1]
                 .select(" > b")
 
-        val authorName = potentialAuthorElements[0].text()
-
-        return if (hasCombinedAuthor(document)) {
-            setOf(
+        val authorNames = potentialAuthorElements[0]
+                .text()
+                .split(AUTHOR_DELIMITER_REGEX)
+        val authors = authorNames
+                .mapTo(mutableSetOf()) {
                     Author(
-                            name = authorName,
-                            scopes = setOf(Author.Scope.TEXT, Author.Scope.MUSIC)
+                            name = it.getCoreAuthorName(),
+                            fullName = it,
+                            scopes = setOf(Author.Scope.TEXT)
                     )
-            )
-        } else {
-            val musicAuthorName = potentialAuthorElements[1].text()
-            setOf(
-                    Author(authorName, scope = Author.Scope.TEXT),
-                    Author(musicAuthorName, scope = Author.Scope.MUSIC)
-            )
+                }
+
+        if (hasCombinedAuthor(document)) {
+            // Don't parse music authors separately. Instead just add the music scope to each author.
+            return authors
+                    .mapTo(mutableSetOf()) { author ->
+                        author.copy(scopes = author.scopes + Author.Scope.MUSIC)
+                    }
         }
+
+        val musicAuthorNames = potentialAuthorElements[1]
+                .text()
+                .split(AUTHOR_DELIMITER_REGEX)
+        val musicAuthors = musicAuthorNames
+                .mapTo(mutableSetOf()) {
+                    Author(
+                            name = it.getCoreAuthorName(),
+                            fullName = it,
+                            scope = Author.Scope.MUSIC
+                    )
+                }
+
+        return authors + musicAuthors
     }
 
     private fun parseRoles(document: Document): Set<Role> {
@@ -222,8 +247,7 @@ class OperaLibLibrettoParser(
 
     private fun parseSideRoles(document: Document): Set<Role> {
         return document
-                .select("p[class=\"rid_info\"]")
-                .get(2)
+                .select("p[class=\"rid_info\"]")[2]
                 .wholeText()
                 .split("\n\n")
                 .map {
@@ -298,13 +322,7 @@ class OperaLibLibrettoParser(
 
     private fun parsePlotRoleNames(element: Element) = element.text().split(CONJUNCTION_REGEX).toSet()
 
-    private fun parsePlotText(element: Element, roleNames: Set<String>): Plot.Text {
-        val names = roleNames
-                .also {
-                    if (it.isEmpty()) {
-                        System.err.println("No role name specified.")
-                    }
-                }
+    private fun parsePlotText(element: Element, names: Set<String>): Plot.Text {
         val text = element
                 .select("> p:not(.rid_indt)")
                 .eachText()
@@ -316,6 +334,14 @@ class OperaLibLibrettoParser(
                 .filter(String::isNotBlank)
                 .takeIf { it.isNotEmpty() }
                 ?.joinToString("\n")
+
+        if (names.isEmpty()) {
+            val snippet = text
+                    .replace('\n', ' ')
+                    .toCharArray()
+                    .joinToString(separator = "", limit = 50)
+            System.err.println("No role name specified for text \"$snippet\".")
+        }
 
         return Plot.Text(names, text, instruction)
     }
@@ -346,7 +372,7 @@ class OperaLibLibrettoParser(
             "fra" -> Locale.FRENCH
             "deu" -> Locale.GERMAN
             "eng" -> Locale.ENGLISH
-            "rus" -> Locale.Builder().setLanguage("ru").setScript("Cyrl").build();
+            "rus" -> Locale.Builder().setLanguage("ru").setScript("Cyrl").build()
             else -> Locale.ITALIAN
         }
     }

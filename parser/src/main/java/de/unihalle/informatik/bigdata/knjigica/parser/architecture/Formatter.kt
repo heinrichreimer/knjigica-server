@@ -1,4 +1,4 @@
-package de.unihalle.informatik.bigdata.knjigica.parser
+package de.unihalle.informatik.bigdata.knjigica.parser.architecture
 
 import okio.Sink
 
