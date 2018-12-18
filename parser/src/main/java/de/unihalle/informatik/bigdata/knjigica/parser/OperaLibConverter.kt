@@ -12,8 +12,8 @@ import okio.BufferedSource
 import java.io.File
 
 object OperaLibConverter : Converter<Libretto>() {
-    private val OPERA_LIB_HTML_CORPUS = File("corpus/crawl/html/opera_lib_libretto/")
-    private val OPERA_LIB_JSON_CORPUS = File("corpus/crawl/json/opera_lib_libretto/")
+    private val OPERA_LIB_HTML_CORPUS = File("corpus/crawl/html/opera_lib/")
+    private val OPERA_LIB_JSON_CORPUS = File("corpus/crawl/json/opera_lib/")
 
     private val ILLEGAL_FILE_NAME_CHARACTERS = Regex("[\\W_]")
 

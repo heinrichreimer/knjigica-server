@@ -1,5 +1,6 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer
 
+import de.unihalle.informatik.bigdata.knjigica.indexer.architecture.chunked
 import de.unihalle.informatik.bigdata.knjigica.indexer.util.parallelMap
 import de.unihalle.informatik.bigdata.knjigica.model.Libretto
 import de.unihalle.informatik.bigdata.knjigica.parser.OperaLibLibrettoParser
@@ -9,7 +10,7 @@ import org.elasticsearch.client.RestHighLevelClient
 import java.io.File
 
 object OperaLibIndexer {
-    private val CORPUS = File("corpus/crawl/html/opera_lib_libretto/")
+    private val CORPUS = File("corpus/crawl/html/opera_lib/")
     private val PARSER = OperaLibLibrettoParser(CORPUS.absolutePath)
 
     suspend fun index(client: RestHighLevelClient) {

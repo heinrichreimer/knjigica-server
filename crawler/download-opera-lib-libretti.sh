@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-OPERA_LIB_LIBRETTO_URLS_PATH="../corpus/crawl/opera_lib_libretto_urls.txt"
-OPERA_LIB_LIBRETTO_CRAWL_PATH="../corpus/crawl/html/opera_lib_libretto"
+OPERA_LIB_LIBRETTO_URLS_PATH="../corpus/crawl/opera_lib_urls.txt"
+OPERA_LIB_LIBRETTO_CRAWL_PATH="../corpus/crawl/html/opera_lib"
 # Fetch a list of URLs to OperaLib libretti.
 curl --location --silent "http://www.operalib.eu/ope_alfatit_eng.html" \
     | hxnormalize -x \

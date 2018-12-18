@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-KAREOL_LIBRETTO_URLS_PATH="../corpus/crawl/kareol_libretto_urls.txt"
-KAREOL_LIBRETTO_CRAWL_PATH="../corpus/crawl/html/kareol_libretto"
+KAREOL_LIBRETTO_URLS_PATH="../corpus/crawl/kareol_urls.txt"
+KAREOL_LIBRETTO_CRAWL_PATH="../corpus/crawl/html/kareol"
 # Fetch a list of URLs to Kareol libretti.
 curl --location --silent "http://www.kareol.es/obra.htm" \
     | hxnormalize -x \
