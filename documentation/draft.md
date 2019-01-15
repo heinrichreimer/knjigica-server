@@ -127,15 +127,31 @@ und diese zunächst unverändert abspeichert.
 2. Formatter, der das Objekt in übersichtliches JSON Dokument umwandelt, 
     welches von Suchmaschine (Elasticsearch) als Referenz verwendet wird
 
+### Cluster/Engine
+
+Was ist (sehr grob) Elasticsearch und warum verwenden wir es?
+
+Zum Testen der Suchmaschine wird ein Elasticsearch Cluster mit zwei Knoten aufgesetzt.
+Diese Knoten, sowie die Monitoring-Tools Kibana[TODO Add footnote] und Cerbero[TODO Add footnote] 
+werden als Docker-Container[TODO Add footnote] ausgeführt und über Docker-Compose verwaltet.
+
 ### Indizieren
 - mittels Java
 - Verwendung von Elasticsearch-REST-Client
   - Elasticsearch ist "üblich" in IR
 - Anpassung der Umgebung
 
-### Such-Engine
-
-Was ist (sehr grob) Elasticsearch und warum verwenden wir es
+Das Indizieren der Libretti in der selben Struktur, 
+die zum Speichern verwendet wurde, war nicht erfolgreich, 
+da Elasticsearch keinen standardmäßigen Support für Arrays aus Objekten zur Verfügung stellt.
+So können die Textfragmente im Plot nicht richtig indiziert und somit nicht nach ihnen gesucht werden.
+Um dies zu umgehen, werden zum Indizieren leicht veränderte Datenstrukturen verwendet:
+Statt die Textfragmente in dem selben Index, wie die Libretti zu speichern, 
+werden sie in einem separaten Index gespeichert, 
+sowie die Informationen zur Absatznummerierung (Position im Libretto) mit eingefügt. 
+Außerdem werden Instruktion bzw. Text zu einem Datentyp mit optionalen Feldern zusammengefügt, 
+sodass ein Index mit Feldern zur Position im Libretto, 
+sowie Instruktionen und/oder gesprochener Text entstehen.
 
 ### Benutzeroberfläche
 
