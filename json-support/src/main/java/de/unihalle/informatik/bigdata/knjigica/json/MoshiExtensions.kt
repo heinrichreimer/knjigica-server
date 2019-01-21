@@ -1,9 +1,10 @@
-package de.unihalle.informatik.bigdata.knjigica.parser.json
+package de.unihalle.informatik.bigdata.knjigica.json
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
+import kotlin.reflect.KClass
 
 fun JsonReader.expectName(name: String): String {
     val nextName = nextName()
@@ -28,10 +29,12 @@ fun <R> JsonWriter.objectValue(block: JsonWriter.() -> R): R {
     return result
 }
 
+fun <T : Any> Moshi.adapter(type: KClass<T>): JsonAdapter<T> = adapter(type.java)
+
 inline fun <reified T> Moshi.adapter(): JsonAdapter<T> {
     return adapter(T::class.java)
 }
 
-inline fun <reified T> Moshi.Builder.add(jsonAdapter: JsonAdapter<T>): Moshi.Builder {
-    return add(T::class.java, jsonAdapter)
+fun <T : Any> Moshi.Builder.add(type: KClass<T>, jsonAdapter: JsonAdapter<T>): Moshi.Builder {
+    return add(type.java, jsonAdapter)
 }

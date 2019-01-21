@@ -1,4 +1,4 @@
-package de.unihalle.informatik.bigdata.knjigica.parser.json
+package de.unihalle.informatik.bigdata.knjigica.json
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
