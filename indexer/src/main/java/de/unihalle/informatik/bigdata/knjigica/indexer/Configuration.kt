@@ -1,6 +1,6 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer
 
-import de.unihalle.informatik.bigdata.knjigica.indexer.util.elasticsearch.rest.restHighLevelClientOf
+import com.heinrichreimer.elasticsearch.kotlin.dsl.rest.restHighLevelClientOf
 import org.apache.http.HttpHost
 
 object Configuration {
@@ -9,6 +9,6 @@ object Configuration {
     val CLIENT = restHighLevelClientOf(HOST)
 
 
-    const val INDEX = "libretti"
+    const val LIBRETTO_INDEX = "libretti"
     const val LIBRETTO_TYPE = "libretto"
 }

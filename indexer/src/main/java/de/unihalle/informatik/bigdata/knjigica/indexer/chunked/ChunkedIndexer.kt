@@ -1,10 +1,9 @@
-package de.unihalle.informatik.bigdata.knjigica.indexer.architecture
+package de.unihalle.informatik.bigdata.knjigica.indexer.chunked
 
+import de.unihalle.informatik.bigdata.knjigica.indexer.architecture.Indexer
 import org.elasticsearch.client.RestHighLevelClient
 
-private const val DEFAULT_CHUNK_SIZE = 100
-
-class ChunkedIndexer<T>(
+internal class ChunkedIndexer<T>(
         private val indexer: Indexer<T>,
         private val chunkSize: Int = DEFAULT_CHUNK_SIZE
 ) : Indexer<T> {
@@ -15,6 +14,8 @@ class ChunkedIndexer<T>(
                     indexer.index(client, chunk)
                 }
     }
-}
 
-fun <T> Indexer<T>.chunked(chunkSize: Int = DEFAULT_CHUNK_SIZE): Indexer<T> = ChunkedIndexer(this)
+    companion object {
+        internal const val DEFAULT_CHUNK_SIZE = 100
+    }
+}
