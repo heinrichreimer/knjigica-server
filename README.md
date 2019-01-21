@@ -1,11 +1,12 @@
-# Knjigica - opera libretti search engine
+# Knjigica - the libretti search engine
 
 ## Installation
 
 1. Install [Docker CE](https://store.docker.com/search?type=edition&offering=community)
-1. Run `./run-elasticsearch.sh` in the terminal to start the Elasticsearch single node cluster on port 9300.
+1. Run `./run-elasticsearch.sh` in the terminal to start the Elasticsearch cluster on port 9300.
 
 ## Idea
+(opera text = libretto)
 
 **TODO**
 
@@ -17,4 +18,5 @@
   - http://www.aria-database.com/search.php?sid=f67bc4a8935043d74f698dec67bde46f&startResults=0&operaBrowse=Opera
 2. Implement Elastic search starter project
 
-See the [roadmap](roadmap.md).
+## Related projects
+- [Java client](https://github.com/heinrichreimer/knjigica-client)
