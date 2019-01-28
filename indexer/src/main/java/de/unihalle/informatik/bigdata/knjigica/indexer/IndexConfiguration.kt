@@ -9,4 +9,14 @@ sealed class IndexConfiguration(
     object Opera : IndexConfiguration("operas", "opera")
     object Plot : IndexConfiguration("plots", "plot")
     object Role : IndexConfiguration("roles", "role")
+
+    companion object {
+        val ALL = arrayOf(
+                Annotation,
+                Author,
+                Opera,
+                Plot,
+                Role
+        )
+    }
 }
