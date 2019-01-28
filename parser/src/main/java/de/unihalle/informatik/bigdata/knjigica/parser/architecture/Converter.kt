@@ -1,7 +1,9 @@
 package de.unihalle.informatik.bigdata.knjigica.parser.architecture
 
+import de.unihalle.informatik.bigdata.knjigica.parser.util.parallelForEach
 import okio.*
 import java.io.File
+import kotlin.system.measureTimeMillis
 
 abstract class Converter<T> {
     abstract val parser: Parser<BufferedSource, T>
@@ -12,27 +14,25 @@ abstract class Converter<T> {
     suspend fun convert(inputDirectory: File, outputDirectory: File) {
         val inputFiles = inputDirectory
                 .listFiles()
-                .asIterable()
-        inputFiles.forEach { input ->
-            //FIXME Use parallelForEach again.
-            println("Opening source buffer for file '${input.path}'.")
-            val source = input
-                    .source()
-                    .buffer()
-            println("Parsing.")
-            val data = parser.parse(source)
+        val time = measureTimeMillis {
+            inputFiles
+                    .asIterable()
+                    .parallelForEach { input ->
+                        val source = input
+                                .source()
+                                .buffer()
+                        println("Parsing from source file '${input.path}'.")
+                        val data = parser.parse(source)
 
-            val output = File(outputDirectory, namingStrategy(data, input))
-            println("Opening sink buffer for file '${output.path}'.")
-            val sink = output
-                    .sink()
-                    .buffer()
-            println("Formatting.")
-            formatter.format(sink, data)
-            println("Done.")
-            output.useLines { it.forEach { println(it) } }
-            println("Printed.")
-            // FIXME This cuts off the JSON at some point.
+                        val output = File(outputDirectory, namingStrategy(data, input))
+                        val sink = output
+                                .sink()
+                                .buffer()
+                        println("Formatting to file '${output.path}'.")
+                        formatter.format(sink, data)
+                        sink.emit()
+                    }
         }
+        println("Converting ${inputFiles.size} files took $time ms (${time / inputFiles.size} ms/file).")
     }
 }
