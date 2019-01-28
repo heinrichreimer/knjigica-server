@@ -30,7 +30,9 @@ object OperaLibConverter : Converter<Libretto>() {
                             .joinToString(separator = "_")
                 }
 
-                val author = libretto.authors.find { Author.Scope.TEXT in it.scopes } ?: libretto.authors.first()
+                val author = libretto.authors
+                        .find { Author.Scope.TEXT in it.scopes }
+                        ?: libretto.authors.first()
                 val authorName = author.name.normalizeToSnakeCase()
                 val title = libretto.title.normalizeToSnakeCase()
 
