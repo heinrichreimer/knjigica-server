@@ -3,7 +3,7 @@ package de.unihalle.informatik.bigdata.knjigica.indexer
 import de.unihalle.informatik.bigdata.knjigica.indexer.chunked.chunked
 import de.unihalle.informatik.bigdata.knjigica.indexer.util.parallelMap
 import de.unihalle.informatik.bigdata.knjigica.model.Libretto
-import de.unihalle.informatik.bigdata.knjigica.parser.OperaLibLibrettoParser
+import de.unihalle.informatik.bigdata.knjigica.parser.JsonLibrettoParserFormatter
 import de.unihalle.informatik.bigdata.knjigica.parser.architecture.Parser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -14,8 +14,8 @@ import org.elasticsearch.client.RestHighLevelClient
 import java.io.File
 
 object OperaLibIndexer {
-    private val OPERA_LIB_HTML_CORPUS = File("corpus/crawl/html/opera_lib/") // FIXME Replace with JSON corpus.
-    private val PARSER: Parser<BufferedSource, Libretto> = OperaLibLibrettoParser(OPERA_LIB_HTML_CORPUS.absolutePath)
+    private val OPERA_LIB_HTML_CORPUS = File("corpus/crawl/json/opera_lib/")
+    private val PARSER: Parser<BufferedSource, Libretto> = JsonLibrettoParserFormatter
 
     @JvmStatic
     fun main(args: Array<String>) = runBlocking(Dispatchers.IO) {
