@@ -6,7 +6,6 @@ import de.unihalle.informatik.bigdata.knjigica.indexer.model.*
 import de.unihalle.informatik.bigdata.knjigica.indexer.model.Annotation
 import de.unihalle.informatik.bigdata.knjigica.json.LanguageRangeAdapter
 import de.unihalle.informatik.bigdata.knjigica.json.LocalDateAdapter
-import de.unihalle.informatik.bigdata.knjigica.json.LocalDateRangeAdapter
 import de.unihalle.informatik.bigdata.knjigica.json.UUIDAdapter
 import de.unihalle.informatik.bigdata.knjigica.parser.architecture.Formatter
 import okio.BufferedSink
@@ -14,7 +13,7 @@ import okio.BufferedSink
 object JsonFormatters {
     private val moshi: Moshi = Moshi.Builder()
             .add(LocalDateAdapter)
-            .add(LocalDateRangeAdapter)
+            .add(ElasticsearchDateRangeAdapter)
             .add(LanguageRangeAdapter)
             .add(UUIDAdapter)
             .add(KotlinJsonAdapterFactory())
