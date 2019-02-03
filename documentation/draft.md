@@ -129,6 +129,9 @@ und diese zunächst unverändert abspeichert.
 
 ### Cluster/Engine
 
+retrieval modell elastic search herausfinden
+hitscores auf 2 nachkommastellen runden
+
 Was ist (sehr grob) Elasticsearch und warum verwenden wir es?
 
 Zum Testen der Suchmaschine wird ein Elasticsearch Cluster mit zwei Knoten aufgesetzt.
