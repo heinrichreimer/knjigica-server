@@ -1,17 +1,14 @@
-<topic number="05" type="Autor">
+<topic number="05" type="author">
 
-    <query>Rinaldo Capua</query>
+    <query>rinaldo capua</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Rinaldo da Capua"
+        Welche Libretti hat der Autor "Rinaldo da Capua" geschrieben?
     </description>
 
-    <narrative>
-        Name ist in der Suchanfrage unvollständg. Gesucht sollte "Rinaldo da Capua" werden
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Es werden Aussagen der Rolle Rinaldo ausgegeben, welche jedoch nichts mit dem Autor zu tun hat.
+        Es werden Aussagen der Rolle "Rinaldo" ausgegeben,
+        jedoch nicht Libretti oder Aussagen des Autors "Rinaldo da Capua" gefunden.
     </result>
 
 </topic>

@@ -1,17 +1,14 @@
-<topic number="08" type="Autor">
+<topic number="08" type="author">
 
-    <query>Vincenzo Belini</query>
+    <query>vincenzo belini</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Vincenzo Bellini"
+        Libretti von "Vincenzo Bellini"
     </description>
 
-    <narrative>
-        Nachname des Autors falsch geschrieben. Es soll nach Bellini gesucht werden
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Es werden Ergebnisse ausgegeben, welche "Vincenzo" enthalten. "Belini" wurde in diesem Zusammenhang nicht gefunden.
+        Es werden Aussagen ausgegeben, die das Wort "Vincenzo" enthalten,
+        jedoch nicht Libretti oder Aussagen des Autors "Bellini" gefunden.
     </result>
 
 </topic>

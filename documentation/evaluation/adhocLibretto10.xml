@@ -1,17 +1,13 @@
-<topic number="10" type="Autor">
+<topic number="10" type="author">
 
-    <query>Cavallo Leon</query>
+    <query>leon cavallo</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Leoncavallo"
+        Libretti von Autoren mit dem namen "Ruggero Leoncavallo"
     </description>
 
-    <narrative>
-        Nachname des Autors falsch geschrieben. Es soll nach "Leoncavallo" gesucht werden
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Es werden Aussagen über bestimmte Dinge ausgegeben, welche entweder "Cavallo" oder "Leon" enthalten.
+        Es werden Aussagen ausgegeben, welche entweder das Wort "Cavallo" oder "Leon" enthalten.
     </result>
 
 </topic>

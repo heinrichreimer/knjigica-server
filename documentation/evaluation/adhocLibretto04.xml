@@ -1,14 +1,23 @@
-<topic number="04" type="Autor">
+<topic number="04" type="author">
 
-    <query>Komponist Sposi</query>
+    <query>komponist sposi</query>
 
     <description>
-        Wer ist der Urheber der Musik
+        Urheber der Musik der Oper "I promessi sposi"
     </description>
 
     <narrative>
-        Die Suche muss den Autor der Musik herausgeben
+        Anderen Komponisten sollten nicht mit ausgegeben werden.
     </narrative>
+
+    <subtopic number="1" type="author">
+        Welcher Autor hat den Text der Oper verfasst?
+    </subtopic>
+
+    <subtopic number="2" type="opera">
+        Welche Opern hat Errico Petrella komponiert?
+    </subtopic>
+
     <!--
     Result accuracy:
      -1: Worse than expected
@@ -17,7 +26,7 @@
     Result version: Search engine version, for comparison.
     -->
     <result accuracy="-1" version="0.1.0">
-        Nur Ergebnisse wörtlicher Rede (Sposi bedeutet "heiraten" in italienisch).
+        Nur wörtliche Rede mit dem italienischen Wort "sposi" (dt.: "heiraten") wird gefunden.
     </result>
 
 </topic>

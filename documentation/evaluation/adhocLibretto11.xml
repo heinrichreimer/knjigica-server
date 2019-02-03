@@ -1,18 +1,17 @@
-<topic number="11" type="Autor">
+<topic number="11" type="author">
 
-    <query>Lifetime Wilibald Gluck</query>
+    <query>leben gluck</query>
 
     <description>
-        Lebensspanne von "Christoph Willibald Gluck"
+        Wann hat "Christoph Willibald Gluck" gelebt?
     </description>
 
     <narrative>
-        Name de Autors nicht vollständig und kein "ll".
-        Suche soll Geburts- und Todesjahr von "Christoph Willibald Gluck" ausgeben
+        Das Geburts-, sowie das Todesjahr von "Christoph Willibald Gluck" sollen ausgeben werden.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">
-        Es werden keine Treffer erzielt.
+        Es werden keine Treffer gefunden.
     </result>
 
 </topic>

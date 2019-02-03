@@ -1,18 +1,19 @@
-<topic number="21" type="Akt">
+<topic number="21" type="section">
 
-    <query>Akt 2 Schauspieldirektor</query>
+    <query>akt 2 schauspieldirektor</query>
 
     <description>
-        Wie heißt der 2.Akt von "Der Schauspieldirektor"?
+        Wie heißt der zweite Akt von "Der Schauspieldirektor"?
     </description>
 
     <narrative>
-        Die Suche muss den 2.ten Auftritt von "der Schauspieldirektor" ergeben, es diese sind im Text an Stelle der Akte
-        genannt und ist synonym.
+        Die Begriffe "Auftritt" und "Akt" sind synonym.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">
-        Es werden Treffer ausgegeben, welche die Zahl "2" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
+        Es werden Aussagen und Regieanweisungen gefunden,
+        welche die Ziffer "2" enthalten.
+        Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 
 </topic>

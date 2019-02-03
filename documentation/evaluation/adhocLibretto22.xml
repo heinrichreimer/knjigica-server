@@ -1,18 +1,19 @@
-<topic number="22" type="Akt">
+<topic number="22" type="section">
 
-    <query>Auftritt 9 Schauspieldirektor</query>
+    <query>auftritt 9 Schauspieldirektor</query>
 
     <description>
-        Wie heißt der 9.Auftritt von "Der Schauspieldirektor"?
+        Wie heißt der neunte Auftritt von "Der Schauspieldirektor"?
     </description>
 
     <narrative>
-        Die Suche muss den 9.Auftritt von "der Schauspieldirektor" ergeben, der im text jedoch als "Letzter Auftritt"
-        beschrieben ist.
+        Die Suche kann den "Letzter Auftritt" des "Der Schauspieldirektor" ergeben,
+        der im Libretto hinter dem achten Auftritt aufgeführt ist.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">
-        Es werden Treffer ausgegeben, welche die Zahl "9" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
+        Es werden Aussagen und Regieanweisungen ausgegeben, welche die Ziffer "9" enthalten.
+        Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 
 </topic>

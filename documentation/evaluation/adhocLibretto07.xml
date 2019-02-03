@@ -1,10 +1,18 @@
-<topic number="07" type="Autor">
+<topic number="07" type="author">
 
-    <query>Puccini</query>
+    <query>puccini</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Puccini"
+        Libretti von "Giacomo Puccini"
     </description>
+
+    <subtopic number="1" type="author">
+        Wann hat Puccini gelebt?
+    </subtopic>
+
+    <subtopic number="2" type="author">
+        Hat Puccini Text geschrieben, oder Musik komponiert?
+    </subtopic>
 
     <result accuracy="-1" version="0.1.0">
         Es werden keine Treffer gefunden.

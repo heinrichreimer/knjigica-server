@@ -1,17 +1,14 @@
-<topic number="12" type="Autor">
+<topic number="12" type="author">
 
-    <query>Libretti Gasparini</query>
+    <query>libretti gasparini</query>
 
     <description>
-        Auflistung Libretti von "Francesco Gasparini"
+        Libretti von "Francesco Gasparini"
     </description>
 
-    <narrative>
-        Es wird nach Libretti von "Franscesco Gasparini" gesuch, es sollen keine Dublikate ausgegeben werden
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Es werden Ergebnisse erzielt, welche jedoch nicht der Intention der Suchanfrage entsprechen.
+        Es werden Aussagen gefunden, die das Wort "Libretti" enthalten.
+        Die gefundenen Libretti beziehen sich jedoch nicht auf den Autor.
     </result>
 
 </topic>

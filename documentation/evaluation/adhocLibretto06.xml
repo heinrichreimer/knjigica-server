@@ -1,13 +1,22 @@
-<topic number="06" type="Autor">
+<topic number="06" type="author">
 
-    <query>Giovanni</query>
+    <query>boretti</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Giovanni"
+        Libretti von "Giovanni Antonio Boretti"
     </description>
 
+    <subtopic number="1" type="author">
+        Wann hat Boretti gelebt?
+    </subtopic>
+
+    <subtopic number="2" type="author">
+        Hat Boretti Text geschrieben, oder Musik komponiert?
+    </subtopic>
+
     <result accuracy="-1" version="0.1.0">
-        Es werden Aussagen der Rolle Don Giovanni ausgegeben, welche jedoch nichts mit dem Autoren zu tun hat.
+        Es werden Aussagen der Rolle "Don Giovanni" ausgegeben,
+        jedoch nicht Libretti oder Aussagen des Autors "Boretti" gefunden.
     </result>
 
 </topic>

@@ -1,17 +1,13 @@
-<topic number="09" type="Autor">
+<topic number="09" type="author">
 
-    <query>Nicolo Minato</query>
+    <query>minato</query>
 
     <description>
-        Libretti von Autoren mit dem namen "Nicolò Minato"
+        Libretti von "Nicolò Minato"
     </description>
 
-    <narrative>
-        Name de Autors ohne Akkzent geschrieben. Es soll nach "Nicolò Minato" gesucht werden
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Er werden keine Treffer erzielt.
+        Er werden keine Treffer gefunden.
     </result>
 
 </topic>

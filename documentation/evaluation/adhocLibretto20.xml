@@ -1,17 +1,13 @@
-<topic number="20" type="Akt">
+<topic number="20" type="section">
 
-    <query>Aktanzahl Schauspieldirektor</query>
+    <query>aktanzahl schauspieldirektor</query>
 
     <description>
         Wie viele Akte hat "Der Schauspieldirektor"?
     </description>
 
-    <narrative>
-        Die Suche muss die Anzahl der Akte ergeben.
-    </narrative>
-
     <result accuracy="-1" version="0.1.0">
-        Es werden keine Treffer erzielt.
+        Es werden keine Treffer gefunden.
     </result>
 
 </topic>
