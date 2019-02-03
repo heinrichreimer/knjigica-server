@@ -1,0 +1,12 @@
+<topic number= "42" "Figur">
+
+<query> Wotan Fricka</query>
+
+<description>
+In welchen Libretti treten Wotan und Fricka auf
+<description>
+
+<narrative>
+Die Suche soll nur Libretti ausgeben, in denen Wotan und Fricka zusammen auftreten.
+
+</topic>
