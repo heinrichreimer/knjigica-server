@@ -1,12 +1,12 @@
-<topic number= "41" "Figur">
+<topic number= "41" type="Text">
 
 <query> Wotan Szenen</query>
 
 <description>
 In welchen Libretti und welchen Szenen tritt ein Wotan auf?
-<description>
+</description>
 
 <narrative>
 Die Suche soll eine Liste aller Libretti und Szenen mit einem Wotan ergeben. 
-
+</narrative>
 </topic>

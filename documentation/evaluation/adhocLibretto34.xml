@@ -1,10 +1,10 @@
-<topic number= "34" "Text">
+<topic number= "34" type="Text">
 
 <query> Bein </query>
 
 <description>
 In welchen gerankten Libretti kommen dieses Wort vor? 
-<description>
+</description>
 
 <narrative>
 Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen diese Wort vorkommt, absteigend gerankt nach Vorkommen

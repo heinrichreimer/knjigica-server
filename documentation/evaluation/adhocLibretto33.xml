@@ -1,10 +1,10 @@
-<topic number= "33" "Text">
+<topic number= "33" type="Text">
 
 <query> Schurke Blut Blut Schmach lieben ewig Blut </query>
 
 <description>
 In welchen gerankten Libretti kommen diese Wörter vor? 
-<description>
+</description>
 
 <narrative>
 Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen jene Wörter am häufigsten vorkommen, wobei das Wort "Blut" dreifach zählt.
