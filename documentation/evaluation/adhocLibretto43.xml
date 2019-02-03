@@ -1,11 +1,12 @@
-<topic number= "43" "Figur">
+<topic number= "43" type="Text">
 
 <query>Figuren Alcina</query>
 
 <description>
 Welche Figuren treten in Alcina auf?
-<description>
+</description>
 
 <narrative>
 Die Suche soll die Figuren, zusammen mit Stimme und Schauspieler ausgeben.
+</narrative>
 </topic>
