@@ -1,13 +1,13 @@
-<topic number= "05" "Autor">
+<topic number="05" type="Autor">
 
-<query> Rinaldo Capua  </query>
+    <query>Rinaldo Capua</query>
 
-<description>
-Libretti von Autoren mit dem namen "Rinaldo da Capua"
-<description>
+    <description>
+        Libretti von Autoren mit dem namen "Rinaldo da Capua"
+    </description>
 
-<narrative>
-Name ist in der Suchanfrage unvollständg. Gesucht sollte "Rinaldo da Capua" werden
-</narrative>
+    <narrative>
+        Name ist in der Suchanfrage unvollständg. Gesucht sollte "Rinaldo da Capua" werden
+    </narrative>
 
 </topic>

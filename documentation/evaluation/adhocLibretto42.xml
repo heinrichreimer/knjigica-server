@@ -1,13 +1,13 @@
-<topic number= "42" type="Text">
+<topic number="42" type="Text">
 
-<query>Wotan Fricka</query>
+    <query>Wotan Fricka</query>
 
-<description>
-In welchen Libretti treten Wotan und Fricka auf
-</description>
+    <description>
+        In welchen Libretti treten Wotan und Fricka auf
+    </description>
 
-<narrative>
-Die Suche soll nur Libretti ausgeben, in denen Wotan und Fricka zusammen auftreten.
-</narrative>
+    <narrative>
+        Die Suche soll nur Libretti ausgeben, in denen Wotan und Fricka zusammen auftreten.
+    </narrative>
 
 </topic>

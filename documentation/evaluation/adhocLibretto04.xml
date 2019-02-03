@@ -1,13 +1,25 @@
-<topic number= "04" "Autor">
+<topic number="04" type="Autor">
 
-<query> Komponist Sposi </query>
+    <query>Komponist Sposi</query>
 
-<description>
-Wer ist der Urheber der Musik
-<description>
+    <description>
+        Wer ist der Urheber der Musik
+    </description>
 
-<narrative>
-Die Suche muss den Autor der Musik herausgeben
-</narrative>
+    <narrative>
+        Die Suche muss den Autor der Musik herausgeben
+    </narrative>
+
+    <results>
+        <!--
+        Result accuracy:
+         -1: Worse than expected
+          0: As expected
+          1: Better than expected
+        Result version: Search engine version, for comparison.
+        -->
+        <!--<result accuracy="1" version="0.1.0">-->
+        <!--</result>-->
+    </results>
 
 </topic>

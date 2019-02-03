@@ -1,13 +1,14 @@
-<topic number= "22" "Akt">
+<topic number="22" type="Akt">
 
-<query> Auftritt 9 Schauspieldirektor </query>
+    <query>Auftritt 9 Schauspieldirektor</query>
 
-<description>
-Wie heißt der 9.Auftritt von "Der Schauspieldirektor"?
-<description>
+    <description>
+        Wie heißt der 9.Auftritt von "Der Schauspieldirektor"?
+    </description>
 
-<narrative>
-Die Suche muss den 9.Auftritt von "der Schauspieldirektor" ergeben, der im text jedoch als "Letzter Auftritt" beschrieben ist.
-</narrative>
+    <narrative>
+        Die Suche muss den 9.Auftritt von "der Schauspieldirektor" ergeben, der im text jedoch als "Letzter Auftritt"
+        beschrieben ist.
+    </narrative>
 
 </topic>

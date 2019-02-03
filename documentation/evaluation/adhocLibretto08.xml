@@ -1,13 +1,13 @@
-<topic number= "08" "Autor">
+<topic number="08" type="Autor">
 
-<query> Vincenzo Belini  </query>
+    <query>Vincenzo Belini</query>
 
-<description>
-Libretti von Autoren mit dem namen "Vincenzo Bellini"
-<description>
+    <description>
+        Libretti von Autoren mit dem namen "Vincenzo Bellini"
+    </description>
 
-<narrative>
-Nachname des Autors falsch geschrieben. Es soll nach Bellini gesucht werden
-</narrative>
+    <narrative>
+        Nachname des Autors falsch geschrieben. Es soll nach Bellini gesucht werden
+    </narrative>
 
 </topic>

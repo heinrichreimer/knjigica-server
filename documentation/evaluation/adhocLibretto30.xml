@@ -1,13 +1,19 @@
-<topic number= "30" type="Text">
+<topic number="30" type="Text">
 
-<query>Da mit dir ich tagte, sank ich so tief, dass zum Schimpf der eignen Geschöpfe ich ward?</query>
+    <query>Da mit dir ich tagte, sank ich so tief, dass zum Schimpf der eignen Geschöpfe ich ward?</query>
 
-<description>
-In welchem Libretto an welcher Stelle kommt dieser Textauszug vor?
-</description>
+    <description>
+        In welchem Libretto an welcher Stelle kommt dieser Textauszug vor?
+    </description>
 
-<narrative>
-Die Suche muss "die Walküre" von Willhelm Richard Wagner und zweiter Aufzug, zweite Szene von Wotan ergeben
-</narrative>
+    <narrative>
+        Die Suche muss "die Walküre" von Willhelm Richard Wagner und zweiter Aufzug, zweite Szene von Wotan ergeben
+    </narrative>
+
+    <results>
+        <result accuracy="0" version="0.1.0">
+            Im Ergebnis fehlt der Name des Libretto. Akt und Szene werden richtig angegeben.
+        </result>
+    </results>
 
 </topic>

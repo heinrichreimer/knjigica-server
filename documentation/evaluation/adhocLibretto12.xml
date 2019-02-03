@@ -1,13 +1,13 @@
-<topic number= "12" "Autor">
+<topic number="12" type="Autor">
 
-<query> Libretti Gasparini </query>
+    <query>Libretti Gasparini</query>
 
-<description>
-Auflistung Libretti von "Francesco Gasparini"
-<description>
+    <description>
+        Auflistung Libretti von "Francesco Gasparini"
+    </description>
 
-<narrative>
-Es wird nach Libretti von "Franscesco Gasparini" gesuch, es sollen keine Dublikate ausgegeben werden 
-</narrative>
+    <narrative>
+        Es wird nach Libretti von "Franscesco Gasparini" gesuch, es sollen keine Dublikate ausgegeben werden
+    </narrative>
 
 </topic>

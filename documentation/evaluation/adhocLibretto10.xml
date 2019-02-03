@@ -1,13 +1,13 @@
-<topic number= "10" "Autor">
+<topic number="10" type="Autor">
 
-<query> Cavallo Leon  </query>
+    <query>Cavallo Leon</query>
 
-<description>
-Libretti von Autoren mit dem namen "Leoncavallo"
-<description>
+    <description>
+        Libretti von Autoren mit dem namen "Leoncavallo"
+    </description>
 
-<narrative>
-Nachname des Autors falsch geschrieben. Es soll nach "Leoncavallo" gesucht werden
-</narrative>
+    <narrative>
+        Nachname des Autors falsch geschrieben. Es soll nach "Leoncavallo" gesucht werden
+    </narrative>
 
 </topic>

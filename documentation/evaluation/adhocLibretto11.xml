@@ -1,14 +1,14 @@
-<topic number= "11" "Autor">
+<topic number="11" type="Autor">
 
-<query> Lifetime Wilibald Gluck </query>
+    <query>Lifetime Wilibald Gluck</query>
 
-<description>
-Lebensspanne von "Christoph Willibald Gluck"
-<description>
+    <description>
+        Lebensspanne von "Christoph Willibald Gluck"
+    </description>
 
-<narrative>
-Name de Autors nicht vollständig und kein "ll".
-Suche soll Geburts- und Todesjahr von "Christoph Willibald Gluck" ausgeben
-</narrative>
+    <narrative>
+        Name de Autors nicht vollständig und kein "ll".
+        Suche soll Geburts- und Todesjahr von "Christoph Willibald Gluck" ausgeben
+    </narrative>
 
 </topic>

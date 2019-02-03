@@ -1,12 +1,12 @@
-<topic number= "44" type="Text">
+<topic number="44" type="Text">
 
-<query>Figuren Sopran</query>
+    <query>Figuren Sopran</query>
 
-<description>
-Welche Figuren mit der Stimme Sopran gibts es im Verzeichnis 
-</description>
+    <description>
+        Welche Figuren mit der Stimme Sopran gibts es im Verzeichnis
+    </description>
 
-<narrative>
-Die Suche soll alle Figuren mit Schauspieler alphabetisch nach Schauspieler Nachnamen ausgeben.
-</narrative>
+    <narrative>
+        Die Suche soll alle Figuren mit Schauspieler alphabetisch nach Schauspieler Nachnamen ausgeben.
+    </narrative>
 </topic>

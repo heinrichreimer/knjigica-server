@@ -1,13 +1,10 @@
-<topic number= "07" "Autor">
+<topic number="07" type="Autor">
 
-<query> Puccini </query>
+    <query>Puccini</query>
 
-<description>
-Libretti von Autoren mit dem namen "Puccini"
-<description>
+    <description>
+        Libretti von Autoren mit dem namen "Puccini"
+    </description>
 
-<narrative>
-
-</narrative>
 
 </topic>

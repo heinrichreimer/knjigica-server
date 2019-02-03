@@ -1,13 +1,9 @@
-<topic number= "06" "Autor">
+<topic number="06" type="Autor">
 
-<query> Giovanni  </query>
+    <query>Giovanni</query>
 
-<description>
-Libretti von Autoren mit dem namen "Giovanni"
-<description>
-
-<narrative>
-
-</narrative>
+    <description>
+        Libretti von Autoren mit dem namen "Giovanni"
+    </description>
 
 </topic>

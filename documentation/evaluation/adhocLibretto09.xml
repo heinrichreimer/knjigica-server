@@ -1,13 +1,13 @@
-<topic number= "09" "Autor">
+<topic number="09" type="Autor">
 
-<query> Nicolo Minato  </query>
+    <query>Nicolo Minato</query>
 
-<description>
-Libretti von Autoren mit dem namen "Nicolò Minato"
-<description>
+    <description>
+        Libretti von Autoren mit dem namen "Nicolò Minato"
+    </description>
 
-<narrative>
-Name de Autors ohne Akkzent geschrieben. Es soll nach "Nicolò Minato" gesucht werden
-</narrative>
+    <narrative>
+        Name de Autors ohne Akkzent geschrieben. Es soll nach "Nicolò Minato" gesucht werden
+    </narrative>
 
 </topic>

@@ -1,13 +1,14 @@
-<topic number= "34" type="Text">
+<topic number="34" type="Text">
 
-<query>Bein</query>
+    <query>Bein</query>
 
-<description>
-In welchen gerankten Libretti kommen dieses Wort vor? 
-</description>
+    <description>
+        In welchen gerankten Libretti kommen dieses Wort vor?
+    </description>
 
-<narrative>
-Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen diese Wort vorkommt, absteigend gerankt nach Vorkommen
-</narrative>
+    <narrative>
+        Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen diese Wort vorkommt, absteigend gerankt
+        nach Vorkommen
+    </narrative>
 
 </topic>

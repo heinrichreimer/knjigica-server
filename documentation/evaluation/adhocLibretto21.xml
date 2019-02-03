@@ -1,13 +1,14 @@
-<topic number= "21" "Akt">
+<topic number="21" type="Akt">
 
-<query> Akt 2 Schauspieldirektor </query>
+    <query>Akt 2 Schauspieldirektor</query>
 
-<description>
-Wie heißt der 2.Akt von "Der Schauspieldirektor"?
-<description>
+    <description>
+        Wie heißt der 2.Akt von "Der Schauspieldirektor"?
+    </description>
 
-<narrative>
-Die Suche muss den 2.ten Auftritt von "der Schauspieldirektor" ergeben, es diese sind im Text an Stelle der Akte genannt und ist synonym.
-</narrative>
+    <narrative>
+        Die Suche muss den 2.ten Auftritt von "der Schauspieldirektor" ergeben, es diese sind im Text an Stelle der Akte
+        genannt und ist synonym.
+    </narrative>
 
 </topic>

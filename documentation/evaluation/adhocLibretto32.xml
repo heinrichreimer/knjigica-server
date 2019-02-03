@@ -1,13 +1,13 @@
-<topic number= "32" type="Text">
+<topic number="32" type="Text">
 
-<query>Schurke Blut Schmach lieben ewig</query>
+    <query>Schurke Blut Schmach lieben ewig</query>
 
-<description>
-In welchen gerankten Libretti kommen diese Wörter vor? 
-</description>
+    <description>
+        In welchen gerankten Libretti kommen diese Wörter vor?
+    </description>
 
-<narrative>
-Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen jene Wörter am häufigsten vorkommen.
-</narrative>
+    <narrative>
+        Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen jene Wörter am häufigsten vorkommen.
+    </narrative>
 
 </topic>
