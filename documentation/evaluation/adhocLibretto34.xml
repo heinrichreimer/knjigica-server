@@ -1,18 +1,17 @@
 <topic number="34" type="Text">
 
-    <query>Bein</query>
+    <query>bein</query>
 
     <description>
-        In welchen gerankten Libretti kommen dieses Wort vor?
+        In welchen Libretti kommt dieses Wort vor?
     </description>
 
     <narrative>
-        Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen diese Wort vorkommt, absteigend gerankt
-        nach Vorkommen
+        Die Suche soll eine dublikatfreie Liste von Libretto ergeben, in denen das Wort vorkommt.
     </narrative>
 
     <result accuracy="0" version="0.1.0">
-        Die Suche ergibt eine Textpassage mit dem Wort "Bein" welche jedoch nicht das einzige Ziel einer derartigen Suchanfrage sein kann.
+        Die Suche ergibt eine Textpassage mit dem Wort "Bein", welche jedoch nicht das einzige Ziel einer derartigen Suchanfrage sein kann.
     </result>
 
 </topic>

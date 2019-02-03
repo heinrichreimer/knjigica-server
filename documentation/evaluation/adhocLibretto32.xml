@@ -1,13 +1,13 @@
 <topic number="32" type="Text">
 
-    <query>Schurke Blut Schmach lieben ewig</query>
+    <query>schurke blut schmach lieben ewig</query>
 
     <description>
-        In welchen gerankten Libretti kommen diese Wörter vor?
+        In welchen Libretto kommen diese Wörter vor?
     </description>
 
     <narrative>
-        Die Suche soll eine Ausgabe derjenigen Libretti ergeben, in denen die Wörter der Suchanfrage vorkommen.
+        Die Suche soll eine Ausgabe derjenigen Libretti ergeben, in denen die Wörter vorkommen.
     </narrative>
 
     <result accuracy="1" version="0.1.0">

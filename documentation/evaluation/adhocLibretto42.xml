@@ -1,17 +1,17 @@
 <topic number="42" type="Text">
 
-    <query>Wotan Fricka</query>
+    <query>wotan fricka</query>
 
     <description>
-        In welchen Libretti treten Wotan und Fricka auf
+        In welchen Libretti treten die Rollen "Wotan" und "Fricka" auf?
     </description>
 
     <narrative>
-        Die Suche soll nur Libretti ausgeben, in denen Wotan und Fricka zusammen auftreten.
+        Die Suche soll nur Libretti ausgeben, in denen die Rollen "Wotan" und "Fricka" zusammen auftreten.
     </narrative>
 
     <result accuracy="0" version="0.1.0">
-        Es werden Dialoge zwischen den beiden Rollen "Wotan" und "Fricka" gefunden. Gefragt war jedoch eine Auflistung der Libretto.
+        Es werden Dialoge zwischen den beiden Rollen "Wotan" und "Fricka" gefunden. Gefragt war jedoch eine Auflistung der Libretti.
     </result>
 
 </topic>

@@ -1,17 +1,17 @@
 <topic number="44" type="Text">
 
-    <query>Figuren Sopran</query>
+    <query>figuren sopran</query>
 
     <description>
-        Welche Figuren mit der Stimme Sopran gibts es im Verzeichnis
+        Welche Figuren mit der Stimme "Sopran" gibts es in den Libretto?
     </description>
 
     <narrative>
-        Die Suche soll alle Figuren mit Schauspieler alphabetisch nach Schauspieler Nachnamen ausgeben.
+        Die Suche soll alle Figuren mit der Stimme "Sopran" ausgeben.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">
-        Es wird ein Ergebnis mit dem Wort "Figuren" erzielt. Sopran und die Frage nach entsprechenden Figuren wird nicht berücksichtigt.
+        Es wird ein Ergebnis mit dem Wort "Figuren" erzielt. Die Stimme "Sopran" und die Frage nach entsprechenden Figuren wird nicht berücksichtigt.
     </result>
 
 </topic>

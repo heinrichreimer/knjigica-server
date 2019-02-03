@@ -1,13 +1,13 @@
 <topic number="24" type="Text">
 
-    <query>Auftritt 10 Schauspieldirektor</query>
+    <query>auftritt 10 schauspieldirektor</query>
 
     <description>
-        Wie heißt der 10.Auftritt von "Der Schauspieldirektor"?
+        Welchen Inhalt hat der zehnte Auftritt des Libretto "Der Schauspieldirektor"?
     </description>
 
     <narrative>
-        Es gibt keinen 10. Auftritt im Schauspieldirektor, das Suchergebnis muss dies ersichtlich machen.
+        Es gibt keinen zehnten Auftritt im Libretto "der Schauspieldirektor", weshalb das Ergebnis der Suchanfrage leer sein sollte.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">

@@ -1,13 +1,13 @@
 <topic number="41" type="Text">
 
-    <query>Wotan Szenen</query>
+    <query>wotan szenen</query>
 
     <description>
-        In welchen Libretti und welchen Szenen tritt ein Wotan auf?
+        In welchen Libretti und welchen Szenen tritt die Rolle "Wotan" auf?
     </description>
 
     <narrative>
-        Die Suche soll eine Liste aller Libretti und Szenen mit einem Wotan ergeben.
+        Die Suche soll eine Liste der Libretti und Szenen mit der Rolle "Wotan" ergeben.
     </narrative>
 
     <result accuracy="0" version="0.1.0">

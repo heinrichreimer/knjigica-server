@@ -1,14 +1,13 @@
 <topic number="25" type="Text">
 
-    <query>Akt 2 Walküre</query>
+    <query>akt 2 walküre</query>
 
     <description>
-        Wie heißt der 2.Aufzug von "Die Walküre"?
+        Welchen Inhalt hat der zweite Akt des Libretto "Die Walküre"?
     </description>
 
     <narrative>
-        Die Suche muss den 2.ten Aufzug der Walküre ergeben, es diese sind im Text an Stelle der Akte genannt und ist
-        synonym.
+        Die Suche soll den Inhalt des zweiten Aktes des Libretto "die Walküre" ergeben.
     </narrative>
 
     <result accuracy="-1" version="0.1.0">

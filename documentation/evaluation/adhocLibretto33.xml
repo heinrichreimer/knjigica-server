@@ -1,14 +1,13 @@
 <topic number="33" type="Text">
 
-    <query>Schurke Blut Blut Schmach lieben ewig Blut</query>
+    <query>schurke blut blut schmach lieben ewig blut</query>
 
     <description>
-        In welchen gerankten Libretti kommen diese Wörter vor?
+        In welchen Libretto kommen diese Wörter vor?
     </description>
 
     <narrative>
-        Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen jene Wörter am häufigsten vorkommen,
-        wobei das Wort "Blut" dreifach zählt.
+        Die Suche soll eine dublikatfreie Liste von Libretto ergeben, in denen die jeweiligen Wörter am häufigsten vorkommen, wobei das Wort "Blut" bevorzugt vorkommen soll.
     </narrative>
 
     <result accuracy="1" version="0.1.0">

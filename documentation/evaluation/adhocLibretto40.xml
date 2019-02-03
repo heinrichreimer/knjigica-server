@@ -1,13 +1,13 @@
 <topic number="40" type="Text">
 
-    <query>Wotan</query>
+    <query>wotan</query>
 
     <description>
-        In welchen Libretti Spielt ein Wotan mit und wir in diesen von wem verkörpert, welche Stimme singt er außerdem.
+        In welchen Libretti spielt die Rolle "Wotan" mit und welche Stimme besitzt sie?
     </description>
 
     <narrative>
-        Die Suche soll eine Liste aller Libretti mit einem Wotan ergeben und seine Stimme und Schauspieler aufführen.
+        Die Suche soll eine Liste aller Libretti mit der Rolle "Wotan" ausgeben und seine Stimme aufführen.
     </narrative>
 
     <result accuracy="0" version="0.1.0">

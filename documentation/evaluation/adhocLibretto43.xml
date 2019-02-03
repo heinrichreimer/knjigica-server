@@ -1,17 +1,17 @@
 <topic number="43" type="Text">
 
-    <query>Figuren Alcina</query>
+    <query>figuren alcina</query>
 
     <description>
-        Welche Figuren treten in Alcina auf?
+        Welche Figuren treten im Libretto "Alcina" auf?
     </description>
 
     <narrative>
-        Die Suche soll die Figuren, zusammen mit Stimme und Schauspieler ausgeben.
+        Die Suche soll eine Auflistung der Figuren im Libretto "Alcina" ergeben-
     </narrative>
 
-    <result accuracy="0" version="0.1.0">
-        Die Suche ergibt Dialoge mit der Rolle "Alcina". Somit wurden Stimme und Schauspieler also nicht richtig erkannt.
+    <result accuracy="-1" version="0.1.0">
+        Die Suche ergibt Treffer dess Stichworts "Alcina". Die eigentliche Suchanfrage wird somit nicht beantwortet.
     </result>
 
 </topic>

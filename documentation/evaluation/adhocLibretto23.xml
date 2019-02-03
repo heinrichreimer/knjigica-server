@@ -1,17 +1,16 @@
 <topic number="23" type="Akt">
 
-    <query>letzter Auftritt Schauspieldirektor</query>
+    <query>letzter auftritt schauspieldirektor</query>
 
     <description>
-        Wie heißt der letzte Auftritt von "Der Schauspieldirektor"?
+        Wie heißt der letzte Auftritt des Libretto "Der Schauspieldirektor"?
     </description>
 
     <narrative>
-        Die Suche muss den 9.Auftritt von "der Schauspieldirektor" ergeben.
+        Die Suche muss den neunten Auftritt des Libretto "der Schauspieldirektor" ergeben.
     </narrative>
 
     <result accuracy="1" version="0.1.0">
         Der letzte Auftritt im "Gelegenheitsstück" wird ausgegeben.
     </result>
-
 </topic>
