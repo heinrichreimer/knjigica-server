@@ -10,4 +10,8 @@
         Nachname des Autors falsch geschrieben. Es soll nach Bellini gesucht werden
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden Ergebnisse ausgegeben, welche "Vincenzo" enthalten. "Belini" wurde in diesem Zusammenhang nicht gefunden.
+    </result>
+
 </topic>

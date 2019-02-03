@@ -11,4 +11,8 @@
         wobei das Wort "Blut" dreifach zählt.
     </narrative>
 
+    <result accuracy="1" version="0.1.0">
+        Die Suchanfrage hatte die gewünschte Ausgabe zur Folge.
+    </result>
+
 </topic>

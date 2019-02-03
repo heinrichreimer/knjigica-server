@@ -6,4 +6,8 @@
         Libretti von Autoren mit dem namen "Giovanni"
     </description>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden Aussagen der Rolle Don Giovanni ausgegeben, welche jedoch nichts mit dem Autoren zu tun hat.
+    </result>
+
 </topic>

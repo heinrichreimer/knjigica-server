@@ -9,17 +9,15 @@
     <narrative>
         Die Suche muss den Autor der Musik herausgeben
     </narrative>
-
-    <results>
-        <!--
-        Result accuracy:
-         -1: Worse than expected
-          0: As expected
-          1: Better than expected
-        Result version: Search engine version, for comparison.
-        -->
-        <!--<result accuracy="1" version="0.1.0">-->
-        <!--</result>-->
-    </results>
+    <!--
+    Result accuracy:
+     -1: Worse than expected
+      0: As expected
+      1: Better than expected
+    Result version: Search engine version, for comparison.
+    -->
+    <result accuracy="-1" version="0.1.0">
+        Nur Ergebnisse wörtlicher Rede (Sposi bedeutet "heiraten" in italienisch).
+    </result>
 
 </topic>

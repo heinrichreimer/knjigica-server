@@ -9,4 +9,9 @@
     <narrative>
         Die Suche soll die Figuren, zusammen mit Stimme und Schauspieler ausgeben.
     </narrative>
+
+    <result accuracy="0" version="0.1.0">
+        Die Suche ergibt Dialoge mit der Rolle "Alcina". Somit wurden Stimme und Schauspieler also nicht richtig erkannt.
+    </result>
+
 </topic>

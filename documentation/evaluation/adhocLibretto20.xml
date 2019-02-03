@@ -10,4 +10,8 @@
         Die Suche muss die Anzahl der Akte ergeben.
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden keine Treffer erzielt.
+    </result>
+
 </topic>

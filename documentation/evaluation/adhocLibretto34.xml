@@ -11,4 +11,8 @@
         nach Vorkommen
     </narrative>
 
+    <result accuracy="0" version="0.1.0">
+        Die Suche ergibt eine Textpassage mit dem Wort "Bein" welche jedoch nicht das einzige Ziel einer derartigen Suchanfrage sein kann.
+    </result>
+
 </topic>

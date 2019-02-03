@@ -10,4 +10,8 @@
         Nachname des Autors falsch geschrieben. Es soll nach "Leoncavallo" gesucht werden
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden Aussagen über bestimmte Dinge ausgegeben, welche entweder "Cavallo" oder "Leon" enthalten.
+    </result>
+
 </topic>

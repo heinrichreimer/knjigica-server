@@ -9,4 +9,9 @@
     <narrative>
         Die Suche soll alle Figuren mit Schauspieler alphabetisch nach Schauspieler Nachnamen ausgeben.
     </narrative>
+
+    <result accuracy="-1" version="0.1.0">
+        Es wird ein Ergebnis mit dem Wort "Figuren" erzielt. Sopran und die Frage nach entsprechenden Figuren wird nicht berücksichtigt.
+    </result>
+
 </topic>

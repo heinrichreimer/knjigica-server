@@ -9,4 +9,9 @@
     <narrative>
         Die Suche soll eine Liste aller Libretti mit einem Wotan ergeben und seine Stimme und Schauspieler aufführen.
     </narrative>
+
+    <result accuracy="0" version="0.1.0">
+        Es erfolgt die Ausgabe der Auftritte der Rolle "Wotan". Es sind jedoch keine Libretti und die Stimme enthalten.
+    </result>
+
 </topic>

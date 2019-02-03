@@ -10,4 +10,8 @@
         Die Suche muss den 9.Auftritt von "der Schauspieldirektor" ergeben.
     </narrative>
 
+    <result accuracy="1" version="0.1.0">
+        Der letzte Auftritt im "Gelegenheitsstück" wird ausgegeben.
+    </result>
+
 </topic>

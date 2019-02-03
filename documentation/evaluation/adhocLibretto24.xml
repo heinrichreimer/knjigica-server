@@ -10,4 +10,8 @@
         Es gibt keinen 10. Auftritt im Schauspieldirektor, das Suchergebnis muss dies ersichtlich machen.
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden Treffer ausgegeben, welche die Zahl "10" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
+    </result>
+
 </topic>

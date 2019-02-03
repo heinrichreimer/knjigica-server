@@ -10,4 +10,8 @@
         Es wird nach Libretti von "Franscesco Gasparini" gesuch, es sollen keine Dublikate ausgegeben werden
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Es werden Ergebnisse erzielt, welche jedoch nicht der Intention der Suchanfrage entsprechen.
+    </result>
+
 </topic>

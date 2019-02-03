@@ -10,4 +10,8 @@
         Die Suche soll nur Libretti ausgeben, in denen Wotan und Fricka zusammen auftreten.
     </narrative>
 
+    <result accuracy="0" version="0.1.0">
+        Es werden Dialoge zwischen den beiden Rollen "Wotan" und "Fricka" gefunden. Gefragt war jedoch eine Auflistung der Libretto.
+    </result>
+
 </topic>

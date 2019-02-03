@@ -10,10 +10,8 @@
         Die Suche muss "die Walküre" von Willhelm Richard Wagner und zweiter Aufzug, zweite Szene von Wotan ergeben
     </narrative>
 
-    <results>
-        <result accuracy="0" version="0.1.0">
-            Im Ergebnis fehlt der Name des Libretto. Akt und Szene werden richtig angegeben.
-        </result>
-    </results>
+    <result accuracy="1" version="0.1.0">
+        Im Ergebnis fehlt der Name des Libretto - Akt und Szene werden richtig angegeben. Zusätzlich wird ausgegeben, welche Rolle diese Aussage trifft.
+    </result>
 
 </topic>

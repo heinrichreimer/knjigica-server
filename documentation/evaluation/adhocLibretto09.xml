@@ -10,4 +10,8 @@
         Name de Autors ohne Akkzent geschrieben. Es soll nach "Nicolò Minato" gesucht werden
     </narrative>
 
+    <result accuracy="-1" version="0.1.0">
+        Er werden keine Treffer erzielt.
+    </result>
+
 </topic>

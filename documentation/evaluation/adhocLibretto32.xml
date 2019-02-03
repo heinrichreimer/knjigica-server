@@ -7,7 +7,11 @@
     </description>
 
     <narrative>
-        Die Suche soll eine dublikatfreie Liste von Librettis ergeben, in denen jene Wörter am häufigsten vorkommen.
+        Die Suche soll eine Ausgabe derjenigen Libretti ergeben, in denen die Wörter der Suchanfrage vorkommen.
     </narrative>
+
+    <result accuracy="1" version="0.1.0">
+        Die Suchanfrage hatte die gewünschte Ausgabe zur Folge.
+    </result>
 
 </topic>
