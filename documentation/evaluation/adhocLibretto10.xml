@@ -10,4 +10,6 @@
         Es werden Aussagen ausgegeben, welche entweder das Wort "Cavallo" oder "Leon" enthalten.
     </result>
 
+    <result relevance="-1" version="0.1.1-alpha1"/>
+
 </topic>

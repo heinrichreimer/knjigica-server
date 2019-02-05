@@ -13,4 +13,8 @@
     <result relevance="1" version="0.1.0">
         Der letzte Auftritt im "Gelegenheitsstück" wird ausgegeben.
     </result>
+
+    <result relevance="-1" version="0.1.1-alpha1">
+        No plot.
+    </result>
 </topic>

@@ -14,4 +14,8 @@
         Es werden Treffer ausgegeben, welche die Zahl "2" und das Wort "Walküre" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 
+    <result relevance="-1" version="0.1.1-alpha1">
+        Die Rollen regieren!
+    </result>
+
 </topic>
