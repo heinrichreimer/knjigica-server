@@ -10,4 +10,8 @@
         Er werden keine Treffer gefunden.
     </result>
 
+    <result relevance="1" version="0.1.1-alpha1">
+        Die Suchanfrage wurde in der Ausgabe richtig erfüllt.
+    </result>
+
 </topic>

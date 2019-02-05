@@ -18,4 +18,8 @@
         Es werden keine Treffer gefunden.
     </result>
 
+    <result relevance="0" version="0.1.1-alpha1">
+        Bis auf das erste Subtopic wurden alle Anfragen richtig ausgegeben, können bzw. erschlossen werden.
+    </result>
+
 </topic>

@@ -11,4 +11,8 @@
         jedoch nicht Libretti oder Aussagen des Autors "Bellini" gefunden.
     </result>
 
+    <result relevance="1" version="0.1.1-alpha1">
+        Neben den Libretti des Autors werden auch musische Werke ausgegeben.
+    </result>
+
 </topic>

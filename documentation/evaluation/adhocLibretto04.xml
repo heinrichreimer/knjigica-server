@@ -29,4 +29,8 @@
         Nur wörtliche Rede mit dem italienischen Wort "sposi" (dt.: "heiraten") wird gefunden.
     </result>
 
+    <result relevance="0" version="0.1.1-alpha1">
+        Bis auf Subtopic 2 wurden die erwarteten Ergebnisse ausgegeben.
+    </result>
+
 </topic>
