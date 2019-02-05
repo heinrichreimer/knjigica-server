@@ -10,7 +10,7 @@
         Die Begriffe "Auftritt" und "Akt" sind synonym.
     </narrative>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Aussagen und Regieanweisungen gefunden,
         welche die Ziffer "2" enthalten.
         Dies entspricht jedoch nicht der Intention der Suchanfrage.

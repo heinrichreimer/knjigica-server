@@ -10,7 +10,7 @@
         Die Suche soll den Inhalt des zweiten Aktes des Libretto "die Walküre" ergeben.
     </narrative>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Treffer ausgegeben, welche die Zahl "2" und das Wort "Walküre" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 

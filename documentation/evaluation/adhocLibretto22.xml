@@ -11,7 +11,7 @@
         der im Libretto hinter dem achten Auftritt aufgeführt ist.
     </narrative>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Aussagen und Regieanweisungen ausgegeben, welche die Ziffer "9" enthalten.
         Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>

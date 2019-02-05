@@ -10,7 +10,7 @@
         Die Suche muss den neunten Auftritt des Libretto "der Schauspieldirektor" ergeben.
     </narrative>
 
-    <result accuracy="1" version="0.1.0">
+    <result relevance="1" version="0.1.0">
         Der letzte Auftritt im "Gelegenheitsstück" wird ausgegeben.
     </result>
 </topic>

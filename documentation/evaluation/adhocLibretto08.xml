@@ -6,7 +6,7 @@
         Libretti von "Vincenzo Bellini"
     </description>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Aussagen ausgegeben, die das Wort "Vincenzo" enthalten,
         jedoch nicht Libretti oder Aussagen des Autors "Bellini" gefunden.
     </result>

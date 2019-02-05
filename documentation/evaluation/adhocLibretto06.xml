@@ -14,7 +14,7 @@
         Hat Boretti Text geschrieben, oder Musik komponiert?
     </subtopic>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Aussagen der Rolle "Don Giovanni" ausgegeben,
         jedoch nicht Libretti oder Aussagen des Autors "Boretti" gefunden.
     </result>

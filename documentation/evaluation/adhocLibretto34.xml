@@ -10,7 +10,7 @@
         Die Suche soll eine dublikatfreie Liste von Libretto ergeben, in denen das Wort vorkommt.
     </narrative>
 
-    <result accuracy="0" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Die Suche ergibt eine Textpassage mit dem Wort "Bein", welche jedoch nicht das einzige Ziel einer derartigen Suchanfrage sein kann.
     </result>
 

@@ -10,7 +10,7 @@
         Die Suche soll "die Walküre von Autor Willhelm Richard Wagner im zweiten Akt, zweite Szene" ergeben.
     </narrative>
 
-    <result accuracy="1" version="0.1.0">
+    <result relevance="1" version="0.1.0">
         Im Ergebnis fehlt der Name des Libretto - Akt und Szene werden richtig angegeben. Zusätzlich wird ausgegeben, welche Rolle diese Aussage trifft.
     </result>
 

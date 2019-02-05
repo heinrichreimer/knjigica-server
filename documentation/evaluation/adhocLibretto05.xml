@@ -6,7 +6,7 @@
         Welche Libretti hat der Autor "Rinaldo da Capua" geschrieben?
     </description>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Es werden Aussagen der Rolle "Rinaldo" ausgegeben,
         jedoch nicht Libretti oder Aussagen des Autors "Rinaldo da Capua" gefunden.
     </result>

@@ -10,7 +10,7 @@
         Die Suche soll eine Ausgabe derjenigen Libretti ergeben, in denen die Wörter vorkommen.
     </narrative>
 
-    <result accuracy="1" version="0.1.0">
+    <result relevance="1" version="0.1.0">
         Die Suchanfrage hatte die gewünschte Ausgabe zur Folge.
     </result>
 

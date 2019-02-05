@@ -10,7 +10,7 @@
         Die Suche soll eine Liste der Libretti und Szenen mit der Rolle "Wotan" ergeben.
     </narrative>
 
-    <result accuracy="0" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es erfolgt die Ausgabe der Auftritte der Rolle "Wotan". Hierbei werden jedoch keine Namen der Libretti ausgegeben.
     </result>
 

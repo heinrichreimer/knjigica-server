@@ -19,13 +19,13 @@
     </subtopic>
 
     <!--
-    Result accuracy:
-     -1: Worse than expected
-      0: As expected
-      1: Better than expected
-    Result version: Search engine version, for comparison.
+    Result relevance:
+     -1: Not relevant
+      0: Relevant
+      1: Highly relevant
+    Result version: Search engine version and/or name, for comparison.
     -->
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Nur wörtliche Rede mit dem italienischen Wort "sposi" (dt.: "heiraten") wird gefunden.
     </result>
 

@@ -10,7 +10,7 @@
         Die Suche soll eine Auflistung der Figuren im Libretto "Alcina" ergeben-
     </narrative>
 
-    <result accuracy="-1" version="0.1.0">
+    <result relevance="-1" version="0.1.0">
         Die Suche ergibt Treffer dess Stichworts "Alcina". Die eigentliche Suchanfrage wird somit nicht beantwortet.
     </result>
 
