@@ -11,4 +11,8 @@
         jedoch nicht Libretti oder Aussagen des Autors "Rinaldo da Capua" gefunden.
     </result>
 
+    <result relevance="-1" version="0.1.1-alpha1">
+        Es werden nur Rollen und eine Oper ausgegeben. Somit ist die eigentliche Intention der Suchanfrage nicht erfüllt.
+    </result>
+
 </topic>
