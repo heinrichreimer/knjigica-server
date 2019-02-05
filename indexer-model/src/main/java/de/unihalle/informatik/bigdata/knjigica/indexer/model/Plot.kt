@@ -1,10 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer.model
 
-import java.util.*
-
 data class Plot(
-        val id: UUID,
-        val operaId: UUID,
+        val operaTitle: String,
         /**
          * Map containing the section name for all known levels.
          */

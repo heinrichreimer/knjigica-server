@@ -28,14 +28,51 @@ object LibrettoIndexer : Indexer<Libretto> {
 
         // First create the index if it does not exist yet.
         client.indices {
+            createIfNotExistsAsync(IndexConfiguration.Libretto.index)
+            putMappingAsync {
+                indices(IndexConfiguration.Libretto.index)
+                type(IndexConfiguration.Libretto.type)
+
+                source {
+                    "title" map MappingType.TEXT
+                    "subtitle" map MappingType.TEXT
+                    "language" map MappingType.KEYWORD
+                    "authors" nested {
+                        "name" map MappingType.TEXT
+                        "fullName" map MappingType.TEXT
+                        "scope" map MappingType.KEYWORD
+                    }
+                    "annotations" nested {
+                        "title" map MappingType.TEXT
+                        "text" map MappingType.TEXT
+                    }
+                    "premiere" map {
+                        "date" map MappingType.DATE
+                        "place" map MappingType.KEYWORD
+                    }
+                    "roles" nested {
+                        "name" map MappingType.TEXT
+                        "voice" map MappingType.KEYWORD
+                    }
+                    "plot" nested {
+                        "section" map {
+                            Section.Level.ACT.name map MappingType.TEXT
+                            Section.Level.SCENE.name map MappingType.TEXT
+                            Section.Level.NUMBER.name map MappingType.TEXT
+                        }
+                        "roleName" map MappingType.TEXT
+                        "text" map MappingType.TEXT
+                        "instruction" map MappingType.TEXT
+                    }
+                }
+            }
             createIfNotExistsAsync(IndexConfiguration.Annotation.index)
             putMappingAsync {
                 indices(IndexConfiguration.Annotation.index)
                 type(IndexConfiguration.Annotation.type)
 
                 source {
-                    "id" map MappingType.BINARY
-                    "operaId" map MappingType.BINARY
+                    "operaTitle" map MappingType.TEXT
                     "title" map MappingType.TEXT
                     "text" map MappingType.TEXT
                 }
@@ -46,8 +83,7 @@ object LibrettoIndexer : Indexer<Libretto> {
                 type(IndexConfiguration.Author.type)
 
                 source {
-                    "id" map MappingType.BINARY
-                    "operaId" map MappingType.BINARY
+                    "operaTitle" map MappingType.TEXT
                     "name" map MappingType.TEXT
                     "fullName" map MappingType.TEXT
                     "lifetime" map MappingType.DATE_RANGE
@@ -59,11 +95,10 @@ object LibrettoIndexer : Indexer<Libretto> {
                 indices(IndexConfiguration.Opera.index)
                 type(IndexConfiguration.Opera.type)
                 source {
-                    "id" map MappingType.BINARY
-                    "title" map MappingType.TEXT
+                    "operaTitle" map MappingType.TEXT
                     "subtitle" map MappingType.TEXT
                     "language" map MappingType.KEYWORD
-                    "premiere" {
+                    "premiere" map {
                         "date" map MappingType.DATE
                         "place" map MappingType.KEYWORD
                     }
@@ -74,9 +109,8 @@ object LibrettoIndexer : Indexer<Libretto> {
                 indices(IndexConfiguration.Plot.index)
                 type(IndexConfiguration.Plot.type)
                 source {
-                    "id" map MappingType.BINARY
-                    "operaId" map MappingType.BINARY
-                    "section" {
+                    "operaTitle" map MappingType.TEXT
+                    "section" map {
                         Section.Level.ACT.name map MappingType.TEXT
                         Section.Level.SCENE.name map MappingType.TEXT
                         Section.Level.NUMBER.name map MappingType.TEXT
@@ -91,8 +125,7 @@ object LibrettoIndexer : Indexer<Libretto> {
                 indices(IndexConfiguration.Role.index)
                 type(IndexConfiguration.Role.type)
                 source {
-                    "id" map MappingType.BINARY
-                    "operaId" map MappingType.BINARY
+                    "operaTitle" map MappingType.TEXT
                     "name" map MappingType.TEXT
                     "description" map MappingType.TEXT
                     "voice" map MappingType.KEYWORD
@@ -103,6 +136,7 @@ object LibrettoIndexer : Indexer<Libretto> {
 
         // Flatten the Libretto and get it's components.
         val (
+                librettos,
                 annotations,
                 authors,
                 operas,
@@ -112,6 +146,7 @@ object LibrettoIndexer : Indexer<Libretto> {
                 .asSequence()
                 .flatten()
 
+        client.bulkAsync(librettos.asIterable()) { index(it) }
         client.bulkAsync(annotations.asIterable()) { index(it) }
         client.bulkAsync(authors.asIterable()) { index(it) }
         client.bulkAsync(operas.asIterable()) { index(it) }
@@ -155,6 +190,9 @@ object LibrettoIndexer : Indexer<Libretto> {
         }
     }
 
+    private suspend inline fun BulkRequest.index(libretto: de.unihalle.informatik.bigdata.knjigica.indexer.model.Libretto) =
+            index(IndexConfiguration.Libretto, libretto.toJsonBytes())
+
     private suspend inline fun BulkRequest.index(libretto: Annotation) =
             index(IndexConfiguration.Annotation, libretto.toJsonBytes())
 
@@ -170,6 +208,7 @@ object LibrettoIndexer : Indexer<Libretto> {
     private suspend inline fun BulkRequest.index(libretto: Role) =
             index(IndexConfiguration.Role, libretto.toJsonBytes())
 
+    private suspend fun de.unihalle.informatik.bigdata.knjigica.indexer.model.Libretto.toJsonBytes() = JsonFormatters.librettoFormatter.toJsonBytes(this)
     private suspend fun Annotation.toJsonBytes() = JsonFormatters.annotationFormatter.toJsonBytes(this)
     private suspend fun Author.toJsonBytes() = JsonFormatters.authorFormatter.toJsonBytes(this)
     private suspend fun Opera.toJsonBytes() = JsonFormatters.operaFormatter.toJsonBytes(this)

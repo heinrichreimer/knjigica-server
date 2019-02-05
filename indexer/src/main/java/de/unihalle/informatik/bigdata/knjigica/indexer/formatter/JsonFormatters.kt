@@ -19,6 +19,7 @@ object JsonFormatters {
             .add(KotlinJsonAdapterFactory())
             .build()
 
+    val librettoFormatter: Formatter<Libretto, BufferedSink> = moshi.parserFormatter()
     val annotationFormatter: Formatter<Annotation, BufferedSink> = moshi.parserFormatter()
     val authorFormatter: Formatter<Author, BufferedSink> = moshi.parserFormatter()
     val operaFormatter: Formatter<Opera, BufferedSink> = moshi.parserFormatter()

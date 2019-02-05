@@ -1,7 +1,6 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer.util
 
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest
-import java.util.*
 
 enum class MappingType(internal val jsonName: String) {
     OBJECT("object"),
@@ -44,6 +43,7 @@ enum class MappingType(internal val jsonName: String) {
     ANNOTATED_TEXT("annotated-text"),
 
     JOIN("join"),
+    NESTED("nested"),
 
     ALIAS("alias")
 }
@@ -62,28 +62,39 @@ class MappingsBuilder internal constructor() {
 
     operator fun String.invoke(block: MappingsBuilder.() -> Unit) = map(block)
 
-    infix fun String.map(block: MappingsBuilder.() -> Unit) {
+    infix fun String.nested(block: MappingsBuilder.() -> Unit) = map(false, block)
+
+    infix fun String.map(block: MappingsBuilder.() -> Unit) = map(true, block)
+
+    fun String.map(flatten: Boolean, block: MappingsBuilder.() -> Unit) {
         checkFieldName(this)
 
         val builder = MappingsBuilder()
         builder.block()
 
-        val rootKey = this
-        map += builder.map
-                .mapKeys { (key, _) -> "$rootKey.$key" }
+        if (flatten) {
+            val rootKey = this
+            map += builder.map
+                    .mapKeys { (key, _) -> "$rootKey.$key" }
+        } else {
+            val properties = builder.map
+            map[this] = mapOf(
+                    "type" to MappingType.NESTED.jsonName,
+                    "properties" to properties
+            )
+        }
     }
 
-    private fun checkFieldName(name: String) =
-            check(name != "type") { "Field name 'type' is reserved." }
+    private fun checkFieldName(name: String) {
+        check(name != "type") { "Field name 'type' is reserved." }
+        check(name != "properties") { "Field name 'properties' is reserved." }
+    }
 }
 
 fun PutMappingRequest.source(block: MappingsBuilder.() -> Unit): PutMappingRequest {
     val builder = MappingsBuilder()
     builder.block()
 
-
-    val message = HashMap<String, Any>()
-    message["type"] = "text"
     val properties = builder.map
     val jsonMap = mapOf("properties" to properties)
 

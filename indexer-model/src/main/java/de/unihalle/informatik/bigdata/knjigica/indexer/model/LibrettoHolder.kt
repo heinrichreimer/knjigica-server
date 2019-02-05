@@ -1,6 +1,7 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer.model
 
 data class LibrettoHolder(
+        val libretto: Sequence<Libretto>,
         val annotations: Sequence<Annotation>,
         val authors: Sequence<Author>,
         val operas: Sequence<Opera>,

@@ -1,22 +1,22 @@
 package de.unihalle.informatik.bigdata.knjigica.indexer.model
 
-import de.unihalle.informatik.bigdata.knjigica.model.Libretto
-import java.util.*
-import java.util.UUID.randomUUID
+import de.unihalle.informatik.bigdata.knjigica.model.Libretto as ModelLibretto
 import de.unihalle.informatik.bigdata.knjigica.model.Plot as ModelPlot
 
-fun Sequence<Libretto>.flatten(): LibrettoHolder {
+fun Sequence<ModelLibretto>.flatten(): LibrettoHolder {
     return map { libretto ->
-        val operaId: UUID = randomUUID()
+        val operaId = libretto.title
         LibrettoHolder(
+                libretto = libretto.librettoSequence(),
                 annotations = libretto.annotationSequence(operaId),
                 authors = libretto.authorSequence(operaId),
-                operas = libretto.operaSequence(operaId),
+                operas = libretto.operaSequence(),
                 plot = libretto.plotSequence(operaId),
                 roles = libretto.roleSequence(operaId)
         )
     }.reduce { accumulator, holder ->
         LibrettoHolder(
+                libretto = accumulator.libretto + holder.libretto,
                 annotations = accumulator.annotations + holder.annotations,
                 authors = accumulator.authors + holder.authors,
                 operas = accumulator.operas + holder.operas,
@@ -26,10 +26,25 @@ fun Sequence<Libretto>.flatten(): LibrettoHolder {
     }
 }
 
-private fun Libretto.operaSequence(operaId: UUID): Sequence<Opera> {
+private fun ModelLibretto.librettoSequence(): Sequence<Libretto> {
+    return sequenceOf(
+            Libretto(
+                    title,
+                    subtitle,
+                    language,
+                    authorSequence(title).toSet(),
+                    annotationSequence(title).toSet(),
+                    premiere,
+                    roleSequence(title).toSet(),
+                    plotSequence(title).toList()
+            )
+    )
+}
+
+
+private fun ModelLibretto.operaSequence(): Sequence<Opera> {
     return sequenceOf(
             Opera(
-                    operaId,
                     title,
                     subtitle,
                     language,
@@ -38,20 +53,19 @@ private fun Libretto.operaSequence(operaId: UUID): Sequence<Opera> {
     )
 }
 
-private fun Libretto.annotationSequence(operaId: UUID): Sequence<Annotation> {
+private fun ModelLibretto.annotationSequence(operaTitle: String): Sequence<Annotation> {
     return annotations
             .asSequence()
             .map { annotation ->
                 Annotation(
-                        randomUUID(),
-                        operaId,
+                        operaTitle,
                         annotation.title,
                         annotation.text
                 )
             }
 }
 
-private fun Libretto.authorSequence(operaId: UUID): Sequence<Author> {
+private fun ModelLibretto.authorSequence(operaTitle: String): Sequence<Author> {
     return authors
             .asSequence()
             .flatMap { author ->
@@ -60,8 +74,7 @@ private fun Libretto.authorSequence(operaId: UUID): Sequence<Author> {
                         .asSequence()
                         .map { scope ->
                             Author(
-                                    randomUUID(),
-                                    operaId,
+                                    operaTitle,
                                     author.name,
                                     author.fullName,
                                     author.lifetime,
@@ -71,7 +84,7 @@ private fun Libretto.authorSequence(operaId: UUID): Sequence<Author> {
             }
 }
 
-private fun Libretto.plotSequence(operaId: UUID): Sequence<Plot> {
+private fun ModelLibretto.plotSequence(operaTitle: String): Sequence<Plot> {
     return plot
             .asSequence()
             .zipLastSection()
@@ -83,8 +96,7 @@ private fun Libretto.plotSequence(operaId: UUID): Sequence<Plot> {
                                 .asSequence()
                                 .map { roleName ->
                                     Plot(
-                                            randomUUID(),
-                                            operaId,
+                                            operaTitle,
                                             sections.mapKeys { (level, _) ->
                                                 level.name
                                             },
@@ -97,8 +109,7 @@ private fun Libretto.plotSequence(operaId: UUID): Sequence<Plot> {
                     is ModelPlot.Instruction -> {
                         sequenceOf(
                                 Plot(
-                                        randomUUID(),
-                                        operaId,
+                                        operaTitle,
                                         sections.mapKeys { (level, _) ->
                                             level.name
                                         },
@@ -113,13 +124,12 @@ private fun Libretto.plotSequence(operaId: UUID): Sequence<Plot> {
             }
 }
 
-private fun Libretto.roleSequence(operaId: UUID): Sequence<Role> {
+private fun ModelLibretto.roleSequence(operaTitle: String): Sequence<Role> {
     return roles
             .asSequence()
             .map { role ->
                 Role(
-                        randomUUID(),
-                        operaId,
+                        operaTitle,
                         role.name,
                         role.description,
                         role.voice,
