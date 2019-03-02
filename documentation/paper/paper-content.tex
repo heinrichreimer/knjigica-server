@@ -60,9 +60,9 @@ Die meisten der Corpora enthalten Libretti verschiedener Sprachen,
 überwiegend jedoch italienische, franzöische,
 englische, deutsche oder russische.
 Auch werden bei einigen Corpora Übersetzungen zur Verfügung gestellt,
-so werden beispielsweise die Libretti von \textquote{Opera Glass}
+so werden beispielsweise die Libretti von \emph{Opera Glass}
 durch 389 Übersetzungen ergänzt.
-Bei \textquote{Kareol} sogar die Übersetzung
+Bei \emph{Kareol} sogar die Übersetzung
 dem Originaltext gegenübergestellt.
 
 \section{Struktur}
@@ -109,7 +109,7 @@ in mehrere Bausteine.
 Während der Crawler vor allem auf Linux-Bash-Programmen aufbaut,
 wird in den anderen Bausteinen, so auch im Parser, Indexer und im Benutzerprogramm
 auf objektorientierte Programmierung mittels Java/Kotlin gesetzt.
-Als Framework wird das praxiserprobte Elasticsearch-Framework verwendet.
+Als Framework wird das praxiserprobte \emph{Elasticsearch}-Framework verwendet.
 Im Folgenden werden die einzelnen Komponenten der Suchmaschine
 näher erklärt.
 
@@ -136,53 +136,103 @@ sowie die \code{html-xml-utils} verwenden.
 Die Inhalte der Internetseite liegen nach dem Crawlen
 als HTML-Quelltext vor.
 Damit in der Folge nach enthaltenen Informationen gesucht werden kann,
-werden die Inhalte mittels Java in ein Objekt geschrieben.
-Hierbei wurde von uns die Bibliothek „jsoup“ verwendet,
-welche die Extraktion und Bearbeitung von HTML Inhalten ermöglicht.
-Entsprechend wird das gecrawlte Material je nach Internetseite
-so verallgemeinert, dass anhand bestimmter Abfolgen von HTML Elementen
-die Hilfsdatenstruktur korrekt gefüllt wird.
-Ein Formatter sorgt abschließend dafür,
-dass die in der Hilfsdatenstruktur enthaltenen Informationen
-in ein JSON Dokument umgewandelt werden.
-Dieses wird von der Suchmaschine als Referenz verwendet.
+werden die Inhalte mittels Java bzw. Kotlin in ein Objekt geschrieben.
+Hierbei wird die Bibliothek \emph{JSoup} verwendet,
+welche die Extraktion und Bearbeitung von HTML-Inhalten ermöglicht.
+Entsprechend werden die gecrawlten Dokumente je nach Quelle
+so verallgemeinert, dass die Hilfsdatenstruktur anhand der Inhalte
+spezifischer HTML-Elemente erzeugt wird.
 
-\section{Suchmaschine}
-Als Suchmaschine verwenden wir die open source Software „Elasticsearch“.
-Diese beruht auch Apache Lucene
+Zur besseren Speicherung der so erhaltenen Objekte
+für die nächsten Bearbeitungsschritte,
+werden zusätzlich ein Parser und ein Formatter entwickelt,
+mit dem die in der Hilfsdatenstruktur enthaltenen Informationen
+in das JSON-Format umgewandelt,
+sowie aus diesem wieder geparst werden können.
+
+\subsection{Suchmaschine}
+Als Suchmaschine verwenden wir die Open-Source-Software \emph{Elasticsearch}.
+Diese beruht auf dem \emph{Lucene}-Framework von Apache
 und realisiert die Kommunikation mit Klienten
 über ein RESTful-Webinterface.
-Das vorher geparste Dokument im JSON Format
-wird an die Suchmaschine gesendet und wird dort indiziert.
-Ein entsprechendes Dokument besitzt in unserem Fall
-die folgende verkürzte Form:
-% \lstinputlisting[language=json, inputencoding=utf8/latin1]{../bretzner-die_entfuhrung_aus_dem_serail-sample.json}
 
-Die Dokumente liegen im Anschluss aufgelistet in Elasticsearch vor
-und können über einen sogenannten Index von der Suchmaschine erreicht werden.
-Eine Suchanfrage wird wie die Inhalte zuvor mittels eines JSON Dokuments
-an Elasticsearch gesendet.
+\subsection{Indizieren}
+
+Da das \emph{Elasticsearch}-Framework
+keine verschachtelten Arrays aus Objekten handhaben kann,
+werden stattdessen angepasste Datenstrukturen verwendet,
+die durch Verflachen aus der umfassenden Datenstruktur entsteht.
+So wird beispielsweise in einem Handlungs-Objekt
+noch der Titel der Oper mit gespeichert,
+und die Information zur aktuellen Überschrift.
+
+Auch für diese Strukturen werden Formatter in das JSON-Format erstellt.
+
+Die aus den zwischengespeicherten JSON-Daten geparsten Dokumente
+werden nun aufgespalten, sodass aus einem Libretto eine Vielzahl von
+Teilobjekten entsteht.
+Diese werden dann jeweils nach Typ in einzelne Indices
+von \emph{Elasticsearch} über das REST-Interface des Clusters indiziert.
+
+\subsection{Anfrageverarbeitung}
+
+Im Anschluss liegen die Dokumente aufgelistet in Elasticsearch vor
+und können über den Index von der Suchmaschine gefunden werden.
+
+Eine Suchanfrage wird, wie die Inhalte zuvor,
+im JSON-Format über das REST-Interface an das Elasticsearch-Cluster gesendet.
 Die Anfrage kann verschiedene Parameter enthalten,
 welche die Resultate mit Filtern versehen
 und Spezifikationen wie eine bestimmte Ordnung der Inhalte
-und Beschneidung auf bestimmte Stichworte erlauben.
-In unserem Fall wurde die Suchanfrage als Boolean umgesetzt,
-wodurch eine Ausgabe nur dann erfolgt,
-wenn ein oder mehrere der angegebenen Variablen mit einem Wert gefüllt wurden. Bei diesen Variablen handelt es sich um den Rollennamen, Regieanweisungen, Akte, Szenen und den Text.
+und Eingrenzung auf bestimmte Stichworte erlauben.
 
-\section{Indizieren}
+Für die Libretto-Suchmaschine werden mehrere Indices,
+nämlich die der verschiedenen Dokumenttypen,
+gleichzeitig angefragt.
+Dabei werden die Ergebnisse je nach Typ unterschiedlich gewichtet,
+sodass bei Konflikten beispielsweise Resultate,
+den Titel der Oper betreffend,
+stärker gewichtet werden können,
+als solche, die in einer Textpassage vorkommen.
+
+Durch die Kombination aller Indices kann über das selbe Suchfeld nach
+Titel, Autor, Rollennamen, Regieanweisungen, Akt, Szene,
+Text, Widmung und Premiere gesucht werden.
 
 \section{Evaluation}
-Die Evaluation wurde anhand des Vorbildes der „Text Retrieval Conference“ (TREC) durchgeführt. In diesem Rahmen wurden 25 Topics entworfen, welche die Suchmaschine auf ihre Funktionalität untersuchen. Ein etwaiges Topic besteht aus einer zentralen Suchanfrage, aus der weitere Unteranfragen resultieren können. Um wichtige Aspekte der Suchmaschine abzudecken, werden die Topics „Autor“, „Struktur“ und „Plot“ verwendet. Die Resultate der Suchanfragen werden anhand einer Skala von 0 bis 1 erfasst:
-\begin{description}
-    \item[0] nicht relevant, beziehungsweise kein hilfreiches Resultat
-    \item[0.2] relevant, erfüllt jedoch nur einen sehr geringen Umfang der Suchanfrage
-    \item[0.4] relevant, erfüllt jedoch nur einen geringen Umfang der Suchanfrage
-    \item[0.6] relevant, erfüllt die Suchanfrage in befriedigendem Umfang
-    \item[0.8] sehr relevant, die Suchanfrage erfüllt die gestellten Kriterien
-    \item[1] sehr relevant und erfüllt die Suchanfrage in vollem Umfang
-\end{description}
-Mit der Hilfe eines unabhängigen Dritten wurden alle Anfragen angewendet, um die Suchmaschine zu testen. Der Prüfende hatte hierfür Zugriff auf die Kommandozeilenanwendung und konnte Rückfragen stellen, sofern ihm bestimmte Aspekte unklar gewesen sind. Die für ihn zutreffenden Einträge der Skala wurden während der Durchführung zusammen mit einem Kommentar erfasst, welcher Aufschluss über die Einordnung der vorgegebenen Skala gibt. Die Anfragen und Ergebnisse der Evaluation der letzten Version der Suchmaschine sind im Anhang „tabelle_evaluation“ hinterlegt.
+Die Evaluation wurde anhand des Vorbildes der
+„Text Retrieval Conference“ (TREC) durchgeführt.
+In diesem Rahmen wird die Suchmaschine anhand von 25 Topics
+auf ihre Funktionalität untersucht.
+
+Ein Topic besteht etwa aus einer zentralen Suchanfrage,
+aus der weitere Unteranfragen resultieren können.
+Um wichtige Aspekte der Suchmaschine abzudecken,
+werden die Topics nach den Typen \textquote{Autor},
+\textquote{Struktur} und \textquote{Handlung} eingeordnet.
+
+Die Relevanz der Suchanfragen werden anhand einer Skala von 0 bis 1 erfasst:
+Hierbei steht ein Wert von 0 für ein Suchergebnis,
+welches überhaupt nicht relevant oder nicht hilfreich ist,
+ein Wert von 1 für ein Ergebnis, das das Informationsbedürfnis des Benutzers
+aus der Suchanfrage in vollem Umfang erfüllt.
+
+\subsection{Durchführung}
+
+Einem unabhängigen Dritten wurden die Topics präsentiert,
+und dieser konnte selbstständig über die Suchbox
+eine Anfrage -- oder die vorgeschlagene Beispielanfrage -- eingeben.
+
+Nach Durchführung einer jeden Suchanfrage sollte die Testperson
+die Relevanz anhand der oben beschriebenen Skala einschätzen
+und zusammen mit einem optionalen Kommentar erfassen,
+welcher Aufschluss über die Einordnung der vorgegebenen Skala gibt.
+
+Die Resultate wurden zusätzlich
+mit der aktuellen Version der Suchmaschine annotiert,
+sodass ein Vergleich verschiedener Versionen der Suchmaschine möglich ist.
+
+\subsection{Ergebnis}
 
 Im Mittel ergeben die Resultate einen Wert von 0,344, was eine (sehr) geringe Erfüllung der Suchanfragen bedeutet. Hierbei sind die Mittelwerte der jeweiligen Topics in Autor: 0,51, Sektion: 0 und Plot: 0,4 aufgeteilt. Die Topics „Autor“ und „Plot“ liefern also beide bessere Suchergebnisse, was im derzeitigen Stand der Umsetzung zu begründen ist. Die Suchmaschine ist in der Lage nach spezifischen Informationen zu suchen, berücksichtigt jedoch noch keine Operatoren oder Suchanfragen, welche eine Umwandlung der Inhalte anhand einer bestimmten Fragestellung enthält. Dies führt auch dazu, dass die Intention einer Suchanfrage nicht erkannt wird und die eigentlich richtig eingeordneten Suchergebnisse mit falschen Parametern ausgegeben werden.
 
