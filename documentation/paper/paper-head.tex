@@ -1,0 +1,182 @@
+\documentclass[
+    sigconf, % Conference paper style
+    timestamp, manuscript, %authordraft, % For writing
+    natbib=false, % Disable natbib package, we'll use biblatex instead.
+    nonacm=true % Disable ACM-related content.
+]{acmart}
+
+
+% Kodierung:
+\usepackage[utf8]{inputenc} % UTF8-Dateikodierung
+\usepackage[T1]{fontenc} % Ausgabekodierung
+
+
+% Letter paper
+\geometry{a4paper} % Use A4 paper format instead of US Letter.
+
+
+% Grundlegende Support-Pakete:
+\usepackage[ngerman]{babel} % Sprachunterstützung für korrekte Silbentrennung und Übersetzung der Standard-LaTeX-Texte
+\usepackage{hyperref} % Querverweise für externe Webseiten und interne Abschnitte/Abbildungen/Quellenangaben etc.
+\usepackage{graphicx} % externe Bilder/Grafiken
+\usepackage{booktabs} % More formal table style.
+\usepackage[inline]{enumitem} % Inline enumerations (looks better in acmart)
+
+% Bibliography & Cites
+\usepackage[autostyle=true]{csquotes} % Anführungszeichen und direkte Zitate
+\usepackage[
+    abbreviate=true,
+    dateabbrev=true,
+    isbn=true,
+    doi=true,
+    urldate=comp,
+    url=true,
+    maxbibnames=9,
+    backref=false,
+    backend=biber,
+    style=alphabetic,
+]{biblatex} % Load biblatex and set ACM styles.
+\renewcommand{\bibfont}{\Small}
+\addbibresource{../bibliography.bib} % Load bibliography file.
+
+
+% Glossaries
+\usepackage{glossaries}
+\makeglossaries
+
+
+% Schrift:
+% \usepackage{eulervm} % Schriftart "Euler Maths" für Mathematik
+\usepackage{eurosym} % offizielles Euro-Zeichen
+
+
+% Schriftformatierung:
+\newcommand{\strong}[1]{\textbf{#1}} \newcommand{\fett}[1]{\textbf{#1}} % fetter Text
+\newcommand{\italic}[1]{\textit{#1}} \newcommand{\kursiv}[1]{\textit{#1}} % kursiver Text
+\newcommand{\code}[1]{\texttt{#1}} % monospace Text
+\newcommand{\unterstrichen}[1]{\underline{#1}} % unterstrichener Text
+\newcommand{\Underline}[1]{\underline{\underline{#1}}} \newcommand{\Unterstrichen}[1]{\Underline{#1}} % doppelt unterstrichener Text
+\newcommand{\plural}[1]{\textsuperscript{\underline{$#1$}}} \newcommand{\pl}[1]{\plural{#1}} % Abgekürzter Plural (höhergestellt und unterstrichen) für "Lineare Algebra"
+\newcommand{\numberlinefont}{\tiny} % Schriftart von Zeilennummern bei Algorithmen und Listings
+\newcommand{\numberlineskip}{0.75em} % Abstand von Zeilennummern bei Algorithmen und Listings
+\newcommand{\queryfont}{\footnotesize\ttfamily} % Query text style
+\newcommand{\query}[1]{{\queryfont#1}} % Query text style
+
+
+% Code-Formatierung:
+\usepackage{listings} % Paket für Code-Listings
+\usepackage{listingsutf8} % UTF8-Support in importierten Listings
+\lstset{
+    language=C, % Standardsprache
+    basicstyle=\ttfamily, % Schriftart
+    breakatwhitespace=false, % Zeilenumbruch nur bei Leerzeichen
+    breaklines=true, % Automatischer Zeilenumbruch
+    prebreak={\mbox{$\hookleftarrow$}}, % Zeichen zur Kennzeichnung autom. Zeilenümbrüche
+    numbers=left,numberstyle=\numberlinefont,numbersep=\numberlineskip,stepnumber=1, % Zeilennummern
+    morecomment=[s][]{/**}{*/}, % Kommentare
+    keepspaces=true, % Leerzeichen übernehmen
+    keywordstyle=\bfseries, % Schlüsselwörter
+    showtabs=false, showspaces=false, % Tabs und Leerzeichen nicht kennzeichnen
+    showstringspaces=false, % Leerzeichen in Zeichenketten nicht kennzeichnen
+    tabsize=4, % Tabulatorgröße
+}
+\lstdefinestyle{haskell}{ % Quellcode-Stil für Haskell ("Konzepte der Programmierung")
+    language=haskell,
+    escapeinside={*'}{'*},
+    showstringspaces=false,
+    morecomment=[l]\%,
+    captionpos=b,
+    emphstyle={\bfseries},
+    tabsize=2,
+}
+\lstdefinelanguage{json}{
+    morestring=[b]",
+    morestring=[d]'
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+
+% Algorithms and pseudocode
+\usepackage[vlined, linesnumbered]{algorithm2e} % Algorithms and pseudocode package
+\DontPrintSemicolon % Hide semicolons
+\SetKwProg{Function}{function}{\ is}{end function} % Function definition
+\SetKwComment{Comment}{\quad$\triangleright$\ }{}\SetCommentSty{itshape} % Comment style
+\SetKw{Continue}{continue}
+\SetKwBlock{Repeat}{repeat}{}
+\SetNlSty{numberlinefont}{}{} % Zeilennummer-Schrift
+\SetNlSkip{\numberlineskip} % Zeilennummer-Abstand
+\SetAlgoNlRelativeSize{0}
+\SetAlFnt{\footnotesize}
+
+
+% Grafiken und Bilder
+\usepackage{rotating} % Rotieren
+\usepackage{tikz} % Tikz Graphen
+\tikzset{>=latex} % Tikz Grundkonfiguration
+\usepackage{pgfplots} % Funktions-Plots in 2D/3D
+\pgfplotsset{compat=1.16}
+    
+
+% Mathematik
+\usepackage{amsthm,amsmath,amssymb,amstext,MnSymbol} % Grundpakete für Matheumgebungen, Sonderzeichen, Brüche etc. (MnSymbol kann auch weggelassen werden)
+\usepackage{array} % Tabellen in Mathematik-Umgebungen
+\usepackage{cancel} % durchgestrichener Text (z.B. \not\in)
+\newcommand{\union}{\cup} \newcommand{\vereinigung}{\cup} % Vereinigung
+\newcommand{\disjunction}{\uplus} % disjunkte Vereinigung
+\newcommand{\intersection}{\cap} \newcommand{\intersect}{\cap} \newcommand{\schnitt}{\cap} % Schnittmenge
+\newcommand{\lund}{\land} % Logisches Und
+\newcommand{\loder}{\lor} % Logisches Oder
+\newcommand{\mland}{\(\land\)} \newcommand{\mlund}{\mland} % Logisches Und im Fließtext
+\newcommand{\mlor}{\(\lor\)} \newcommand{\mloder}{\mlor} % Logisches Oder im Fließtext
+\renewcommand{\C}{\mathbb{C}} \newcommand{\complexnumbers}{\C} \newcommand{\complexezahlen}{\C} % Shortcut für Mengensymbol der komplexen Zahlen
+\newcommand{\R}{\mathbb{R}} \newcommand{\realnumbers}{\R} \newcommand{\reelezahlen}{\R} % Shortcut für Mengensymbol der reelen Zahlen
+\newcommand{\Q}{\mathbb{Q}} \newcommand{\rationalnumbers}{\Q} \newcommand{\rationalezahlen}{\Q} % Shortcut für Mengensymbol der rationalen Zahlen
+\newcommand{\Z}{\mathbb{Z}} \newcommand{\wholenumbers}{\Z} \newcommand{\ganzezahlen}{\Z} % Shortcut für Mengensymbol der ganzen Zahlen
+\newcommand{\N}{\mathbb{N}} \newcommand{\naturalnumbers}{\N} \newcommand{\natuerlichezahlen}{\N} % Shortcut für Mengensymbol der natürlichen Zahlen
+\newcommand{\B}{\mathbb{B}} \newcommand{\binarynumbers}{\B} \newcommand{\binaerezahlen}{\B} % Shortcut für Mengensymbol der binären Zahlen
+\renewcommand{\O}{\mathcal{O}} % asymptotische Laufzeit in O-Notation ("Datenstrukturen und effiziente Algorithmen")
+\newcommand{\base}[1]{\mathcal{#1}} % Formatierung für Basis ("Lineare Algebra")
+\newcommand{\rechtspfeil}{\rightarrow} % Shortcut für Pfeil nach rechts
+\newcommand{\Rechtspfeil}{\Rightarrow} % Shortcut für doppelten Pfeil nach rechts
+\newcommand{\linkspfeil}{\leftarrow} % Shortcut für Pfeil nach links
+\newcommand{\Linkspfeil}{\Leftarrow} % Shortcut für doppelten Pfeil nach links
+\newcommand{\linksrechtspfeil}{\leftrightarrow} % Shortcut für Pfeil nach links und rechts
+\newcommand{\Linksrechtspfeil}{\Leftrightarrow} % Shortcut für doppelten Pfeil nach links und rechts
+\DeclareMathOperator{\im}{im} % Bild
+\DeclareMathOperator{\id}{id} % Identität
+\DeclareMathOperator{\sel}{sel} % Selektion
+\DeclareMathOperator{\dom}{dom} % Definitionsbereich
+\DeclareMathOperator{\ran}{ran} % Wertebereich
+\DeclareMathOperator{\Hom}{Hom} % Homomorphismus
+\DeclareMathOperator{\End}{End} % Endomorphismus
+\DeclareMathOperator{\indeg}{indeg} % Eingangsgrad
+\DeclareMathOperator{\outdeg}{outdeg} % Ausgangsgrad
+\let\tmp\mod \let\mod\bmod \let\bmod\tmp % Tausche \mod und \bmod Befehle
+\let\varemptyset\emptyset \let\emptyset\varnothing % Verbesserte Darstellung der leeren Menge \emptyset (\varemptyset für alte Darstellung)
+\let\tmp\epsilon \let\epsilon\varepsilon \let\varepsilon\tmp % Verbesserte Darstellung von Epsilon (Tausche \epsilon und \varepsilon)
+\let\tmp\phi \let\phi\varphi \let\varphi\tmp % Verbesserte Darstellung von Phi (Tausche \phi und \varphi)
+\newcommand{\eqtransform}{\ensuremath{\qquad\big|\,\,}} % Äquivalenzumformung
+\newcommand{\infinity}{\infty} % Unendlich-Zeichen
+\newcommand{\corresponds}{\triangleq} % Entspricht-Zeichen
+\newcommand{\ditto}{\textquotedbl} \newcommand{\dito}{\ditto} % "Siehe oben"-Zeichen
+\renewcommand{\qed}{\nopagebreak\hfill\ensuremath{\square}} % Ende eines Beweises: "quod erat demonstrandum", lat. "was zu beweisen war"
+\newcolumntype{L}{>{\(}l<{\)}} % linksbündige Tabellenspalte im Mathe-Modus
+\newcolumntype{R}{>{\(}r<{\)}} % rechtbündige Tabellenspalte im Mathe-Modus
+\newcolumntype{C}{>{\(}c<{\)}} % zentrierte Tabellenspalte im Mathe-Modus
+
