@@ -10,11 +10,11 @@
         Das Geburts-, sowie das Todesjahr von "Christoph Willibald Gluck" sollen ausgeben werden.
     </narrative>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es werden keine Treffer gefunden.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0" version="0.1.1-alpha1">
         Keine Informationen zu Lebensdaten
     </result>
 

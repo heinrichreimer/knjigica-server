@@ -25,11 +25,11 @@
       1: Highly relevant
     Result version: Search engine version and/or name, for comparison.
     -->
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0.2" version="0.1.0">
         Nur wörtliche Rede mit dem italienischen Wort "sposi" (dt.: "heiraten") wird gefunden.
     </result>
 
-    <result relevance="0" version="0.1.1-alpha1">
+    <result relevance="0.6" version="0.1.1-alpha1">
         Bis auf Subtopic 2 wurden die erwarteten Ergebnisse ausgegeben.
     </result>
 

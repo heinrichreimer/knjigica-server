@@ -10,10 +10,10 @@
         Die Suche soll eine duplikatfreie Liste von Libretto ergeben, in denen das Wort vorkommt.
     </narrative>
 
-    <result relevance="0" version="0.1.0">
+    <result relevance="0.4" version="0.1.0">
         Die Suche ergibt eine Textpassage mit dem Wort "Bein", welche jedoch nicht das einzige Ziel einer derartigen Suchanfrage sein kann.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1"/>
+    <result relevance="0" version="0.1.1-alpha1"/>
 
 </topic>

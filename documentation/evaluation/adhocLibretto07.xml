@@ -14,11 +14,11 @@
         Hat Puccini Text geschrieben, oder Musik komponiert?
     </subtopic>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es werden keine Treffer gefunden.
     </result>
 
-    <result relevance="0" version="0.1.1-alpha1">
+    <result relevance="0,8" version="0.1.1-alpha1">
         Bis auf das erste Subtopic wurden alle Anfragen richtig ausgegeben, können bzw. erschlossen werden.
     </result>
 

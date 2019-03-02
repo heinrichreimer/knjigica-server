@@ -6,12 +6,12 @@
         Libretti von "Francesco Gasparini"
     </description>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es werden Aussagen gefunden, die das Wort "Libretti" enthalten.
         Die gefundenen Libretti beziehen sich jedoch nicht auf den Autor.
     </result>
 
-    <result relevance="0" version="0.1.1-alpha1">
+    <result relevance="0.4" version="0.1.1-alpha1">
         Erste Ergebnisse allgemein zu libretti
     </result>
 

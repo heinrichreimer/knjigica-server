@@ -14,7 +14,7 @@
         Im Ergebnis fehlt der Name des Libretto - Akt und Szene werden richtig angegeben. Zusätzlich wird ausgegeben, welche Rolle diese Aussage trifft.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0" version="0.1.1-alpha1">
         Zu viele Opern, kein Textauszug
     </result>
 

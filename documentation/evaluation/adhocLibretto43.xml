@@ -10,11 +10,11 @@
         Die Suche soll eine Auflistung der Figuren im Libretto "Alcina" ergeben-
     </narrative>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0.2" version="0.1.0">
         Die Suche ergibt Treffer dess Stichworts "Alcina". Die eigentliche Suchanfrage wird somit nicht beantwortet.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0.2" version="0.1.1-alpha1">
         Nur Alcina, keine anderen Rollen
     </result>
 

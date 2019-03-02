@@ -10,11 +10,11 @@
         Die Suche soll den Inhalt des zweiten Aktes des Libretto "die Walküre" ergeben.
     </narrative>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es werden Treffer ausgegeben, welche die Zahl "2" und das Wort "Walküre" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0" version="0.1.1-alpha1">
         Die Rollen regieren!
     </result>
 

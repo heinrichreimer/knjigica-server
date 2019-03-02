@@ -10,11 +10,11 @@
         Es gibt keinen zehnten Auftritt im Libretto "der Schauspieldirektor", weshalb das Ergebnis der Suchanfrage leer sein sollte.
     </narrative>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es werden Treffer ausgegeben, welche die Zahl "10" enthalten. Dies entspricht jedoch nicht der Intention der Suchanfrage.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0" version="0.1.1-alpha1">
         No plot.
     </result>
 

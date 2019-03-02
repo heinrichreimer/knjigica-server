@@ -10,11 +10,11 @@
         Die Suche soll aufzeigen, dass dieser Text auf diese Art und Weise in keinem Libretto steht, jedoch Ahnlichkeit zu "die Walküre" von Willhelm Richard Wagner im zweiter Aufzug, zweite Szene von der Rolle "Wotan" hat.
     </narrative>
 
-    <result relevance="0" version="0.1.0">
+    <result relevance="0.4" version="0.1.0">
         Es wird selbiges Ergebnis wie bei korrekter Suchanfrage ausgegeben. Somit ist die Ähnlichkeit gegeben, jedoch wird der vermeintliche Fehler nicht erkannt.
     </result>
 
-    <result relevance="-1" version="0.1.1-alpha1">
+    <result relevance="0" version="0.1.1-alpha1">
         No plot.
     </result>
 

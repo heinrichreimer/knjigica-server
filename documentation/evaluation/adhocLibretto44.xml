@@ -10,7 +10,7 @@
         Die Suche soll alle Figuren mit der Stimme "Sopran" ausgeben.
     </narrative>
 
-    <result relevance="-1" version="0.1.0">
+    <result relevance="0" version="0.1.0">
         Es wird ein Ergebnis mit dem Wort "Figuren" erzielt. Die Stimme "Sopran" und die Frage nach entsprechenden Figuren wird nicht berücksichtigt.
     </result>
 
