@@ -32,13 +32,7 @@
     }
   ],
   "plot": [
-    {
-      "type": "SECTION",
-      "data": {
-        "section": "Erster Aufzug",
-        "level": "ACT"
-      }
-    },
+    //...
     {
       "type": "SECTION",
       "data": {
@@ -59,13 +53,7 @@
         "text": "Hier soll ich dich denn sehen;\nKonstanze! dich mein Glück!\nLaß Himmel es geschehen!\nGib mir die Ruh zurück.\nIch duldete der Leiden\nO Liebe! allzuviel!\nSchenk mir dafür nun Freuden\nUnd bringe mich ans Ziel!"
       }
     },
-    {
-      "type": "TEXT",
-      "data": {
-        "roleName": [],
-        "text": "Aber wie soll ich in den Palast kommen? Wie sie sehen? Wie sprechen? ~"
-      }
-    },
+    //...
     {
       "type": "SECTION",
       "data": {
@@ -81,33 +69,6 @@
         ],
         "text": "Wer ein Liebchen hat gefunden,\nDie es treu und redlich meint,\nLohn' es ihr durch tausend Küsse,\nMach ihr all das Leben süße,\nSei ihr Tröster, sei ihr Freund.\nTrallalera, trallalera.",
         "instruction": "mit einer Leiter, welche er an einen Baum vor der Tür des Palastes lehnt, hinaufsteigt und Feigen abnimmt"
-      }
-    },
-    {
-      "type": "TEXT",
-      "data": {
-        "roleName": [
-          "BELMONTE"
-        ],
-        "text": "Vielleicht, daß ich durch diesen Alten etwas erfahre. He, Freund! ist das nicht das Landhaus des Bassa Selim?"
-      }
-    },
-    {
-      "type": "TEXT",
-      "data": {
-        "roleName": [
-          "OSMIN"
-        ],
-        "text": "Doch sie treu sich zu erhalten,\nSchließ' er Liebchen sorglich ein:\nDenn die losen Dinger haschen\nJeden Schmetterling, und naschen\nGar zu gern von fremdem Wein.\nTrallalera, trallalera."
-      }
-    },
-    {
-      "type": "TEXT",
-      "data": {
-        "roleName": [
-          "BELMONTE"
-        ],
-        "text": "He, Alter, he! ~ hört Ihr nicht? ~ Ist hier des Bassa Selim Palast?"
       }
     }
     // ...
