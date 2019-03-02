@@ -173,22 +173,18 @@ wenn ein oder mehrere der angegebenen Variablen mit einem Wert gefüllt wurden. 
 \section{Indizieren}
 
 \section{Evaluation}
-Die Evaluation wurde anhand des Vorbildes der „Text Retrieval Conference“ (TREC) durchgeführt. In diesem Rahmen wurden 25 sogenannte Topics entworfen, welche die Suchmaschine auf ihre Funktionalität untersucht. Ein etwaiges Topic besteht aus einer zentralen Suchanfrage, aus der weitere Unteranfragen resultieren. Für die Bewertung der Resultate wurde eine Skala von -1 bis 1 verwendet:
+Die Evaluation wurde anhand des Vorbildes der „Text Retrieval Conference“ (TREC) durchgeführt. In diesem Rahmen wurden 25 Topics entworfen, welche die Suchmaschine auf ihre Funktionalität untersuchen. Ein etwaiges Topic besteht aus einer zentralen Suchanfrage, aus der weitere Unteranfragen resultieren können. Um wichtige Aspekte der Suchmaschine abzudecken, werden die Topics „Autor“, „Struktur“ und „Plot“ verwendet. Die Resultate der Suchanfragen werden anhand einer Skala von 0 bis 1 erfasst:
 \begin{description}
-    \item[-1] nicht relevant, beziehungsweise kein hilfreiches Resultat
-    \item[0] relevant, erfüllt jedoch nicht den kompletten Umfang der Suchanfrage
+    \item[0] nicht relevant, beziehungsweise kein hilfreiches Resultat
+    \item[0.2] relevant, erfüllt jedoch nur einen sehr geringen Umfang der Suchanfrage
+    \item[0.4] relevant, erfüllt jedoch nur einen geringen Umfang der Suchanfrage
+    \item[0.6] relevant, erfüllt die Suchanfrage in befriedigendem Umfang
+    \item[0.8] sehr relevant, die Suchanfrage erfüllt die gestellten Kriterien
     \item[1] sehr relevant und erfüllt die Suchanfrage in vollem Umfang
 \end{description}
-Die Anfragen und Ergebnisse der Evaluation der letzten Version der Suchmaschine werden in folgender Tabelle zusammengefasst:
+Mit der Hilfe eines unabhängigen Dritten wurden alle Anfragen angewendet, um die Suchmaschine zu testen. Der Prüfende hatte hierfür Zugriff auf die Kommandozeilenanwendung und konnte Rückfragen stellen, sofern ihm bestimmte Aspekte unklar gewesen sind. Die für ihn zutreffenden Einträge der Skala wurden während der Durchführung zusammen mit einem Kommentar erfasst, welcher Aufschluss über die Einordnung der vorgegebenen Skala gibt. Die Anfragen und Ergebnisse der Evaluation der letzten Version der Suchmaschine sind im Anhang „tabelle_evaluation“ hinterlegt.
 
-Die Ergebnisse der Evaluation sind entsprechend folgend verteilt:
-\begin{description}
-    \item[-1] 11 Anfragen
-    \item[0] 8 Anfragen
-    \item[1] 5 Anfragen
-\end{description}
-
-Mit der derzeitigen Version der Suchmaschine werden also bei mehr als 50% der gestellten Suchanfragen relevante Ergebnisse ausgegeben. 
+Im Mittel ergeben die Resultate einen Wert von 0,344, was eine (sehr) geringe Erfüllung der Suchanfragen bedeutet. Hierbei sind die Mittelwerte der jeweiligen Topics in Autor: 0,51, Sektion: 0 und Plot: 0,4 aufgeteilt. Die Topics „Autor“ und „Plot“ liefern also beide bessere Suchergebnisse, was im derzeitigen Stand der Umsetzung zu begründen ist. Die Suchmaschine ist in der Lage nach spezifischen Informationen zu suchen, berücksichtigt jedoch noch keine Operatoren oder Suchanfragen, welche eine Umwandlung der Inhalte anhand einer bestimmten Fragestellung enthält. Dies führt auch dazu, dass die Intention einer Suchanfrage nicht erkannt wird und die eigentlich richtig eingeordneten Suchergebnisse mit falschen Parametern ausgegeben werden.
 
 \section{Zusammenfassung und Ausblick}
 
