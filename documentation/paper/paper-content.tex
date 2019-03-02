@@ -35,7 +35,7 @@ Im ersten Schritt der Umsetzung ist eine umfassende Recherche
 nach Libretto und deren Texten im Internet erfolgt.
 \begin{table}
     \centering
-    \begin{tabular}{l l}
+    \begin{tabular}{l r}
         \toprule
         Corpus & Anzahl Libretto \\
         \midrule
@@ -177,11 +177,11 @@ von \emph{Elasticsearch} über das REST-Interface des Clusters indiziert.
 
 \subsection{Anfrageverarbeitung}
 
-Im Anschluss liegen die Dokumente aufgelistet in Elasticsearch vor
+Im Anschluss liegen die Dokumente aufgelistet in \emph{Elasticsearch} vor
 und können über den Index von der Suchmaschine gefunden werden.
 
 Eine Suchanfrage wird, wie die Inhalte zuvor,
-im JSON-Format über das REST-Interface an das Elasticsearch-Cluster gesendet.
+im JSON-Format über das REST-Interface an das \emph{Elasticsearch}-Cluster gesendet.
 Die Anfrage kann verschiedene Parameter enthalten,
 welche die Resultate mit Filtern versehen
 und Spezifikationen wie eine bestimmte Ordnung der Inhalte
@@ -237,11 +237,25 @@ sodass ein Vergleich verschiedener Versionen der Suchmaschine möglich ist.
 
 Im Mittel ergibt sich über alle Topics eine Relevanz von 0,344,
 was eine verhältnismäßig geringe Erfüllung der Suchanfragen bedeutet.
+\begin{table}
+    \centering
+    \begin{tabular}{l r r}
+        \toprule
+        Typ & Anzahl Topics & Durchschnittliche Relevanz \\
+        \midrule
+        Autor & 9 & 0,510 \\
+        Struktur & 6 & 0,000 \\
+        Handlung & 10 & 0,400 \\
+        alle & 25 & 0,344 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Relevanz nach Topic-Typ}
+    \label{tab:rel-topic-type}
+\end{table}
 Jedoch fällt die Relevanz
-bei den unterschiedlichen Topic-Typen verschieden aus.
-Hierbei sind die Mittelwerte für den Typen \textquote{Autor} 0,51,
-für \textquote{Struktur} 0 und für \textquote{Plot} 0,4.
-Die Topics \textquote{Autor} und \textquote{Plot}
+bei den unterschiedlichen Topic-Typen verschieden aus,
+wie in Tabelle \ref{tab:rel-topic-type} ersichtlich ist.
+Die Typen \textquote{Autor} und \textquote{Handlung}
 liefern also beide bessere Suchergebnisse,
 was durch den derzeitigen Stand der Umsetzung zu begründen ist.
 
@@ -254,7 +268,7 @@ nicht vollständig korrekt erkannt wird
 und die eigentlich richtig eingeordneten Suchergebnisse
 mit falschen Parametern ausgegeben werden.
 
-\section{Zusammenfassung und Ausblick}
+\section{Zusammenfassung \& Ausblick}
 Im derzeitigen Umsetzungsstand der Suchmaschine
 können innerhalb einer Kommandozeilenanwendung Anfragen gestellt werden,
 welche die bereits vollständig indizierten Dokumente
@@ -269,7 +283,7 @@ welche Dokumente mit einer von uns festgelegten Datenstruktur enthält.
 Diese wurde im jetzigen Stand lediglich aus einer Datenquelle heraus befüllt.
 
 \subsection{Corpus}
-Obwohl wir bisher nur für den \textquote{Opera Lib}-Corpus
+Obwohl wir bisher nur für den \emph{Opera Lib}-Corpus
 einen Parser geschrieben haben,
 lässt sich das entwickelte Framework problemlos auf weitere Corpora erweitern.
 So planen wir beispielsweise,
@@ -285,7 +299,7 @@ und könnten auch in vollständigerer Form hinterlegt sein.
 
 Eine weitere Erweiterungsmöglichkeit besteht darin,
 Kunstlieder mit in die Suchmaschine einzubeziehen.
-Der \textquote{Kareol}-Corpus stellt dazu 687 Lieder zur Verfügung.
+Der \emph{Kareol}-Corpus stellt dazu 687 Lieder zur Verfügung.
 
 \subsection{Query Understanding}
 Ein weiteres Ziel in folgenden Versionen soll es sein,
@@ -293,12 +307,9 @@ die Suchanfragen zu analysieren
 und somit auch auf eventuelle Spezifizierungen
 eine angepasste Ausgabe geben zu können.
 Ein wichtiger Punkt wäre hierbei zunächst
-das sogenannte „Natural Language Processing“,
+das sogenannte „Natural Language Processing“ \cite{liddy2001natural},
 welches mit Hilfe der gegebenen Quellen Sprachen erkennt,
 deren Inhalte segmentiert und im Anschluss Funktionen
 und Bedeutungen der Wörter herausfiltert.
 Mit diesem Vorgehen würde ein hauptsächlicher Grund
 für die schlechten Ergebnisse der Evaluation entfallen.
-
-% https://www.bigdata-insider.de/was-ist-natural-language-processing-a-590102/
-% https://surface.syr.edu/cgi/viewcontent.cgi?referer=https://scholar.google.de/&httpsredir=1&article=1019&context=cnlp
