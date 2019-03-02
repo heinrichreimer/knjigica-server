@@ -237,16 +237,21 @@ sodass ein Vergleich verschiedener Versionen der Suchmaschine möglich ist.
 Im Mittel ergeben die Resultate einen Wert von 0,344, was eine (sehr) geringe Erfüllung der Suchanfragen bedeutet. Hierbei sind die Mittelwerte der jeweiligen Topics in Autor: 0,51, Sektion: 0 und Plot: 0,4 aufgeteilt. Die Topics „Autor“ und „Plot“ liefern also beide bessere Suchergebnisse, was im derzeitigen Stand der Umsetzung zu begründen ist. Die Suchmaschine ist in der Lage nach spezifischen Informationen zu suchen, berücksichtigt jedoch noch keine Operatoren oder Suchanfragen, welche eine Umwandlung der Inhalte anhand einer bestimmten Fragestellung enthält. Dies führt auch dazu, dass die Intention einer Suchanfrage nicht erkannt wird und die eigentlich richtig eingeordneten Suchergebnisse mit falschen Parametern ausgegeben werden.
 
 \section{Zusammenfassung und Ausblick}
+Im derzeitigen Umsetzungsstand der Suchmaschine können innerhalb einer Kommandozeilenanwendung Anfragen gestellt werden, welche die bereits transferierten Dokumente nach passenden Inhalten durchsucht. Dabei werden als Resultate nur übereinstimmende Inhalte ausgegeben, welche in den Kategorien „Titel“ und „Sprache“ (3), „Autor“ (1,5), „Rollen“ (1,2), „Bemerkungen“ und „Widmungen“ (0,7), „Plot“ (0,15) mit absteigenden Gewichtungen festgelegt sind. Im Suchprozess wird auf eine Datenbank zugegriffen, welche Dokumente mit einer von uns festgelegten Datenstruktur enthält. Diese wurde im jetzigen Stand lediglich aus einer Datenquelle heraus befüllt.
 
 \subsection{Corpus}
 Obwohl wir bisher nur für den \textquote{Opera Lib}-Corpus
 einen Parser geschrieben haben,
 lässt sich das entwickelte Framework problemlos auf weitere Corpora erweitern.
-So planen wir beispielsweise, die
+So planen wir beispielsweise, die im Gliederungspunkt „Datenquellen“ angegebenen Seiten zu crawlen und in die Hilfsdatenstruktur zu transferieren. Dies setzt auch die Zusammenführung mit den bereits vorhandenen Dokumenten voraus, welche als Folge eventuell doppelt und nicht mehr redundanzfrei vorliegen würden. Als Folge dieses Prozesses dürften Libretto teilweise in mehreren Sprachen vorliegen und könnten auch in vollständigerer Form hinterlegt sein.
 
+\subsection(Query Understanding)
+Ein weiteres Ziel in folgenden Versionen soll es sein, die Suchanfragen zu analysieren und somit auch auf eventuelle Spezifizierungen eine angepasste Ausgabe geben zu können. Ein wichtiger Punkt wäre hierbei zunächst das sogenannte „Natural Language Processing“, welches mit Hilfe der gegebenen Quellen Sprachen erkennt, deren Inhalte segmentiert und im Anschluss Funktionen und Bedeutungen der Wörter herausfiltert. Mit diesem Vorgehen würde ein hauptsächlicher Grund für die schlechten Ergebnisse der Evaluation entfallen
 
 Eine weitere Erweiterungsmöglichkeit besteht darin, Kunstlieder mit in die Suchmaschine einzubeziehen.
 Der \textquote{Kareol}-Corpus stellt dazu 687 Lieder zur Verfügung.
 
 https://aws.amazon.com/de/elasticsearch-service/what-is-elasticsearch/
 https://de.wikipedia.org/wiki/Elasticsearch
+https://www.bigdata-insider.de/was-ist-natural-language-processing-a-590102/
+https://surface.syr.edu/cgi/viewcontent.cgi?referer=https://scholar.google.de/&httpsredir=1&article=1019&context=cnlp
