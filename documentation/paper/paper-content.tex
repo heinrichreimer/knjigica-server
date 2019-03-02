@@ -30,54 +30,145 @@ Die Möglichkeiten der Benutzung dieser Suchmaschine sind also vielfältig
 und können sogar der Forschung in der Librettologie zugutekommen.
 
 \section{Datenquellen}
-Im ersten Schritt der Umsetzung ist eine umfassende Recherche 
-nach Libretto und deren Texten im Internet erfolgt. 
-Als Ergebnis der Suche wurden folgende Datenquellen ausgemacht:
+\label{sec:corpora}
+Im ersten Schritt der Umsetzung ist eine umfassende Recherche
+nach Libretto und deren Texten im Internet erfolgt.
+\begin{table}
+    \centering
+    \begin{tabular}{l l}
+        \toprule
+        Corpus & Anzahl Libretto \\
+        \midrule
+        Kareol & 385 \\
+        Opera Lib & 434 \\
+        Opera Folio & 512 \\
+        Opera Glass & 170 \\
+        Aria & 177 \\
+        Collection Ulric Voyer & 220 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Libretto-Corpora}
+    \label{tab:corpora}
+\end{table}
+Als Ergebnis der Suche wurden die in Tabelle \ref{tab:corpora} aufgeführten
+Datenquellen ausgemacht.
 
-\begin{tabular}{l l l l}
-    \toprule
-    Webseite & Status & Anzahl Libretto & Sonstiges \\
-    \midrule
-    Kareol & Gecrawlt & 385 Libretto, 687 Lieder & \\
-    Opera Lib & Indiziert & 434 Libretto & Stücke mit Prämieren in den Jahren 1600-1929 \\
-    Opera Folio & Noch nicht benutzt & 512 Libretto & Italienische, franzöische, englische, deutsche Libretto vom 17. bis 20. Jhd. \\
-    Opera Glass & Noch nicht benutzt & 170 Libretto & 65 Komponisten, 389 Übersetzungen \\
-    Aria & Noch nicht benutzt & 177 Libretto & \\
-    Collection Ulric Voyer & Noch nicht benutzt & 220 Libretto & \\
-    \bottomrule
-\end{tabular}
+Zeitgeschichtlich wurde der überwiegene Teil der
+in den Corpora enthaltenen Libretti
+im Zeitraum vom 17. bis 20. Jahrhundert uraufgeführt.
+Die meisten der Corpora enthalten Libretti verschiedener Sprachen,
+überwiegend jedoch italienische, franzöische,
+englische, deutsche oder russische.
+Auch werden bei einigen Corpora Übersetzungen zur Verfügung gestellt,
+so werden beispielsweise die Libretti von \textquote{Opera Glass}
+durch 389 Übersetzungen ergänzt.
+Bei \textquote{Kareol} sogar die Übersetzung
+dem Originaltext gegenübergestellt.
 
-\section{Datenstruktur}
+\section{Struktur}
 
-\subsection{Struktur von Libretto}
-Im Verlauf der Zeit haben sich Libretto stetig weiterentwickelt. Daher ist eine feste Struktur der Texte nicht bestimmbar. Grob lässt sich der Aufbau eines Librettos jedoch mit folgender Abfolge definieren:
-\begin{enumerate}
-    \item Prolog
-    \item Erster Akt
-    \item Intermezzo
-    \item Zweiter Akt
-    \item Epilog
-\end{enumerate}
-In den uns vorliegenden Quellen erfolgt zudem vor Beginn des Textes eine Angabe zusätzlicher Informationen wie Erstaufführung, Sprache, Zusammenfassung der Handlung oder veröffentlichte Medien, welche das Libretto beinhalten. Des Weiteren wird zu Beginn der jeweiligen Handlung die Rollen vorgestellt, welche das Libretto begleiten und meist auch in welcher Stimmlage diese singen. Nicht notwendigerweise wird die Handlung auch von einem Erzähler begleitet.
+\subsection{Literarische Struktur von Libretto}
+Im geschichtlichen Verlauf der Zeit haben sich Libretti
+stetig weiterentwickelt.
+Daher ist es schwierig, für ein Libretto eine feste Struktur festzulegen.
+Allgemein sin jedoch einige Bestandteile in jedem Libretto vorhanden.
+So wird anfangs der Titel und die Autoren genannt.
+Hier werden auch oftmals weitere Informationen, wie Daten zur Premiere,
+sowie weitere Notizen oder Widmungen des Autors genannt.
+Nachfolgend werden die im Libretto vorkommenden Rollen mit Namen,
+teils mit Beschreibung, sowie mit der vorgesehenen Stimmlage, aufgeführt.
+Anschließend folgt die Handlung des Libretto.
+So werden die Überschriften, sowie Unterüberschriften genannt.
+Textpassagen werden, meist mit dem Namen der vortragenden Rolle versehen,
+einfach aufgelistet. Zwischen Textpassagen stehen gelegentlich
+Regieanweisungen zur Betonung, Informationen zum Bühnenbild,
+sowie weitere Instruktionen.
+Mit der Handlung endet das Libretto.
 
 \subsection{Hilfsdatenstruktur}
-Aus der allgemeinen Struktur von Librettos wurde für die Suchmaschine ein standardisiertes Format abgeleitet. Dieses dient dem effizienten speichern der Daten und der Vorbereitung und Standardisierung für die folgende Suche. Zu diesem Zweck wurden mehrere Klassen entworfen, welche die Informationen der Librettos auf Kerninformationen eingrenzen. Der Einfachheit halber ist eine Unterteilung in Haupt- und Nebenklassen erfolgt. Zu den Nebenklassen gehören der Autor, die Annotationen, der Plot, Informationen zur Premiere und den agierenden Rollen. Vereint werden diese in der Hauptklasse „Libretto“.
+Aus der allgemeinen Struktur von Librettos
+leiten wir für die Entwicklung der Suchmaschine
+ein standardisiertes und maschinell lesbares Format ab.
+Dieses dient dem effizienten Speichern der gerawlten Rohdaten
+und der Vorbereitung sowie Standardisierung
+für die spätere erfolgende Indizierung durch die Suchmaschine.
+
+Neben einer Datenstruktur, die ein vollständiges Libretto abbildet,
+entwerfen wir Klassen, die einzelne Teile der Struktur speichern.
+In einer Datenstruktur werden alle Informationen zum Autor gespeichert,
+in einer zweiten Informationen über Widmungen und Notizen des Autors,
+in einer dritten Informationen zu einer Rolle bzw. einem Darsteller,
+und in einer letzten werden alle
+die Handlung betreffenden Informationen abgespeichert.
+Dabei wird diese letzte in sich in drei Datenstrukturen unterteilt,
+für Textpassagen, Instruktionen, sowie für Überschriften.
 
 \section{Technische Implementierung}
-Mit Hilfe welcher Tools haben wir die im letzten Kapitel angegebene Hilfsdatenstruktur erreicht? Die Implementierung der Suchmaschine ist mit Hilfe mehrere Schritte erfolgt, welche im Folgenden näher erklärt werden sollen.
+Die Implementierung der Libretto-Suchmaschine unterteilt sich
+in mehrere Bausteine.
+Während der Crawler vor allem auf Linux-Bash-Programmen aufbaut,
+wird in den anderen Bausteinen, so auch im Parser, Indexer und im Benutzerprogramm
+auf objektorientierte Programmierung mittels Java/Kotlin gesetzt.
+Als Framework wird das praxiserprobte Elasticsearch-Framework verwendet.
+Im Folgenden werden die einzelnen Komponenten der Suchmaschine
+näher erklärt.
 
 \subsection{Crawler}
-Um an die Inhalte beider Seiten zu gelangen und somit eine Grundlage für die spätere Suche zu schaffen, wurde ein Crawler konzipiert, welcher systematisch die HTML-Seiten aller Libretti erfasst und diese zunächst unverändert abspeichert. Dieser Vorgang wurde mit Hilfe von Bash Skripten umgesetzt und basiert somit auf dem kopieren der im Internet aufgeführten HTML Quelltexten. Da die von uns recherchierten Internetseiten meist über ein Register verfügen, werden die in den Quelltexten aufgeführten Links mit der Kennzeichnung „href“ extrahiert und in einer neuen Datei abgespeichert. Um Probleme mit Links aufgrund relativer Adressen auszuschließen, werden diese um die der absoluten Adresse erweitert. Nachdem alle auf der Seite befindlichen Inhalte erfasst wurden, wird mit Hilfe des Programms „wget“ jede referenzierte Seite heruntergeladen.
+Der von uns entwickelte Crawler hat die Aufgabe,
+die Corpora in \ref{sec:corpora} aus dem Internet herunterzuladen,
+und für die weitere Verarbeitung zu speichern.
+
+Zuerst werden dazu die URLs aller Libretti aus dem Register
+eines jeden Corpus extrahiert und als Liste zwischengespeichert.
+Um Probleme mit relativen URLs auszuschließen,
+werden diese auf die absolute Adresse erweitert.
+
+Danach lädt ein weiteres Skript systematisch die HTML-Dokumente
+aller erfassten URLs herunter
+und speichert diese zunächst unverändert ab.
+Hierbei werden auch verlinkte, verschachtelte Seiten zunächst mit übernommen.
+
+Beide Vorgänge wurden mit Hilfe von Bash-Skripten umgesetzt,
+die die Linux-Funktionen \code{wget}, \code{curl},
+sowie die \code{html-xml-utils} verwenden.
 
 \subsection{Parser}
-Die Inhalte der Internetseite liegen nach dem Crawlen nun in HTML Quelltext vor. Damit in der Folge nach enthaltenen Informationen gesucht werden kann, werden die Inhalte mittels Java in ein Objekt geschrieben. Hierbei wurde von uns die Bibliothek „jsoup“ verwendet, welche die Extraktion und Bearbeitung von HTML Inhalten ermöglicht. Entsprechend wird das gecrawlte Material je nach Internetseite so verallgemeinert, dass anhand bestimmter Abfolgen von HTML Elementen die Hilfsdatenstruktur korrekt gefüllt wird. 
-Ein Formatter sorgt abschließend dafür, dass die in der Hilfsdatenstruktur enthaltenen Informationen in ein JSON Dokument umgewandelt werden. Dieses wird von der Suchmaschine als Referenz verwendet.
+Die Inhalte der Internetseite liegen nach dem Crawlen
+als HTML-Quelltext vor.
+Damit in der Folge nach enthaltenen Informationen gesucht werden kann,
+werden die Inhalte mittels Java in ein Objekt geschrieben.
+Hierbei wurde von uns die Bibliothek „jsoup“ verwendet,
+welche die Extraktion und Bearbeitung von HTML Inhalten ermöglicht.
+Entsprechend wird das gecrawlte Material je nach Internetseite
+so verallgemeinert, dass anhand bestimmter Abfolgen von HTML Elementen
+die Hilfsdatenstruktur korrekt gefüllt wird.
+Ein Formatter sorgt abschließend dafür,
+dass die in der Hilfsdatenstruktur enthaltenen Informationen
+in ein JSON Dokument umgewandelt werden.
+Dieses wird von der Suchmaschine als Referenz verwendet.
 
 \section{Suchmaschine}
-Als Suchmaschine verwenden wir die open source Software „Elasticsearch“. Diese beruht auch Apache Lucene und realisiert die Kommunikation mit Klienten über ein RESTful-Webinterface. Das vorher geparste Dokument im JSON Format wird an die Suchmaschine gesendet und wird dort indiziert. Ein entsprechendes Dokument besitzt in unserem Fall die folgende verkürzte Form:
-\lstinputlisting[language=json, inputencoding=utf8/latin1]{../bretzner-die_entfuhrung_aus_dem_serail-sample.json}
+Als Suchmaschine verwenden wir die open source Software „Elasticsearch“.
+Diese beruht auch Apache Lucene
+und realisiert die Kommunikation mit Klienten
+über ein RESTful-Webinterface.
+Das vorher geparste Dokument im JSON Format
+wird an die Suchmaschine gesendet und wird dort indiziert.
+Ein entsprechendes Dokument besitzt in unserem Fall
+die folgende verkürzte Form:
+% \lstinputlisting[language=json, inputencoding=utf8/latin1]{../bretzner-die_entfuhrung_aus_dem_serail-sample.json}
 
-Die Dokumente liegen im Anschluss aufgelistet in Elasticsearch vor und können über einen sogenannten Index von der Suchmaschine erreicht werden. Eine Suchanfrage wird wie die Inhalte zuvor mittels eines JSON Dokuments an Elasticsearch gesendet. Die Anfrage kann verschiedene Parameter enthalten, welche die Resultate mit Filtern versehen und Spezifikationen wie eine bestimmte Ordnung der Inhalte und Beschneidung auf bestimmte Stichworte erlauben. In unserem Fall wurde die Suchanfrage als Boolean umgesetzt, wodurch eine Ausgabe nur dann erfolgt, wenn ein oder mehrere der angegebenen Variablen mit einem Wert gefüllt wurden. Bei diesen Variablen handelt es sich um den Rollennamen, Regieanweisungen, Akte, Szenen und den Text.
+Die Dokumente liegen im Anschluss aufgelistet in Elasticsearch vor
+und können über einen sogenannten Index von der Suchmaschine erreicht werden.
+Eine Suchanfrage wird wie die Inhalte zuvor mittels eines JSON Dokuments
+an Elasticsearch gesendet.
+Die Anfrage kann verschiedene Parameter enthalten,
+welche die Resultate mit Filtern versehen
+und Spezifikationen wie eine bestimmte Ordnung der Inhalte
+und Beschneidung auf bestimmte Stichworte erlauben.
+In unserem Fall wurde die Suchanfrage als Boolean umgesetzt,
+wodurch eine Ausgabe nur dann erfolgt,
+wenn ein oder mehrere der angegebenen Variablen mit einem Wert gefüllt wurden. Bei diesen Variablen handelt es sich um den Rollennamen, Regieanweisungen, Akte, Szenen und den Text.
 
 \section{Indizieren}
 
@@ -100,5 +191,16 @@ Die Ergebnisse der Evaluation sind entsprechend folgend verteilt:
 Mit der derzeitigen Version der Suchmaschine werden also bei mehr als 50% der gestellten Suchanfragen relevante Ergebnisse ausgegeben. 
 
 \section{Zusammenfassung und Ausblick}
+
+\subsection{Corpus}
+Obwohl wir bisher nur für den \textquote{Opera Lib}-Corpus
+einen Parser geschrieben haben,
+lässt sich das entwickelte Framework problemlos auf weitere Corpora erweitern.
+So planen wir beispielsweise, die
+
+
+Eine weitere Erweiterungsmöglichkeit besteht darin, Kunstlieder mit in die Suchmaschine einzubeziehen.
+Der \textquote{Kareol}-Corpus stellt dazu 687 Lieder zur Verfügung.
+
 https://aws.amazon.com/de/elasticsearch-service/what-is-elasticsearch/
 https://de.wikipedia.org/wiki/Elasticsearch

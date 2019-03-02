@@ -4,16 +4,16 @@
   "language": "de",
   "authors": [
     {
-      "name": "BRETZNER",
-      "fullName": "Christoph Friedrich BRETZNER",
+      "name": "Bretzner",
+      "fullName": "Christoph Friedrich Bretzner",
       "scopes": [
         "TEXT"
       ]
     },
     // ...
     {
-      "name": "MOZART",
-      "fullName": "Wolfgang Amadeus MOZART",
+      "name": "Mozart",
+      "fullName": "Wolfgang Amadeus Mozart",
       "scopes": [
         "MUSIC"
       ]
@@ -22,12 +22,12 @@
   "annotations": [],
   "roles": [
     {
-      "name": "SELIM",
-      "description": "SELIM Bassa"
+      "name": "Selim",
+      "description": "Selim Bassa"
     },
     {
-      "name": "KONSTANZE",
-      "description": "KONSTANZE Geliebte des Belmonte",
+      "name": "Konstanze",
+      "description": "Konstanze, Geliebte des Belmonte",
       "voice": "SOPRANO"
     }
   ],
@@ -65,7 +65,7 @@
       "type": "TEXT",
       "data": {
         "roleName": [
-          "OSMIN"
+          "Osmin"
         ],
         "text": "Wer ein Liebchen hat gefunden,\nDie es treu und redlich meint,\nLohn' es ihr durch tausend Küsse,\nMach ihr all das Leben süße,\nSei ihr Tröster, sei ihr Freund.\nTrallalera, trallalera.",
         "instruction": "mit einer Leiter, welche er an einen Baum vor der Tür des Palastes lehnt, hinaufsteigt und Feigen abnimmt"
